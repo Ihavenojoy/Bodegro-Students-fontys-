@@ -1,0 +1,6 @@
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\bin\Debug\BodegroLibery.dll
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\bin\Debug\BodegroLibery.pdb
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\obj\Debug\BodegroLibrary.csproj.AssemblyReference.cache
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\obj\Debug\BodegroLibrary.csproj.CoreCompileInputs.cache
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\obj\Debug\BodegroLibery.dll
+C:\Users\marti\OneDrive\Documenten\GitHub\Bodegro-Students-fontys-\BodegroLibery\obj\Debug\BodegroLibery.pdb
