@@ -1,8 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodeGro\\",
+  "WorkspaceRootPath": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{83C4D1DE-74E1-4613-ABC3-38AA912A543A}|..\\BodegroLibery\\BodegroLibrary.csproj|c:\\users\\18022\\onedrive - office 365 fontys\\semester 2\\group git\\bodegro\\bodegrolibery\\protocol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -33,6 +34,13 @@
     {
       "AbsoluteMoniker": "D:0:0:{A6DDC88C-DE39-4187-A5E3-51EED89AEC18}|BodeGro.csproj|C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodeGro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6DDC88C-DE39-4187-A5E3-51EED89AEC18}|BodeGro.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{E4F49804-5176-4905-9DB0-B1C28B654818}|..\\BodegroLibary\\BodegroLibary.csproj|c:\\users\\18022\\onedrive - office 365 fontys\\semester 2\\group git\\bodegrolibary\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{83DAC0BD-7E0A-4453-ACC0-2E7A1E27347B}|Bodegro.csproj|c:\\users\\18022\\onedrive - office 365 fontys\\semester 2\\group git\\bodegro\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{83DAC0BD-7E0A-4453-ACC0-2E7A1E27347B}|Bodegro.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+>>>>>>> Stashed changes
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +50,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 6,
+=======
+          "SelectedChildIndex": 2,
+>>>>>>> Stashed changes
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,14 +62,11 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 1,
               "Title": "Patient.cs",
               "DocumentMoniker": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodegroLibery\\Patient.cs",
@@ -105,10 +114,22 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-18T12:57:14.651Z",
+=======
+              "DocumentIndex": 0,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\BodegroLibary\\Class1.cs",
+              "RelativeDocumentMoniker": "..\\BodegroLibary\\Class1.cs",
+              "ToolTip": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\BodegroLibary\\Class1.cs",
+              "RelativeToolTip": "..\\BodegroLibary\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-19T08:16:38.313Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 3,
               "Title": "Subscription.cs",
               "DocumentMoniker": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodegroLibery\\Subscription.cs",
@@ -170,13 +191,21 @@
             {
               "$type": "Document",
               "DocumentIndex": 4,
+=======
+              "DocumentIndex": 1,
+>>>>>>> Stashed changes
               "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodeGro\\Form1.cs",
+              "DocumentMoniker": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
-              "ToolTip": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\BodeGro\\Form1.cs [Design]",
+              "ToolTip": "C:\\Users\\18022\\OneDrive - Office 365 Fontys\\Semester 2\\Group Git\\Bodegro\\Form1.cs [Design]",
               "RelativeToolTip": "Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< Updated upstream
               "WhenOpened": "2024-09-18T12:10:55.356Z"
+=======
+              "WhenOpened": "2024-09-19T08:15:33.799Z",
+              "EditorCaption": " [Design]"
+>>>>>>> Stashed changes
             }
           ]
         }
