@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroLibery
+namespace Bodegro2FALibrary
 {
-    internal class Step
+    internal class Code32
     {
-        public int Time {  get; set; }
-        public string Discription { get; set; }
     }
 }

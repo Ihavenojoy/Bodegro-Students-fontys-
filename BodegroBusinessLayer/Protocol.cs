@@ -11,5 +11,12 @@ namespace BodegroLibery
         public string Name { get; set; }
 
         public List<Step> Steps { get; set; }
+
+
+        public Protocol(string Name, List<Step> Steps) 
+        { 
+            this.Name = Name;
+            this.Steps = Steps;
+        }
     }
 }
