@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bodegro2FALibrary
 {
-    internal class Code32
+    public class Code32
     {
         private static readonly char[] _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567=".ToCharArray(); // Pading toegevoegd om invalids te voorkomen https://en.wikipedia.org/wiki/Base32#:~:text=Base%2032%20Encoding%20per%20%C2%A76,-The%20most%20widely&text=It%20uses%20an%20alphabet%20of%20A%E2%80%93Z%2C%20followed%20by%202,of%20the%20string%20modulo%208).
         public static string Encode(byte[] data)

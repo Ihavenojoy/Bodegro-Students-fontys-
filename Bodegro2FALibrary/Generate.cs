@@ -36,7 +36,7 @@ public class Generate
         }
 
     }
-    public static byte[] GenerateRandomKey(int length)
+    public static byte[] RandomKey(int length)
     {
         byte[] key = new byte[length];
         using (var rng = RandomNumberGenerator.Create())
