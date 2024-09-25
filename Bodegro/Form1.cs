@@ -11,6 +11,7 @@ using BodegroDatabaseLayer;
         private void TestButton_Click(object sender, EventArgs e)
         {
         DatabaseConnection databaseConnection = new DatabaseConnection();
-        databaseConnection.OpenConnection();
+        MessageBox.Show(databaseConnection.OpenConnection());
+        
         }
     }
