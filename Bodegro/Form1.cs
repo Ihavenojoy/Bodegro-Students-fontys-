@@ -13,8 +13,9 @@ using Bodegro2FALibrary;
         {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         MessageBox.Show(databaseConnection.OpenConnection());
-        MessageBox.Show(Convert.ToString(Generate.OTP));
-        MessageBox.Show(Convert.ToString(Generate.RandomKey));
-        MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32))));
+        MessageBox.Show(Convert.ToString(Generate.OTP)); // Greate OTP without key (does nothing)
+        MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
+        MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key
+        MessageBox.Show(Generate.OTP(Code32.Encode(Generate.RandomKey(32)),6,30)); // Generates a OTP
         }
     }
