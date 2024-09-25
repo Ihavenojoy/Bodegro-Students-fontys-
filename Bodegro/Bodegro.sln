@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bodegro", "Bodegro.csproj", "{81EEE43C-271B-4D22-881D-2D5DC493C8A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bodegro", "Bodegro.csproj", "{81EEE43C-271B-4D22-881D-2D5DC493C8A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodegroBusinessLayer", "..\BodegroBusinessLayer\BodegroBusinessLayer.csproj", "{E9E39A1D-342C-4D8B-87BE-291C5356AD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroBusinessLayer", "..\BodegroBusinessLayer\BodegroBusinessLayer.csproj", "{E9E39A1D-342C-4D8B-87BE-291C5356AD06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodegroDatabaseLayer", "..\BodegroDatabaseLayer\BodegroDatabaseLayer.csproj", "{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E9E39A1D-342C-4D8B-87BE-291C5356AD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9E39A1D-342C-4D8B-87BE-291C5356AD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9E39A1D-342C-4D8B-87BE-291C5356AD06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
