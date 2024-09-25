@@ -1,9 +1,9 @@
 ﻿namespace Bodegro2FALibrary;
 using System.Security.Cryptography;
-public class TwoFactor
+public class Generate
 {
     // This method generates a TOTP code based on the current time
-    public static string GenerateTOTP(string secretKey, int digits = 6, int timeStep = 30)
+    public static string OTP(string secretKey, int digits = 6, int timeStep = 30)
     {
 
         // Get the current timestamp in seconds and divide by time step (30 sec intervals)
@@ -14,7 +14,7 @@ public class TwoFactor
         Array.Reverse(timeBytes);  // Ensure big-endian byte order
 
         // Decode the base32-encoded secret key
-        var keyBytes = Base32Decode(secretKey);
+        var keyBytes = Code32.Decode(secretKey);
 
         // Generate HMAC-SHA1 hash using the secret key and the time
         using (var hmac = new HMACSHA1(keyBytes))
@@ -34,5 +34,15 @@ public class TwoFactor
             // Return the OTP as a zero-padded string
             return otp.ToString(new string('0', digits));
         }
+
+    }
+    public static byte[] GenerateRandomKey(int length)
+    {
+        byte[] key = new byte[length];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(key); // Vult de array met veilige willekeurige bytes
+        }
+        return key;
     }
 }
