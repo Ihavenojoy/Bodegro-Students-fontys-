@@ -18,17 +18,18 @@ namespace Bodegro
         {
             InitializeComponent();
             domain = new NewSubscriptionDomain(doctor);
+            Doctor newdoctor = doctor;
             UpdateUI();
         }
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(domain.AddSubscription(ProtocoBox.Text, PatientBox.Text, StartDate.Value, EndDate.Value));
+            MessageBox.Show(domain.AddSubscription(ProtocolBox.Text, PatientBox.Text, StartDate.Value, EndDate.Value));
         }
         private void UpdateUI()
         {
             PatientBox.DataSource = domain.GivePatients();
-            ProtocoBox.DataSource = domain.GiveProtocols();
+            ProtocolBox.DataSource = domain.GiveProtocols();
         }
     }
 }

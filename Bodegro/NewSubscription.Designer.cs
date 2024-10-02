@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             Confirm = new Button();
-            ProtocoBox = new ListBox();
+            ProtocolBox = new ListBox();
             PatientBox = new ListBox();
             StartDate = new DateTimePicker();
             EndDate = new DateTimePicker();
@@ -45,14 +45,14 @@
             Confirm.UseVisualStyleBackColor = true;
             Confirm.Click += Confirm_Click;
             // 
-            // ProtocoBox
+            // ProtocolBox
             // 
-            ProtocoBox.FormattingEnabled = true;
-            ProtocoBox.ItemHeight = 15;
-            ProtocoBox.Location = new Point(43, 37);
-            ProtocoBox.Name = "ProtocoBox";
-            ProtocoBox.Size = new Size(239, 379);
-            ProtocoBox.TabIndex = 1;
+            ProtocolBox.FormattingEnabled = true;
+            ProtocolBox.ItemHeight = 15;
+            ProtocolBox.Location = new Point(43, 37);
+            ProtocolBox.Name = "ProtocolBox";
+            ProtocolBox.Size = new Size(239, 379);
+            ProtocolBox.TabIndex = 1;
             // 
             // PatientBox
             // 
@@ -87,7 +87,7 @@
             Controls.Add(EndDate);
             Controls.Add(StartDate);
             Controls.Add(PatientBox);
-            Controls.Add(ProtocoBox);
+            Controls.Add(ProtocolBox);
             Controls.Add(Confirm);
             Name = "NewSubscription";
             Text = "NewSubscription";
@@ -97,7 +97,7 @@
         #endregion
 
         private Button Confirm;
-        private ListBox ProtocoBox;
+        private ListBox ProtocolBox;
         private ListBox PatientBox;
         private DateTimePicker StartDate;
         private DateTimePicker EndDate;

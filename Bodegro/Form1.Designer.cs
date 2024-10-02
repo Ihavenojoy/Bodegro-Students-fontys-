@@ -33,7 +33,7 @@
             // 
             // TestButton
             // 
-            TestButton.Location = new Point(336, 319);
+            TestButton.Location = new Point(358, 240);
             TestButton.Name = "TestButton";
             TestButton.Size = new Size(75, 23);
             TestButton.TabIndex = 0;
