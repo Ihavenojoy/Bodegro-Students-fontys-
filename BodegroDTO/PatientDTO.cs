@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    public class Patient
+    public record PatientDTO
     {
         static public int PatientID = 0;
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public List<string> MedicalHistory { get; set; }
-        public Regio Regio { get; set; }
-        public List<Subscription> subscriptions = new List<Subscription>();
+        public int Regio { get; set; }
+        public List<SubscriptionDTO> subscriptions = new List<SubscriptionDTO>();
 
-        public Patient(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, Regio Regio)
+        public PatientDTO(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, int Regio)
         {
             PatientID = PatientID++;
             this.Name = Name;

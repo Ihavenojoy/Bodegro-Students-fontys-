@@ -1,5 +1,4 @@
-﻿using BodegroLibery;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BodegroBusinessLayer;
+using BodegroBusinessLayer.Containers;
+using BodegroBusinessLayer.Modules;
 namespace Bodegro
 {
     public partial class NewSubscription : Form

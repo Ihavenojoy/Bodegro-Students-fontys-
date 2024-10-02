@@ -1,11 +1,12 @@
-﻿using BodegroLibery;
+﻿using BodegroBusinessLayer.Enums;
+using BodegroBusinessLayer.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroBusinessLayer
+namespace BodegroBusinessLayer.Containers
 {
     public class NewSubscriptionDomain
     {
@@ -37,7 +38,7 @@ namespace BodegroBusinessLayer
         }
         public string AddSubscription(string protocol, string patient, DateTime SDate, DateTime EDate)
         {
-            if (Datumcheck(SDate, EDate)) 
+            if (Datumcheck(SDate, EDate))
             {
                 int proto = 0;
                 for (int i = 0; i < protocols.Count; i++)
