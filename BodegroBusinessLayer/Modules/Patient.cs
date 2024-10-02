@@ -9,7 +9,6 @@ namespace BodegroBusinessLayer.Modules
 {
     public class Patient
     {
-        static public int PatientID = 0;
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
@@ -19,7 +18,6 @@ namespace BodegroBusinessLayer.Modules
 
         public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, Regio Regio)
         {
-            PatientID = PatientID++;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
