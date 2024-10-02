@@ -24,5 +24,10 @@ public partial class Form1 : Form
         NewSubscription newSubscription = new NewSubscription(doctor);
         newSubscription.Closed += (s, args) => this.Close();
         newSubscription.Show();
+        InlogPagina inlog = new InlogPagina();
+        if (inlog.ShowDialog() == DialogResult.OK && inlog.inlog == true)
+        {
+
+        }
     }
     }
