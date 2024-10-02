@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    public class User
+    public abstract class User
     {
         public string Name { get; set; }
         public string Password { get; set; }

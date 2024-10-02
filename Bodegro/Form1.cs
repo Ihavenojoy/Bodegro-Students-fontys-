@@ -1,6 +1,7 @@
 namespace Bodegro;
 using BodegroDatabaseLayer;
 using Bodegro2FALibrary;
+using BodegroMailLibary;
 
     public partial class Form1 : Form
     {
@@ -17,5 +18,7 @@ using Bodegro2FALibrary;
         //MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
         MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key
         MessageBox.Show(Generate.OTP(Code32.Encode(Generate.RandomKey(32)),6,30)); // Generates a OTP
+        SentMail sentmail = new SentMail();
+        sentmail.NewMail();
         }
     }
