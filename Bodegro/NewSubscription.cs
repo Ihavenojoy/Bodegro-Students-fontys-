@@ -1,4 +1,5 @@
-﻿using BodegroLibery;
+﻿using BodegroBusinessLayer.Modules;
+using BodegroBusinessLayer.Containers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,12 +24,12 @@ namespace Bodegro
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(domain.AddSubscription(ProtocoBox.Text, PatientBox.Text, StartDate.Value, EndDate.Value));
+            MessageBox.Show(domain.AddSubscription(ProtocolBox.Text, PatientBox.Text, StartDate.Value, EndDate.Value));
         }
         private void UpdateUI()
         {
             PatientBox.DataSource = domain.GetPatients();
-            ProtocoBox.DataSource = domain.GetProtocols();
+            ProtocolBox.DataSource = domain.GetProtocols();
         }
     }
 }
