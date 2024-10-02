@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroLibery
+namespace BodegroBusinessLayer.Modules
 {
     public class Protocol
     {
@@ -13,8 +13,8 @@ namespace BodegroLibery
         public List<Step> Steps { get; set; }
 
 
-        public Protocol(string Name, List<Step> Steps) 
-        { 
+        public Protocol(string Name, List<Step> Steps)
+        {
             this.Name = Name;
             this.Steps = Steps;
         }

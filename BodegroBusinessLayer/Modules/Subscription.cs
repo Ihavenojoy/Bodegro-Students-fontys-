@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroLibery
+namespace BodegroBusinessLayer.Modules
 {
     public class Subscription
     {
@@ -13,9 +13,9 @@ namespace BodegroLibery
         public Protocol Protocol { get; set; }
         public int StepsTaken { get; set; }
 
-        public Subscription(DateTime StarDate, DateTime EndDate, Protocol Protocol) 
-        { 
-            this.StartDate = StarDate;
+        public Subscription(DateTime StarDate, DateTime EndDate, Protocol Protocol)
+        {
+            StartDate = StarDate;
             this.EndDate = EndDate;
             this.Protocol = Protocol;
             StepsTaken = 0;

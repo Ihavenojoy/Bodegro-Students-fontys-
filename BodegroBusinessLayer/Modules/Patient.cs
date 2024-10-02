@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodegroBusinessLayer.Enums;
 
-namespace BodegroLibery
+namespace BodegroBusinessLayer.Modules
 {
     public class Patient
     {
@@ -16,7 +17,7 @@ namespace BodegroLibery
         public Regio Regio { get; set; }
         public List<Subscription> subscriptions = new List<Subscription>();
 
-        public Patient(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, Regio Regio)
+        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, Regio Regio)
         {
             PatientID = PatientID++;
             this.Name = Name;
