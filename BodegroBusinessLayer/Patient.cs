@@ -25,5 +25,14 @@ namespace BodegroLibery
             this.MedicalHistory = MedicalHistory;
             this.Regio = Regio;
         }
+        public bool IDCheck(int ID)
+        {
+            bool check = false;
+            if (ID == PatientID)
+            {
+                check = true;
+            }
+            return check;
+        }
     }
 }

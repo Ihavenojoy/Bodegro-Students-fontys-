@@ -13,11 +13,11 @@ namespace Bodegro
 {
     public partial class NewSubscription : Form
     {
-        NewSubscriptionDomain domain;
+        NewSubscriptionContainer domain;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent();
-            domain = new NewSubscriptionDomain(doctor);
+            domain = new NewSubscriptionContainer(doctor);
             UpdateUI();
         }
 
@@ -27,8 +27,8 @@ namespace Bodegro
         }
         private void UpdateUI()
         {
-            PatientBox.DataSource = domain.GivePatients();
-            ProtocoBox.DataSource = domain.GiveProtocols();
+            PatientBox.DataSource = domain.GetPatients();
+            ProtocoBox.DataSource = domain.GetProtocols();
         }
     }
 }

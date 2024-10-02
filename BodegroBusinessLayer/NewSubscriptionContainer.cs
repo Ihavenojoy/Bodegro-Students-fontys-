@@ -7,27 +7,31 @@ using System.Threading.Tasks;
 
 namespace BodegroBusinessLayer
 {
-    public class NewSubscriptionDomain
+    public class NewSubscriptionContainer
     {
         private Doctor doctor;
         private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
-        public NewSubscriptionDomain(Doctor doctor)
+        public NewSubscriptionContainer(Doctor doctor)
         {
             this.doctor = doctor;
             GetMockData();
         }
-        public List<string> GivePatients()
-        {
+        public List<string> GetPatients()
+        {// Komt in de database layer
             List<string> list = new List<string>();
             for (int i = 0; i < patients.Count; i++)
             {
-                list.Add(patients[i].Name);
+                for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
+                {
+                    if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
+                    list.Add(patients[i].Name);
+                }
             }
             return list;
         }
-        public List<string> GiveProtocols()
-        {
+        public List<string> GetProtocols()
+        {// Komt in de database layer
             List<string> list = new List<string>();
             for (int i = 0; i < protocols.Count; i++)
             {
@@ -57,7 +61,7 @@ namespace BodegroBusinessLayer
             return "Onverwacht probleem gededecteert";
         }
         private void GetMockData()
-        {
+        {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
             Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant);
             Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam);
