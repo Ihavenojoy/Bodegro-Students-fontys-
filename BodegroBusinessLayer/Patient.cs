@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    internal class Patient
+    public class Patient
     {
         static public int PatientID = 0;
         public string Name { get; set; }
@@ -14,6 +14,7 @@ namespace BodegroLibery
         public int PhoneNumber { get; set; }
         public List<string> MedicalHistory { get; set; }
         public Regio Regio { get; set; }
+        public List<Subscription> subscriptions = new List<Subscription>();
 
         public Patient(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, Regio Regio)
         {

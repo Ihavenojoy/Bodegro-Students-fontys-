@@ -1,10 +1,11 @@
 namespace Bodegro;
 using BodegroDatabaseLayer;
 using Bodegro2FALibrary;
-using BodegroMailLibary;
+using BodegroLibery;
 
-    public partial class Form1 : Form
+public partial class Form1 : Form
     {
+    public Doctor doctor = new Doctor("Henry", "Test3!", "test@gmail.com", Regio.Hart_voor_Brabant);
         public Form1()
         {
             InitializeComponent();
@@ -18,7 +19,9 @@ using BodegroMailLibary;
         //MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
         MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key
         MessageBox.Show(Generate.OTP(Code32.Encode(Generate.RandomKey(32)),6,30)); // Generates a OTP
-        SentMail sentmail = new SentMail();
-        sentmail.NewMail();
-        }
+        this.Hide();
+        NewSubscription newSubscription = new NewSubscription(doctor);
+        newSubscription.Closed += (s, args) => this.Close();
+        newSubscription.Show();
+    }
     }

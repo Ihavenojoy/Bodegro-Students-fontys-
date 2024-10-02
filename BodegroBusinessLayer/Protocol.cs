@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    internal class Protocol
+    public class Protocol
     {
         public string Name { get; set; }
 

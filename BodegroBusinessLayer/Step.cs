@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    internal class Step
+    public class Step
     {
         public int Time {  get; set; }
         public string Discription { get; set; }

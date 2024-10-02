@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroLibery
 {
-    internal class Subscription
+    public class Subscription
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
