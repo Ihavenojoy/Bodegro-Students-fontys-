@@ -28,7 +28,7 @@ namespace BLL.Containers
                 for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
                 {
                     if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
-                    list.Add(patients[i].Name);
+                    list.Add(patients[i].ToString());
                 }
             }
             return list;
@@ -38,7 +38,7 @@ namespace BLL.Containers
             List<string> list = new List<string>();
             for (int i = 0; i < protocols.Count; i++)
             {
-                list.Add(protocols[i].Name);
+                list.Add(protocols[i].ToString());
             }
             return list;
         }

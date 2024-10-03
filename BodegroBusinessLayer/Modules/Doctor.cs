@@ -16,7 +16,7 @@ namespace BLL.Modules
         public Doctor(string username, string password, string email, Regio regio) : base (username, password, email)
         {
             this.Regio = regio;
-            PatientIDs = new List<int>();
+            PatientIDs = new List<int>() { 1 };
         }
         public List<int> GetPatientIDs()
         {

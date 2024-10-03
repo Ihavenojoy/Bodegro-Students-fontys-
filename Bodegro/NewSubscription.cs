@@ -36,8 +36,6 @@ namespace Bodegro
             {
                 PatientBox.Items.Add(sub);
             }
-            //PatientBox.DataSource = domain.GetPatients();
-            //ProtocolBox.DataSource = domain.GetProtocols();
         }
     }
 }
