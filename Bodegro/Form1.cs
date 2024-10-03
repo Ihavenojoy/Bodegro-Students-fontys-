@@ -1,8 +1,9 @@
 namespace Bodegro;
-using BodegroDatabaseLayer;
+using BLL;
 using Bodegro2FALibrary;
-using BodegroBusinessLayer.Enums;
-using BodegroBusinessLayer.Modules;
+using DAL;
+using BLL.Enums;
+using BLL.Modules;
 
 public partial class Form1 : Form
     {
