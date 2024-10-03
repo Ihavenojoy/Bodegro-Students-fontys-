@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BodegroDatabaseLayer\BodegroDatabaseLayer.csproj" />
   </ItemGroup>
 
 </Project>

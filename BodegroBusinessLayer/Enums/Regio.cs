@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroBusinessLayer.Enums
+namespace BLL.Enums
 {
     public enum Regio
     {
