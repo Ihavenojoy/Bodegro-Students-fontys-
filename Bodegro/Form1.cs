@@ -1,12 +1,11 @@
 namespace Bodegro;
-using BodegroDatabaseLayer;
 using Bodegro2FALibrary;
-using BodegroBusinessLayer.Enums;
-using BodegroBusinessLayer.Modules;
+using BLL.Enums;
+using BLL.Modules;
 
 public partial class Form1 : Form
     {
-    public Doctor doctor = new Doctor("Henry", "Test3!", "test@gmail.com", Regio.Hart_voor_Brabant);
+    
         public Form1()
         {
             InitializeComponent();
@@ -14,8 +13,7 @@ public partial class Form1 : Form
 
         private void TestButton_Click(object sender, EventArgs e)
         {
-        DatabaseConnection databaseConnection = new DatabaseConnection(); // Create object Databaseconnectie
-        MessageBox.Show(databaseConnection.OpenConnection()); //
+        Doctor doctor = new Doctor("Henry", "Test3!", "test@gmail.com", Regio.Hart_voor_Brabant);
         //MessageBox.Show(Convert.ToString(Generate.OTP)); // Greate OTP without key (does nothing)
         //MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
         MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key

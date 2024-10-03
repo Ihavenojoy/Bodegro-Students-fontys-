@@ -1,4 +1,5 @@
-﻿using BLL.Enums;
+﻿using BLL.Modules;
+using BLL.Enums;
 using BLL.Containers;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,12 @@ using DAL;
 
 namespace BLL.Containers
 {
-    public class NewSubscriptionContainer
+    public class NewSubscriptionDomain
     {
         private Doctor doctor;
         private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
-        public NewSubscriptionContainer(Doctor doctor)
+        public NewSubscriptionDomain(Doctor doctor)
         {
             this.doctor = doctor;
             GetMockData();
