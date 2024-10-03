@@ -25,6 +25,7 @@ namespace BLL.Modules
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
             this.Regio = Regio;
+            PatientID = 1;
         }
         public bool IDCheck(int ID)
         {
@@ -34,6 +35,10 @@ namespace BLL.Modules
                 check = true;
             }
             return check;
+        }
+        public string ToString()
+        {
+            return Name;
         }
     }
 }
