@@ -11,10 +11,12 @@ namespace BLL.Modules
     public class Doctor : User
     {
         public Regio Regio { get; set; }
+        public int Admin_ID { get; }
 
-        public Doctor(string username, string password, string email, Regio regio) : base(username, password, email)
+        public Doctor(string username, string password, string email, Regio regio, int admin_ID) : base(username, password, email)
         {
             Regio = regio;
+            Admin_ID = admin_ID;
         }
     }
 }
