@@ -7,7 +7,13 @@ using DTO;
 
 namespace DAL
 {
-    internal class SubscriptionDAL
+    public class SubscriptionDAL
     {
+        private readonly string connectionString = "TrustServerCertificate=True;" +
+            "Server=mssqlstud.fhict.local;" +
+            "Database=dbi500009_grodebo;" +
+            "User Id=dbi500009_grodebo;" +
+            "Password=Grodebo;";
+
     }
 }
