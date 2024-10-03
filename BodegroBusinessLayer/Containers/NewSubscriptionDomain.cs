@@ -1,5 +1,6 @@
-﻿using BLL.Enums;
-using BLL.Modules;
+﻿using BLL.Modules;
+using BLL.Enums;
+using BLL.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,12 @@ using DAL;
 
 namespace BLL.Containers
 {
-    public class NewSubscriptionContainer
+    public class NewSubscriptionDomain
     {
         private Doctor doctor;
         private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
-        public NewSubscriptionContainer(Doctor doctor)
+        public NewSubscriptionDomain(Doctor doctor)
         {
             this.doctor = doctor;
             GetMockData();
@@ -27,7 +28,7 @@ namespace BLL.Containers
                 for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
                 {
                     if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
-                    list.Add(patients[i].ToString());
+                    list.Add(patients[i].Name);
                 }
             }
             return list;

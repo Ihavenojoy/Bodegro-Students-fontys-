@@ -1,5 +1,5 @@
-﻿using BodegroBusinessLayer.Modules;
-using BodegroBusinessLayer.Containers;
+﻿using BLL.Modules;
+using BLL.Containers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BodegroBusinessLayer;
+
 namespace Bodegro
 {
     public partial class NewSubscription : Form
     {
-        NewSubscriptionContainer domain;
+        NewSubscriptionDomain domain;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent();
-            domain = new NewSubscriptionContainer(doctor);
+            domain = new NewSubscriptionDomain(doctor);
             UpdateUI();
         }
 
