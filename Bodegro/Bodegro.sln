@@ -5,15 +5,15 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bodegro", "Bodegro.csproj", "{81EEE43C-271B-4D22-881D-2D5DC493C8A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroBusinessLayer", "..\BodegroBusinessLayer\BodegroBusinessLayer.csproj", "{E9E39A1D-342C-4D8B-87BE-291C5356AD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "..\BodegroBusinessLayer\BLL.csproj", "{E9E39A1D-342C-4D8B-87BE-291C5356AD06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroDatabaseLayer", "..\BodegroDatabaseLayer\BodegroDatabaseLayer.csproj", "{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "..\BodegroDatabaseLayer\DAL.csproj", "{F0F56B7D-4751-4831-91EB-0C6D6D3BF1D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bodegro2FALibrary", "..\Bodegro2FALibrary\Bodegro2FALibrary.csproj", "{91BE89B9-1A2D-4EED-92AA-6DFB77BBA1CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroMailLibary", "..\BodegroMailLibary\BodegroMailLibary.csproj", "{770C3C08-80C5-4671-A03E-3895D3858DA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodegroDTO", "..\BodegroDTO\BodegroDTO.csproj", "{AC7598B8-6294-4CFD-86B5-E4CA56B38260}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "..\BodegroDTO\DTO.csproj", "{AC7598B8-6294-4CFD-86B5-E4CA56B38260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

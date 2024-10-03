@@ -1,12 +1,13 @@
-﻿using BodegroBusinessLayer.Enums;
-using BodegroBusinessLayer.Modules;
+﻿using BLL.Enums;
+using BLL.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace BodegroBusinessLayer.Containers
+namespace BLL.Containers
 {
     public class NewSubscriptionDomain
     {

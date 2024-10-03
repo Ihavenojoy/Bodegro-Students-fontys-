@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 
-namespace BodegroDatabaseLayer.DAL_s
+namespace DAL
 {
     internal class SubscriptionDAL
     {

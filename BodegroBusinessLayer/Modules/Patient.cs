@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BodegroBusinessLayer.Enums;
+using BLL.Enums;
+using DAL;
 
-namespace BodegroBusinessLayer.Modules
+namespace BLL.Modules
 {
     public class Patient
     {
