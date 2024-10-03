@@ -7,7 +7,7 @@ using DTO;
 
 namespace DAL
 {
-    internal class StepDAL
+    public class StepDAL
     {
     }
 }

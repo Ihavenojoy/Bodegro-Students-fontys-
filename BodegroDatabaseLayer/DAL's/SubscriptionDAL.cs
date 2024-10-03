@@ -7,7 +7,7 @@ using DTO;
 
 namespace DAL
 {
-    internal class SubscriptionDAL
+    public class SubscriptionDAL
     {
     }
 }

@@ -7,7 +7,7 @@ using DTO;
 
 namespace DAL
 {
-    internal class PatientDAL
+    public class PatientDAL
     {
     }
 }

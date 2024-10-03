@@ -7,7 +7,7 @@ using DTO;
 
 namespace DAL
 {
-    internal class ProtocolDAL
+    public class ProtocolDAL
     {
     }
 }
