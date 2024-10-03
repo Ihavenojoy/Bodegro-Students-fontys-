@@ -25,7 +25,7 @@ public partial class Form1 : Form
         InlogPagina inlog = new InlogPagina();
         if (inlog.ShowDialog() == DialogResult.OK && inlog.inlog == true)
         {
-
+            
         }
     }
     }

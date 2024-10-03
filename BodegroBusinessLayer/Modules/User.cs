@@ -20,9 +20,10 @@ namespace BLL.Modules
             Password = password;
             Email = email;
         }
-        public User Verification()
+        public bool Verification()
         {
-            return null;
+
+            return false;   
         }
     }
     
