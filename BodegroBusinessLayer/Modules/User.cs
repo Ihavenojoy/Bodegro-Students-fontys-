@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,5 +19,10 @@ namespace BodegroBusinessLayer.Modules
             Password = password;
             Email = email;
         }
+        public User Verification()
+        {
+            return null;
+        }
     }
+    
 }
