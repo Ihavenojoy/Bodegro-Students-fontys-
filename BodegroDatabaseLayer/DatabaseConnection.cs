@@ -1,7 +1,8 @@
-﻿namespace BodegroDatabaseLayer;
+﻿namespace DAL;
 
 using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Server;
+
 
 public class DatabaseConnection
 {

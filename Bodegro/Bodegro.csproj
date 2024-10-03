@@ -9,10 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bodegro2FALibrary\Bodegro2FALibrary.csproj" />
-    <ProjectReference Include="..\BodegroBusinessLayer\BodegroBusinessLayer.csproj" />
-    <ProjectReference Include="..\BodegroDatabaseLayer\BodegroDatabaseLayer.csproj" />
-    <ProjectReference Include="..\BodegroMailLibary\BodegroMailLibary.csproj" />
+    <ProjectReference Include="..\BodegroBusinessLayer\BLL.csproj" />
   </ItemGroup>
 
 </Project>

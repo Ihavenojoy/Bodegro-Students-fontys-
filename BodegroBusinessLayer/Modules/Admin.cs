@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace BodegroBusinessLayer.Modules
+namespace BLL.Modules
 {
     public class Admin : User
     {

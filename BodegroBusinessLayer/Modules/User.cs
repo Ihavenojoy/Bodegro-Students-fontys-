@@ -4,8 +4,9 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace BodegroBusinessLayer.Modules
+namespace BLL.Modules
 {
     public abstract class User
     {

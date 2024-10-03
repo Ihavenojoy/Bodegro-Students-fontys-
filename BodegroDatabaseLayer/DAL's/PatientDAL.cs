@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTO;
 
-namespace DTO
+namespace DAL
 {
-    public record StepDTO
+    internal class PatientDAL
     {
-        public int Time {  get; set; }
-        public string Discription { get; set; }
     }
 }

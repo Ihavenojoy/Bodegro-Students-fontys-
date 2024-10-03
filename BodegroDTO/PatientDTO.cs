@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroLibery
+namespace DTO
 {
     public record PatientDTO
     {
-        static public int PatientID = 0;
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
@@ -18,7 +17,6 @@ namespace BodegroLibery
 
         public PatientDTO(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, int Regio)
         {
-            PatientID = PatientID++;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
