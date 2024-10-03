@@ -26,7 +26,7 @@ namespace BodegroBusinessLayer.Containers
                 for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
                 {
                     if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
-                    list.Add(patients[i].Name);
+                    list.Add(patients[i].ToString());
                 }
             }
             return list;
