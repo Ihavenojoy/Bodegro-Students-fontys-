@@ -28,8 +28,16 @@ namespace Bodegro
         }
         private void UpdateUI()
         {
-            PatientBox.DataSource = domain.GetPatients();
-            ProtocolBox.DataSource = domain.GetProtocols();
+            foreach(var sub in domain.GetProtocols())
+            {
+                ProtocolBox.Items.Add(sub);
+            }
+            foreach(var sub in domain.GetPatients())
+            {
+                PatientBox.Items.Add(sub);
+            }
+            //PatientBox.DataSource = domain.GetPatients();
+            //ProtocolBox.DataSource = domain.GetProtocols();
         }
     }
 }
