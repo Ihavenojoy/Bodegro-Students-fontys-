@@ -17,7 +17,7 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-        public int CreateAdmin(AdminDTO admin)
+        public int CreateAdmin(AdminDTO admin,string Password)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
@@ -47,6 +47,12 @@ namespace DAL
                 conn.Close();
             }
             return insertedId;
+        }
+
+        public AdminDTO AdminLogin(int id)
+        {
+            AdminDTO adminDTO = new AdminDTO();
+            return AdminDTO
         }
 
         // Method to read a product record by ID
