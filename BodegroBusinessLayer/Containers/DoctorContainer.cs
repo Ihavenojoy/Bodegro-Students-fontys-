@@ -55,7 +55,7 @@ namespace BLL.Containers
             return doctor;
 
         }
-        public List<Doctor> GetAllProducts()
+        public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new();
             List<DoctorDTO> doctorDTOS = doctorDAL.GetAllDoctors();
