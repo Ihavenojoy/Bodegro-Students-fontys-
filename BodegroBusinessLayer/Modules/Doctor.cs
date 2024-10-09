@@ -22,5 +22,6 @@ namespace BLL.Modules
         {
             return PatientIDs;
         }
+
     }
 }

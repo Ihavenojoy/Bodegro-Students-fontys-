@@ -10,7 +10,7 @@ using BodegroInterfaces;
 
 namespace DAL
 {
-    public class DoctorDAL : IDoctor
+    public class DoctorDAL: IDoctor
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +
@@ -18,8 +18,7 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-
-        public int CreateDoctor(DoctorDTO doctor, string password)
+        public int CreateDoctor(DoctorDTO doctor)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
@@ -33,6 +32,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Admin_ID", doctor.Admin_ID);
                         cmd.Parameters.AddWithValue("@Name", doctor.Name);
                         cmd.Parameters.AddWithValue("@Email", doctor.Email);
+                        cmd.Parameters.AddWithValue("@Password", password);
                         cmd.Parameters.AddWithValue("@Regio", doctor.Regio);
                         cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 
@@ -80,46 +80,6 @@ namespace DAL
             return count > 0;
         }
 
-        public DoctorDTO DoctorLogin(string EmailInput, string PassWordInput)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            DoctorDTO doctorDTO = new DoctorDTO(null, null,0,0);
-            try
-            {
-                string insert = "Select Name, Email, Password, Regio, AdminID From Admin WHERE Email = @Email AND Password = @Password";
-
-                using (conn)
-                {
-
-                    using (SqlCommand cmd = new SqlCommand(insert, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Email", EmailInput);
-                        cmd.Parameters.AddWithValue("@Password", PassWordInput);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                doctorDTO = new DoctorDTO(
-                            (string)reader["Name"],
-                            (string)reader["Email"],
-                            (int)reader["Regio"],
-                            (int)reader["Admin_ID"]
-                            );
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Debug.WriteLine("An SQL error occurred while creating a admin: " + ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return doctorDTO;
-        }
         // Method to read a product record by ID
         //public ProductDTO GetProductById(int id)
         //{
