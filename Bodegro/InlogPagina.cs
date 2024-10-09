@@ -7,11 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BLL;
+using BodegroInterfaces;
+using DAL;
 
 namespace Bodegro
 {
+
     public partial class InlogPagina : Form
     {
+        public object Inlogaccount;
+        private readonly IDoctor _Doctoracces = new DoctorDAL();
+        private readonly IAdmin _Adminacces =  new AdminDAL();
+
         public InlogPagina()
         {
             InitializeComponent();
@@ -23,6 +31,7 @@ namespace Bodegro
             string EmailInput = EmailInputUser.Text;
             string PasswordInput = PassWordInputUser.Text;
             TwoFactorPage twoFactorPage = new TwoFactorPage();
+            _Doctoracces.DoctorLogin(EmailInput,PasswordInput);
             if (twoFactorPage.ShowDialog() == DialogResult.OK && twoFactorPage.Confirmation == true)
             {
 

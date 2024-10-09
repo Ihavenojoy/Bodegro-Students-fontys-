@@ -8,7 +8,7 @@ namespace DTO
 {
     public record AdminDTO : UserDTO
     {
-        public AdminDTO(string username, string password, string email) : base (username, password, email) 
+        public AdminDTO(string username, string email) : base (username, email) 
         {
 
         }

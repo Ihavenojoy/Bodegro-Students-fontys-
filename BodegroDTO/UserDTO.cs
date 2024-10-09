@@ -9,13 +9,11 @@ namespace DTO
     public abstract record UserDTO
     {
         public string Name { get; set; }
-        public string Password { get; set; }
         public string Email { get; set; }
 
-        public UserDTO (string name, string password, string email)
+        public UserDTO (string name, string email)
         {
             Name = name;
-            Password = password;
             Email = email;
         }
     }

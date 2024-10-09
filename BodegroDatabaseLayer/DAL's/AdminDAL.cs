@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
+using BodegroInterfaces;
 
 namespace DAL
 {
-    public class AdminDAL
+    public class AdminDAL : IAdmin
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +
@@ -30,7 +32,7 @@ namespace DAL
                     {
                         cmd.Parameters.AddWithValue("@Name", admin.Name);
                         cmd.Parameters.AddWithValue("@Email", admin.Email);
-                        cmd.Parameters.AddWithValue("@Password", admin.Password);
+                        cmd.Parameters.AddWithValue("@Password", Password);
 
                         conn.Open();
                         insertedId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -49,10 +51,43 @@ namespace DAL
             return insertedId;
         }
 
-        public AdminDTO AdminLogin(int id)
+        public AdminDTO AdminLogin(string Emailinput, string PassWordInput)
         {
-            AdminDTO adminDTO = new AdminDTO(null,null,null);
-            return adminDTO
+            SqlConnection conn = new SqlConnection(connectionString);
+            AdminDTO adminDTO = new AdminDTO(null,null);
+                try
+            {
+                string insert = "Select Name, Email From Admin WHERE Email = @Email AND Password = @Password";
+                
+                using (conn)
+                {
+
+                    using (SqlCommand cmd = new SqlCommand(insert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", Emailinput);
+                        cmd.Parameters.AddWithValue("@Password", PassWordInput);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                adminDTO = new AdminDTO(
+                            (string)reader["Name"],
+                            (string)reader["Email"]
+                            );
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while creating a admin: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return adminDTO;
         }
 
         // Method to read a product record by ID

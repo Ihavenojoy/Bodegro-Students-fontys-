@@ -5,11 +5,18 @@ using BLL.Modules;
 
 public partial class Form1 : Form
     {
-    
-        public Form1()
+    public object account;
+    public Form1()
         {
             InitializeComponent();
+        InlogPagina inlog = new InlogPagina();
+        if (inlog.ShowDialog() == DialogResult.OK && inlog.inlog == true)
+        {
+            account = inlog.Inlogaccount;
         }
+        MessageBox.Show(account.ToString());
+        }
+        
 
         private void TestButton_Click(object sender, EventArgs e)
         {
@@ -22,10 +29,6 @@ public partial class Form1 : Form
         NewSubscription newSubscription = new NewSubscription(doctor);
         newSubscription.Closed += (s, args) => this.Close();
         newSubscription.Show();
-        InlogPagina inlog = new InlogPagina();
-        if (inlog.ShowDialog() == DialogResult.OK && inlog.inlog == true)
-        {
-            
-        }
+        
     }
     }
