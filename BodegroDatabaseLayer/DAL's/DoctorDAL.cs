@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
+using BodegroInterfaces;
 
 namespace DAL
 {
-    public class DoctorDAL
+    public class DoctorDAL: IDoctor
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +
@@ -17,7 +18,7 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-        public int CreateDoctor(DoctorDTO doctor, string password)
+        public int CreateDoctor(DoctorDTO doctor)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);

@@ -9,6 +9,6 @@ namespace BodegroInterfaces
 {
     public interface IDoctor
     {
-        public int CreateDoctor(DoctorDTO doctor);
+        public int CreateDoctor(DoctorDTO doctor, string password);
     }
 }
