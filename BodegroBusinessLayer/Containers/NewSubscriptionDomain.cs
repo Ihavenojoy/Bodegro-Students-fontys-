@@ -67,10 +67,10 @@ namespace BLL.Containers
         private void GetMockData()
         {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
-            Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant);
-            Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam);
-            Patient Mock3 = new Patient("Jan", "janjansen@gmail.com", 98379626, medicalHistory, Regio.Brabant_Zuidoost);
-            Patient Mock4 = new Patient("Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, Regio.West_Brabant);
+            Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant, 1);
+            Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam, 1);
+            Patient Mock3 = new Patient("Jan", "janjansen@gmail.com", 98379626, medicalHistory, Regio.Brabant_Zuidoost, 1);
+            Patient Mock4 = new Patient("Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, Regio.West_Brabant, 1);
             patients.Add(Mock1);
             patients.Add(Mock2);
             patients.Add(Mock3);

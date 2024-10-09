@@ -17,8 +17,9 @@ namespace BLL.Modules
         public List<string> MedicalHistory { get; set; }
         public Regio Regio { get; set; }
         public List<Subscription> subscriptions = new List<Subscription>();
+        public int DoctorID { get; set; }
 
-        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, Regio Regio)
+        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, Regio Regio, int doctorID)
         {
             this.Name = Name;
             this.Email = Email;
@@ -26,6 +27,7 @@ namespace BLL.Modules
             this.MedicalHistory = MedicalHistory;
             this.Regio = Regio;
             PatientID = 1;
+            DoctorID = doctorID;
         }
         public bool IDCheck(int ID)
         {

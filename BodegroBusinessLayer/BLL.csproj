@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BodegroDatabaseLayer\DAL.csproj" />
+    <ProjectReference Include="..\BodegroInterfaces\BodegroInterfaces.csproj" />
   </ItemGroup>
 
 </Project>
