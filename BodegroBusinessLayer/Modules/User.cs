@@ -20,10 +20,11 @@ namespace BLL.Modules
             Password = password;
             Email = email;
         }
-        public bool Verification()
+        public User Verification()
         {
-
-            return false;   
+            AdminDAL adminDAL = new AdminDAL();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            return null;
         }
     }
     

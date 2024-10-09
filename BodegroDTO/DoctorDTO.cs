@@ -9,10 +9,12 @@ namespace DTO
     public record DoctorDTO : UserDTO
     {
         public int Regio { get; set; }
+        public int Admin_ID { get; }
 
-        public DoctorDTO(string username, string password, string email, int regio) : base (username, password, email)
+        public DoctorDTO(string username, string password, string email, int regio, int admin_ID) : base (username, password, email)
         {
             this.Regio = regio;
+            this.Admin_ID = admin_ID;
         }
     }
 }
