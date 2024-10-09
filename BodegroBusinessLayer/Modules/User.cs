@@ -24,8 +24,7 @@ namespace BLL.Modules
         {
             AdminDAL adminDAL = new AdminDAL();
             DoctorDAL doctorDAL = new DoctorDAL();
-            adminDAL.
-            return doctor;
+            return null;
         }
     }
     

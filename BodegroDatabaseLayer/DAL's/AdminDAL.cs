@@ -51,8 +51,8 @@ namespace DAL
 
         public AdminDTO AdminLogin(int id)
         {
-            AdminDTO adminDTO = new AdminDTO();
-            return AdminDTO
+            AdminDTO adminDTO = new AdminDTO(null,null,null);
+            return adminDTO
         }
 
         // Method to read a product record by ID
