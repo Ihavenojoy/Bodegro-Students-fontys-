@@ -18,7 +18,7 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-        public int CreateDoctor(DoctorDTO doctor)
+        public int CreateDoctor(DoctorDTO doctor, string password)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
@@ -203,7 +203,7 @@ namespace DAL
                                     ID = reader.GetInt32(reader.GetOrdinal("ID")),
                                     Name = reader.GetString(reader.GetOrdinal("Name")),
                                     Email = reader.GetString(reader.GetOrdinal("Email")),
-                                    Regio = reader.GetString(reader.GetOrdinal("Regio")),
+                                    Regio = reader.GetInt32(reader.GetOrdinal("Regio")),
                                     Admin_ID = reader.GetInt32(reader.GetOrdinal("Admin_ID"))
 
                                 });
