@@ -1,4 +1,5 @@
-﻿using BLL.Enums;
+﻿using BLL.Modules;
+using BLL.Enums;
 using BLL.Containers;
 using BLL.Modules;
 using System;
@@ -20,21 +21,25 @@ namespace BLL.Containers
             this.doctor = doctor;
             GetMockData();
         }
-        public List<string> GivePatients()
-        {
+        public List<string> GetPatients()
+        {// Komt in de database layer
             List<string> list = new List<string>();
             for (int i = 0; i < patients.Count; i++)
             {
-                list.Add(patients[i].Name);
+                for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
+                {
+                    if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
+                    list.Add(patients[i].ToString());
+                }
             }
             return list;
         }
-        public List<string> GiveProtocols()
-        {
+        public List<string> GetProtocols()
+        {// Komt in de database layer
             List<string> list = new List<string>();
             for (int i = 0; i < protocols.Count; i++)
             {
-                list.Add(protocols[i].Name);
+                list.Add(protocols[i].ToString());
             }
             return list;
         }
@@ -60,7 +65,7 @@ namespace BLL.Containers
             return "Onverwacht probleem gededecteert";
         }
         private void GetMockData()
-        {
+        {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
             Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant);
             Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam);

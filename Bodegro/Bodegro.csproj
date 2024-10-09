@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bodegro2FALibrary\Bodegro2FALibrary.csproj" />
     <ProjectReference Include="..\BodegroBusinessLayer\BLL.csproj" />
   </ItemGroup>
 

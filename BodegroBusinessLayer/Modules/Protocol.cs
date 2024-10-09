@@ -19,5 +19,9 @@ namespace BLL.Modules
             this.Name = Name;
             this.Steps = Steps;
         }
+        public string ToString()
+        {
+            return Name;
+        }
     }
 }

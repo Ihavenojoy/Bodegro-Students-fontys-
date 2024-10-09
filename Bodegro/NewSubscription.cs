@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BLL.Modules;
+using BLL.Containers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BodegroBusinessLayer.Containers;
-using BodegroBusinessLayer.Modules;
+
 namespace Bodegro
 {
     public partial class NewSubscription : Form
@@ -18,7 +19,6 @@ namespace Bodegro
         {
             InitializeComponent();
             domain = new NewSubscriptionDomain(doctor);
-            Doctor newdoctor = doctor;
             UpdateUI();
         }
 
@@ -28,8 +28,14 @@ namespace Bodegro
         }
         private void UpdateUI()
         {
-            PatientBox.DataSource = domain.GivePatients();
-            ProtocolBox.DataSource = domain.GiveProtocols();
+            foreach(var sub in domain.GetProtocols())
+            {
+                ProtocolBox.Items.Add(sub);
+            }
+            foreach(var sub in domain.GetPatients())
+            {
+                PatientBox.Items.Add(sub);
+            }
         }
     }
 }
