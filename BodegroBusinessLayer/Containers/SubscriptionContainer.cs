@@ -8,15 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using DTO;
+using BodegroInterfaces;
 
 namespace BLL.Containers
 {
-    public class NewSubscriptionDomain
+    public class SubscriptionContainer
     {
+        ISubscription DAL = new SubscriptionDAL();
+        ProtocolContainer ProtocolContainer;
         private Doctor doctor;
         private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
-        public NewSubscriptionDomain(Doctor doctor)
+        public SubscriptionContainer(Doctor doctor)
         {
             this.doctor = doctor;
             GetMockData();
@@ -67,10 +71,10 @@ namespace BLL.Containers
         private void GetMockData()
         {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
-            Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant);
-            Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam);
-            Patient Mock3 = new Patient("Jan", "janjansen@gmail.com", 98379626, medicalHistory, Regio.Brabant_Zuidoost);
-            Patient Mock4 = new Patient("Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, Regio.West_Brabant);
+            Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant, 1);
+            Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam, 1);
+            Patient Mock3 = new Patient("Jan", "janjansen@gmail.com", 98379626, medicalHistory, Regio.Brabant_Zuidoost, 1);
+            Patient Mock4 = new Patient("Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, Regio.West_Brabant, 1);
             patients.Add(Mock1);
             patients.Add(Mock2);
             patients.Add(Mock3);
@@ -119,6 +123,16 @@ namespace BLL.Containers
                 Date += temp;
             }
             return Date;
+        }
+        public Subscription DTOToObject(SubscriptionDTO subscriptionDTO)
+        {
+            Subscription subscription = new Subscription(subscriptionDTO.StartDate, subscriptionDTO.EndDate, ProtocolContainer.DTOToObject(subscriptionDTO.Protocol));
+            return subscription;
+        }
+        public SubscriptionDTO ObjectToDTO(Subscription subscription)
+        {
+            SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, subscription.EndDate, ProtocolContainer.ObjectToDTO(subscription.Protocol));
+            return subscriptionDTO;
         }
     }
 }

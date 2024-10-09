@@ -14,11 +14,11 @@ namespace Bodegro
 {
     public partial class NewSubscription : Form
     {
-        NewSubscriptionDomain domain;
+        SubscriptionContainer domain;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent();
-            domain = new NewSubscriptionDomain(doctor);
+            domain = new SubscriptionContainer(doctor);
             UpdateUI();
         }
 

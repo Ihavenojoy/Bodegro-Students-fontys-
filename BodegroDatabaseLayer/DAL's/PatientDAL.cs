@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
+using BodegroInterfaces;
 
 namespace DAL
 {
-    public class PatientDAL
+    public class PatientDAL : IPatient
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +
