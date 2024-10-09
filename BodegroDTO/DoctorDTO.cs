@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public record DoctorDTO : UserDTO
+    public record DoctorDTO
     {
-        public int Regio { get; set; }
-        public int Admin_ID { get; }
-
-        public DoctorDTO(string username, string password, string email, int regio, int admin_ID) : base (username, password, email)
-        {
-            this.Regio = regio;
-            this.Admin_ID = admin_ID;
-        }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public bool IsActive { get; set; }
+        public string Regio { get; set; }
+        public int Admin_ID { get; set; }
     }
 }
