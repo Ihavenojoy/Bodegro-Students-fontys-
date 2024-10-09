@@ -17,13 +17,13 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-        public int CreateDoctor(DoctorDTO doctor)
+        public int CreateDoctor(DoctorDTO doctor, string password)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Doctor] (Admin_ID, Name, Email, Password, Regio) VALUES (@Admin_ID, @Name, @Email, @Password, @Regio); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Doctor] (Admin_ID, Name, Email, Regio, IsActive) VALUES (@Admin_ID, @Name, @Email, @Regio,@IsActive); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -31,8 +31,9 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Admin_ID", doctor.Admin_ID);
                         cmd.Parameters.AddWithValue("@Name", doctor.Name);
                         cmd.Parameters.AddWithValue("@Email", doctor.Email);
-                        cmd.Parameters.AddWithValue("@Password", doctor.Password);
+                        cmd.Parameters.AddWithValue("@Password", password);
                         cmd.Parameters.AddWithValue("@Regio", doctor.Regio);
+                        cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 
                         conn.Open();
                         insertedId = Convert.ToInt32(cmd.ExecuteScalar());
@@ -49,6 +50,33 @@ namespace DAL
                 conn.Close();
             }
             return insertedId;
+        }
+        public bool DoctorExists(string email)
+        {
+            int count = 0;
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT COUNT(*) FROM [Doctor] WHERE Email = @Email";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        conn.Open();
+                        count = (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while checking if a doctor exists: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return count > 0;
         }
 
         // Method to read a product record by ID
@@ -124,82 +152,76 @@ namespace DAL
         //        conn.Close();
         //    }
         //}
+        public bool SoftDeleteDoctor(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string delete = "UPDATE [Doctor] SET IsActive = 0 WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(delete, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
 
-        //// Method to delete a product record by ID
-        //public bool DeleteProduct(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string delete = "DELETE FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(delete, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while deleting a doctor: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public List<DoctorDTO> GetAllDoctors()
+        {
+            List<DoctorDTO> doctors = new List<DoctorDTO>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, Regio, Admin_ID FROM [Doctor] WHERE IsActive = 1";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                doctors.Add(new DoctorDTO
+                                {
 
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while deleting a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
+                                    ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    Regio = reader.GetString(reader.GetOrdinal("Regio")),
+                                    Admin_ID = reader.GetInt32(reader.GetOrdinal("Admin_ID"))
 
-        //// Method to get all products
-        //public List<ProductDTO> GetAllProducts()
-        //{
-        //    List<ProductDTO> products = new List<ProductDTO>();
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string select = @"
-        //                SELECT p.ID, p.Type, p.Standard_Value, IFNULL(r.Quantity, 0) AS Quantity, r.Expiredate 
-        //                FROM product p
-        //                LEFT JOIN receiver r ON p.ID = r.Product_ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(select, conn))
-        //            {
-        //                conn.Open();
-        //                using (SqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        products.Add(new ProductDTO
-        //                        {
-        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value")),
-        //                            Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
-        //                            ExpireDate = reader.IsDBNull(reader.GetOrdinal("Expiredate"))
-        //                                         ? DateTime.MinValue
-        //                                         : reader.GetDateTime(reader.GetOrdinal("Expiredate"))
-        //                        });
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        return products;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while retrieving products: " + ex.Message);
-        //        return products;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
+                                });
+                            }
+                        }
+                    }
+                }
+                return doctors;
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while retrieving doctors: " + ex.Message);
+                return doctors;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
     }
 }
