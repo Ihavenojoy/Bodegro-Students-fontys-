@@ -4,12 +4,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BodegroInterfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
 
 namespace DAL
 {
-    public class ProtocolDAL
+    public class ProtocolDAL : IProtocol
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +

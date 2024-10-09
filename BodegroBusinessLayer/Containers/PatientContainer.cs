@@ -20,12 +20,12 @@ namespace BLL.Containers
             //foreach loop met de database waar PatientDTO wordt opgehaald en wordt Convert waarna het in de list komt
             return patients;
         }
-        private Patient Converter(PatientDTO patientDTO)
+        private Patient DTOToObject(PatientDTO patientDTO)
         {
             Patient patient = new Patient(patientDTO.Name, patientDTO.Email, patientDTO.PhoneNumber, patientDTO.MedicalHistory, (Regio)patientDTO.Regio, patientDTO.Doctor_ID);
             return patient;
         }
-        private PatientDTO Converter(Patient patient)
+        private PatientDTO ObjectToDTO(Patient patient)
         {
             PatientDTO patientDTO = new PatientDTO(patient.Name, patient.Email, patient.PhoneNumber, patient.MedicalHistory, (int)patient.Regio, patient.DoctorID);
             return patientDTO;

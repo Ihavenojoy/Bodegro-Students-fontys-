@@ -8,15 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using DTO;
+using BodegroInterfaces;
 
 namespace BLL.Containers
 {
-    public class NewSubscriptionDomain
+    public class SubscriptionContainer
     {
+        ISubscription DAL = new SubscriptionDAL();
+        ProtocolContainer ProtocolContainer;
         private Doctor doctor;
         private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
-        public NewSubscriptionDomain(Doctor doctor)
+        public SubscriptionContainer(Doctor doctor)
         {
             this.doctor = doctor;
             GetMockData();
@@ -119,6 +123,16 @@ namespace BLL.Containers
                 Date += temp;
             }
             return Date;
+        }
+        public Subscription DTOToObject(SubscriptionDTO subscriptionDTO)
+        {
+            Subscription subscription = new Subscription(subscriptionDTO.StartDate, subscriptionDTO.EndDate, ProtocolContainer.DTOToObject(subscriptionDTO.Protocol));
+            return subscription;
+        }
+        public SubscriptionDTO ObjectToDTO(Subscription subscription)
+        {
+            SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, subscription.EndDate, ProtocolContainer.ObjectToDTO(subscription.Protocol));
+            return subscriptionDTO;
         }
     }
 }
