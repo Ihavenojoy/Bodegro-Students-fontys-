@@ -18,11 +18,8 @@ namespace DAL
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
 
-<<<<<<< Updated upstream
+
         public int CreateDoctor(DoctorDTO doctor, string password)
-=======
-        public int CreateDoctor(DoctorDTO doctor, string Password)
->>>>>>> Stashed changes
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
@@ -36,11 +33,6 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Admin_ID", doctor.Admin_ID);
                         cmd.Parameters.AddWithValue("@Name", doctor.Name);
                         cmd.Parameters.AddWithValue("@Email", doctor.Email);
-<<<<<<< Updated upstream
-                        cmd.Parameters.AddWithValue("@Password", password);
-=======
-                        cmd.Parameters.AddWithValue("@Password", Password);
->>>>>>> Stashed changes
                         cmd.Parameters.AddWithValue("@Regio", doctor.Regio);
                         cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 

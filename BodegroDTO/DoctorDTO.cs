@@ -8,14 +8,12 @@ namespace DTO
 {
     public record DoctorDTO
     {
-<<<<<<< Updated upstream
         public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public bool IsActive { get; set; }
         public string Regio { get; set; }
         public int Admin_ID { get; set; }
-=======
         public int Regio { get; set; }
         public int Admin_ID { get; }
 
@@ -24,6 +22,5 @@ namespace DTO
             this.Regio = regio;
             this.Admin_ID = admin_ID;
         }
->>>>>>> Stashed changes
     }
 }

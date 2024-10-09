@@ -8,30 +8,19 @@ using DAL;
 
 namespace BLL.Modules
 {
-    public class Doctor
+    public class Doctor : User
     {
-        public int ID { get; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public bool IsActive { get; set; }
         public Regio Regio { get; set; }
-        public int Admin_ID { get; }
+        public List<int> PatientIDs { get; set; }
 
-        public Doctor(string name, string email, bool isActive, Regio regio, int admin_ID)
+        public Doctor(string username, string email, Regio regio) : base (username, email)
         {
-            Name = name;
-            Email = email;
-            IsActive = isActive;
-            Regio = regio;
-            Admin_ID = admin_ID;
+            this.Regio = regio;
+            PatientIDs = new List<int>() { 1 };
         }
-        public Doctor(int id, string name, string email, bool isActive, Regio regio, int admin_ID) : this(name, email, isActive, regio, admin_ID)
+        public List<int> GetPatientIDs()
         {
-            ID = id;
-        }
-        public override string ToString()
-        {
-            return Name;
+            return PatientIDs;
         }
     }
 }
