@@ -18,13 +18,14 @@ namespace DTO
         public int Doctor_ID { get; set; }
 
 
-        public PatientDTO(int ID, string Name, string Email,int PhoneNumber, List<string> MedicalHistory, int Regio, int doctor_ID)
+        public PatientDTO(int ID, string Name, string Email,int PhoneNumber, List<string> MedicalHistory, List<SubscriptionDTO> Subscriptions, int Regio, int doctor_ID)
         {
             this.ID = ID;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
+            this.subscriptions = Subscriptions;
             this.Regio = Regio;
             this.Doctor_ID = doctor_ID;
         }

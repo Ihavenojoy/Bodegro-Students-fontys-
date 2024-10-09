@@ -19,8 +19,9 @@ namespace BLL.Modules
         public List<Subscription> Subscriptions { get; set; }
         public int DoctorID { get; set; }
 
-        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory,List<Subscription>Subscriptions, Regio Regio, int doctorID)
+        public Patient(int ID, string Name, string Email, int PhoneNumber, List<string> MedicalHistory,List<Subscription>Subscriptions, Regio Regio, int doctorID)
         {
+            this.ID = ID;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;

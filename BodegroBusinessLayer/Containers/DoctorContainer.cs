@@ -13,7 +13,6 @@ namespace BLL.Containers
     public class DoctorContainer
     {
         DoctorDAL doctorDAL = new DoctorDAL();
-        DoctorConvertors doctorConvertors = new ();
         public int CreateDoctor(Doctor doctor)
         {
             if (doctorDAL.DoctorExists(doctor.Email))
@@ -22,7 +21,7 @@ namespace BLL.Containers
             }
             else
             {
-                return doctorDAL.CreateDoctor(doctorConvertors.ConvertDoctorToDTO(doctor));
+                return doctorDAL.CreateDoctor(ConvertToDTO(doctor));
             }
         }
         public bool DoctorExists(string email)
@@ -38,6 +37,8 @@ namespace BLL.Containers
             }
             return true;
         }
+
+        
         public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new();
@@ -45,7 +46,7 @@ namespace BLL.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(doctorConvertors.ConvertToDoctor(doctor));
+                doctors.Add(ConvertToDomain(doctor));
             }
             return doctors;
         }
