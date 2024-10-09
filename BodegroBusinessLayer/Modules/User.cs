@@ -10,13 +10,15 @@ namespace BLL.Modules
 {
     public abstract class User
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public User(string name, string email)
+        public User(int ID, string Name, string Email)
         {
-            Name = name;
-            Email = email;
+            this.ID = ID;
+            this.Name = Name;
+            this.Email = Email;
         }
         public User Verification()
         {

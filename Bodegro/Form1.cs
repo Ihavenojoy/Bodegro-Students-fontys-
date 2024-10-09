@@ -20,7 +20,7 @@ public partial class Form1 : Form
 
         private void TestButton_Click(object sender, EventArgs e)
         {
-        Doctor doctor = new Doctor("Henry", "Test3!", "test@gmail.com", Regio.Hart_voor_Brabant);
+        Doctor doctor = new Doctor(0,"Henry", "test@gmail.com", Regio.Hart_voor_Brabant,0,true);
         //MessageBox.Show(Convert.ToString(Generate.OTP)); // Greate OTP without key (does nothing)
         //MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
         MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key

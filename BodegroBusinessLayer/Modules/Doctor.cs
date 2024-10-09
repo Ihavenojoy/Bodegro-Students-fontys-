@@ -10,17 +10,21 @@ namespace BLL.Modules
 {
     public class Doctor : User
     {
+        public int PhoneNumber { get; set; }
         public Regio Regio { get; set; }
-        public List<int> PatientIDs { get; set; }
+        public List<Patient> Patients { get; set; }
+        public int AdminId { get; set; }
+        public bool IsActive { get; set; }
 
-        public Doctor(string username, string email, Regio regio) : base (username, email)
+        public Doctor(int ID, string Name, string Email, Regio Regio , int AdminId, bool IsActive) : base (ID , Name, Email)
         {
-            this.Regio = regio;
-            PatientIDs = new List<int>() { 1 };
-        }
-        public List<int> GetPatientIDs()
-        {
-            return PatientIDs;
+            this.ID = ID;
+            this.Name = Name;
+            this.Email = Email;
+            this.Regio = Regio;
+            this.Patients = new List<Patient>();
+            this.AdminId = AdminId;
+            this.IsActive = IsActive;
         }
 
     }

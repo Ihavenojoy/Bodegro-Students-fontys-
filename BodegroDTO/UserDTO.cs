@@ -8,13 +8,15 @@ namespace DTO
 {
     public abstract record UserDTO
     {
+        public int ID {  get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public UserDTO (string name, string email)
+        public UserDTO (int ID, string Name, string Email)
         {
-            Name = name;
-            Email = email;
+            this.ID = ID;
+            this.Name = Name;
+            this.Email = Email;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace BLL.Containers
 {
     public class AdminContainer
     {
-        public Admin DTOtoObject(AdminDTO adminDTO)
+        public Admin DTOToObject(AdminDTO adminDTO)
         {
             Admin admin = new Admin
                 (

@@ -10,29 +10,30 @@ namespace BLL.Modules
 {
     public class Patient
     {
-        public int PatientID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public List<string> MedicalHistory { get; set; }
         public Regio Regio { get; set; }
-        public List<Subscription> subscriptions = new List<Subscription>();
+        public List<Subscription> Subscriptions { get; set; }
         public int DoctorID { get; set; }
 
-        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, Regio Regio, int doctorID)
+        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory,List<Subscription>Subscriptions, Regio Regio, int doctorID)
         {
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
             this.Regio = Regio;
-            PatientID = 1;
+            ID = 1;
             DoctorID = doctorID;
+            this.Subscriptions = Subscriptions;
         }
-        public bool IDCheck(int ID)
+        public bool IDCheck(int checkID)
         {
             bool check = false;
-            if (ID == PatientID)
+            if (checkID == ID)
             {
                 check = true;
             }

@@ -31,7 +31,6 @@ namespace Bodegro
             string EmailInput = EmailInputUser.Text;
             string PasswordInput = PassWordInputUser.Text;
             TwoFactorPage twoFactorPage = new TwoFactorPage();
-            _Doctoracces.DoctorLogin(EmailInput,PasswordInput);
             if (twoFactorPage.ShowDialog() == DialogResult.OK && twoFactorPage.Confirmation == true)
             {
 

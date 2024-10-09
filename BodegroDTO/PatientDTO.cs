@@ -8,6 +8,7 @@ namespace DTO
 {
     public record PatientDTO
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
@@ -17,8 +18,9 @@ namespace DTO
         public int Doctor_ID { get; set; }
 
 
-        public PatientDTO(string Name, string Email,int PhoneNumber, List<string> MedicalHistory, int Regio, int doctor_ID)
+        public PatientDTO(int ID, string Name, string Email,int PhoneNumber, List<string> MedicalHistory, int Regio, int doctor_ID)
         {
+            this.ID = ID;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
