@@ -124,15 +124,5 @@ namespace BLL.Containers
             }
             return Date;
         }
-        public Subscription DTOToObject(SubscriptionDTO subscriptionDTO)
-        {
-            Subscription subscription = new Subscription(subscriptionDTO.StartDate, subscriptionDTO.EndDate, ProtocolContainer.DTOToObject(subscriptionDTO.Protocol));
-            return subscription;
-        }
-        public SubscriptionDTO ObjectToDTO(Subscription subscription)
-        {
-            SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, subscription.EndDate, ProtocolContainer.ObjectToDTO(subscription.Protocol));
-            return subscriptionDTO;
-        }
     }
 }

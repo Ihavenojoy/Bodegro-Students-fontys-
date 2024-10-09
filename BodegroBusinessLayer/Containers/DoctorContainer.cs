@@ -38,23 +38,7 @@ namespace BLL.Containers
             return true;
         }
 
-        private DoctorDTO ConvertToDTO(Doctor doctor)
-        {
-            return new DoctorDTO
-            {
-                Name = doctor.Name,
-                Email = doctor.Email,
-                IsActive = doctor.IsActive,
-                Regio = doctor.Regio,
-                Admin_ID = doctor.Admin_ID
-            };
-        }
-        private Doctor ConvertToDomain(DoctorDTO dto)
-        {
-            Doctor doctor = new(dto.ID, dto.Name, dto.Email, dto.IsActive, dto.Regio, dto.Admin_ID);
-            return doctor;
-
-        }
+        
         public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new();
