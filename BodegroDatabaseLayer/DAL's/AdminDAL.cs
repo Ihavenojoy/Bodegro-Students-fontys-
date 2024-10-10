@@ -54,10 +54,10 @@ namespace DAL
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput)
         {
             SqlConnection conn = new SqlConnection(connectionString);
-            AdminDTO adminDTO = new AdminDTO(null,null);
+            AdminDTO adminDTO = new AdminDTO();
                 try
             {
-                string insert = "Select Name, Email From Admin WHERE Email = @Email AND Password = @Password";
+                string insert = "Select ID, Name, Email From Admin WHERE Email = @Email AND Password = @Password";
                 
                 using (conn)
                 {
@@ -70,10 +70,11 @@ namespace DAL
                         {
                             if (reader.HasRows)
                             {
-                                adminDTO = new AdminDTO(
-                            (string)reader["Name"],
-                            (string)reader["Email"]
-                            );
+                                adminDTO = new AdminDTO {
+                            ID = (int)reader["ID"],
+                            Name = (string)reader["Name"],
+                            Email = (string)reader["Email"]
+                                };
                             }
                         }
                     }

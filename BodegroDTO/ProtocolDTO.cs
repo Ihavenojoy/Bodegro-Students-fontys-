@@ -8,15 +8,10 @@ namespace DTO
 {
     public record ProtocolDTO
     {
+        public int ID {  get; set; }
         public string Name { get; set; }
 
         public List<StepDTO> Steps { get; set; }
 
-
-        public ProtocolDTO(string Name, List<StepDTO> Steps) 
-        { 
-            this.Name = Name;
-            this.Steps = Steps;
-        }
     }
 }

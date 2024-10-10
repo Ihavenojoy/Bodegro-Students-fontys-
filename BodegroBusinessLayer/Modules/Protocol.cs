@@ -9,6 +9,7 @@ namespace BLL.Modules
 {
     public class Protocol
     {
+        public int ID { get;}
         public string Name { get; set; }
 
         public List<Step> Steps { get; set; }

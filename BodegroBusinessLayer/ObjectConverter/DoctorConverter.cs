@@ -11,10 +11,9 @@ namespace BLL.ObjectConverter
 {
     public class DoctorConverter
     {
-        private Doctor ConvertToDomain(DoctorDTO dto)
+        public Doctor ConvertToDomain(DoctorDTO dto)
         {
-            Doctor doctor = new(
-                dto.ID,
+            Doctor doctor = new Doctor(
                 dto.Name,
                 dto.Email,
                 (Regio)dto.Regio,

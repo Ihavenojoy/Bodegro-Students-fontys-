@@ -13,11 +13,11 @@ namespace BLL.DTOConverter
         public AdminDTO ObjectToDTO(Admin admin)
         {
             AdminDTO admindto = new AdminDTO
-                (
-                admin.ID,
-                admin.Name,
-                admin.Email
-                );
+            {                 
+                ID =admin.ID,
+                Name = admin.Name,
+                Email = admin.Email
+            };
             return admindto;
         }
     }

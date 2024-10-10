@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public record AdminDTO : UserDTO
+    public record AdminDTO
     {
-        public AdminDTO(int ID, string Name, string Email) : base(ID, Name, Email)
-        {
-            this.ID = ID;
-            this.Name = Name;
-            this.Email = Email;
-        }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 }

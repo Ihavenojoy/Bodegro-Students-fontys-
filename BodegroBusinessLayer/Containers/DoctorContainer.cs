@@ -7,11 +7,15 @@ using DAL;
 using BLL.Enums;
 using BLL.Modules;
 using DTO;
+using BLL.DTOConverter;
+using BLL.ObjectConverter;
 
 namespace BLL.Containers
 {
     public class DoctorContainer
     {
+        DoctorDTOConverter docConverter = new DoctorDTOConverter();
+        DoctorConverter objectConverter = new DoctorConverter();
         DoctorDAL doctorDAL = new DoctorDAL();
         public int CreateDoctor(Doctor doctor)
         {
@@ -21,7 +25,7 @@ namespace BLL.Containers
             }
             else
             {
-                return doctorDAL.CreateDoctor(ConvertToDTO(doctor));
+                return doctorDAL.CreateDoctor(docConverter.ConvertToDTO(doctor), "");
             }
         }
         public bool DoctorExists(string email)
@@ -46,7 +50,7 @@ namespace BLL.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(ConvertToDomain(doctor));
+                doctors.Add(objectConverter.ConvertToDomain(doctor));
             }
             return doctors;
         }

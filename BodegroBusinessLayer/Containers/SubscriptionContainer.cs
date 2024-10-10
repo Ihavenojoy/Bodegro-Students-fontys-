@@ -30,9 +30,9 @@ namespace BLL.Containers
             List<string> list = new List<string>();
             for (int i = 0; i < patients.Count; i++)
             {
-                for (int j = 0; j < doctor.GetPatientIDs().Count; j++)
+                for (int j = 0; j < doctor.Patients.Count(); j++)
                 {
-                    if (patients[i].IDCheck(doctor.GetPatientIDs()[j]))
+                    if (patients[i].IDCheck(doctor.Patients[j].ID))
                     list.Add(patients[i].ToString());
                 }
             }
@@ -63,7 +63,7 @@ namespace BLL.Containers
                     if (patients[i].Name == patient) { patien = i; }
                 }
                 Subscription subscription = new Subscription(SDate, EDate, prot);
-                patients[patien].subscriptions.Add(subscription);
+                patients[patien].Subscriptions.Add(subscription);
                 return "Succesvol toegevoegt";
             }
             return "Onverwacht probleem gededecteert";
@@ -71,10 +71,11 @@ namespace BLL.Containers
         private void GetMockData()
         {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
-            Patient Mock1 = new Patient("Piet", "pietpuk@gmail.com", 45963049, medicalHistory, Regio.Hart_voor_Brabant, 1);
-            Patient Mock2 = new Patient("Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, Regio.Amsterdam, 1);
-            Patient Mock3 = new Patient("Jan", "janjansen@gmail.com", 98379626, medicalHistory, Regio.Brabant_Zuidoost, 1);
-            Patient Mock4 = new Patient("Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, Regio.West_Brabant, 1);
+            List<Subscription> subscriptions = new List<Subscription>();
+            Patient Mock1 = new Patient(0,"Piet", "pietpuk@gmail.com", 45963049, medicalHistory, subscriptions, Regio.Hart_voor_Brabant, 1);
+            Patient Mock2 = new Patient(1,"Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, subscriptions, Regio.Amsterdam, 1);
+            Patient Mock3 = new Patient(2,"Jan", "janjansen@gmail.com", 98379626, medicalHistory, subscriptions, Regio.Brabant_Zuidoost, 1);
+            Patient Mock4 = new Patient(3,"Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, subscriptions, Regio.West_Brabant, 1);
             patients.Add(Mock1);
             patients.Add(Mock2);
             patients.Add(Mock3);

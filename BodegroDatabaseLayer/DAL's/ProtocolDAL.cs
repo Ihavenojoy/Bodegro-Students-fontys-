@@ -29,11 +29,11 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
-                        cmd.Parameters.AddWithValue("@Name", protocol.Name);
-                        cmd.Parameters.AddWithValue("@Email", protocol.Email);
-                        cmd.Parameters.AddWithValue("@Password", protocol.Password);
-                        cmd.Parameters.AddWithValue("@Regio", protocol.Regio);
+                        //cmd.Parameters.AddWithValue("@Admin_ID", protocol);
+                        //cmd.Parameters.AddWithValue("@Name", protocol.Name);
+                        //cmd.Parameters.AddWithValue("@Email", protocol.Email);
+                        //cmd.Parameters.AddWithValue("@Password", protocol.Password);
+                        //cmd.Parameters.AddWithValue("@Regio", protocol.Regio);
 
                         conn.Open();
                         insertedId = Convert.ToInt32(cmd.ExecuteScalar());

@@ -11,17 +11,17 @@ namespace BLL.DTOConverter
 {
     public class DoctorDTOConverter
     {
-        private DoctorDTO ConvertToDTO(Doctor doctor)
+        public DoctorDTO ConvertToDTO(Doctor doctor)
         {
             return new DoctorDTO
-            (
-                doctor.ID,
-                doctor.Name,
-                doctor.Email,
-                doctor.IsActive,
-                (int)doctor.Regio,
-                doctor.AdminId
-            );
+            {
+                ID = doctor.ID,
+                Name = doctor.Name,
+                Email = doctor.Email,
+                IsActive = doctor.IsActive,
+                Regio = (int)doctor.Regio,
+                Admin_ID = doctor.Admin_ID
+            };
         }
     }
 }

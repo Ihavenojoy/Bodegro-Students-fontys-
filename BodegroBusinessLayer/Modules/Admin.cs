@@ -10,9 +10,10 @@ namespace BLL.Modules
 {
     public class Admin : User
     {
-        public Admin(int ID, string Name, string Email) : base(ID, Name, Email)
+        public Admin(string Name, string Email) : base(Name, Email)
         {
-
+            this.Name = Name;
+            this.Email = Email;
         }
 
     }
