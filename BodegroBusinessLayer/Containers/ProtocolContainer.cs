@@ -14,6 +14,10 @@ namespace BLL.Containers
     {
         IProtocol Dal = new ProtocolDAL();
         StepContainer StepContainer;
-        
+        public void AddProtocol(string Name, string Description, List<Step> Steps)
+        {
+            Protocol protocol = new Protocol(Name, Steps, Description);
+
+        }
     }
 }
