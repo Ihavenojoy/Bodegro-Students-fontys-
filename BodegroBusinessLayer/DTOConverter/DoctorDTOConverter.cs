@@ -15,7 +15,6 @@ namespace BLL.DTOConverter
         {
             return new DoctorDTO
             {
-                ID = doctor.ID,
                 Name = doctor.Name,
                 Email = doctor.Email,
                 IsActive = doctor.IsActive,
