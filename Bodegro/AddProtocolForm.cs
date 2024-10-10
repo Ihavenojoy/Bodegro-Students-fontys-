@@ -15,9 +15,11 @@ namespace Bodegro
     public partial class AddProtocolForm : Form
     {
         ProtocolContainer protocolContainer;
-        public AddProtocolForm()
+        Admin user;
+        public AddProtocolForm(Admin user)
         {
             InitializeComponent();
+            this.user = user;
         }
 
         private void AddProtocol_Click(object sender, EventArgs e)
@@ -32,8 +34,19 @@ namespace Bodegro
                         steps.Add((Step)sub);
                     }
                 }
-                protocolContainer.AddProtocol(NameBox.Text, DescriptionBox.Text, steps);
+                protocolContainer.AddProtocol(NameBox.Text, DescriptionBox.Text, steps, user);
             }
+        }
+        private void NewStep_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            AddStepForm addStepForm = new AddStepForm();
+            addStepForm.Closed += (s, args) => this.Close();
+            addStepForm.Show();
+        }
+        private void UpdateUI()
+        {
+
         }
     }
 }

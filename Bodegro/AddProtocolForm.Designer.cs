@@ -87,6 +87,7 @@
             NewStep.TabIndex = 5;
             NewStep.Text = "Nieuwe Stap";
             NewStep.UseVisualStyleBackColor = true;
+            NewStep.Click += NewStep_Click;
             // 
             // AddProtocol
             // 

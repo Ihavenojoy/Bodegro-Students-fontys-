@@ -7,6 +7,7 @@ using DAL;
 using BLL.Modules;
 using BodegroInterfaces;
 using DTO;
+using BLL.DTOConverter;
 
 namespace BLL.Containers
 {
@@ -14,10 +15,11 @@ namespace BLL.Containers
     {
         IProtocol Dal = new ProtocolDAL();
         StepContainer StepContainer;
-        public void AddProtocol(string Name, string Description, List<Step> Steps)
+        ProtocolDTOConverter protocolDTOConverter;
+        public void AddProtocol(string Name, string Description, List<Step> Steps, User user)
         {
-            Protocol protocol = new Protocol(Name, Steps, Description);
-
+            Protocol protocol = new Protocol(Name, Steps, Description, user.ID);
+            Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
         }
     }
 }

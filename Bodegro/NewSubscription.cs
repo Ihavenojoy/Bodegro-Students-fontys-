@@ -15,10 +15,12 @@ namespace Bodegro
     public partial class NewSubscription : Form
     {
         SubscriptionContainer domain;
+        Doctor doctor;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent();
             domain = new SubscriptionContainer(doctor);
+            this.doctor = doctor;
             UpdateUI();
         }
 
@@ -40,10 +42,10 @@ namespace Bodegro
 
         private void AddProtocol_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            AddProtocolForm addProtocolForm = new AddProtocolForm();
-            addProtocolForm.Closed += (s, args) => this.Close();
-            addProtocolForm.Show();
+            //this.Hide();
+            //AddProtocolForm addProtocolForm = new AddProtocolForm();
+            //addProtocolForm.Closed += (s, args) => this.Close();
+            //addProtocolForm.Show();
         }
     }
 }

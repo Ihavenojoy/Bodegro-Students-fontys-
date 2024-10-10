@@ -17,7 +17,8 @@ namespace BLL.DTOConverter
             ProtocolDTO protocoldto = new ProtocolDTO {
                 Name = protocol.Name,
                 Steps = stepDTOConverter.ObjectToDTO(protocol.Steps),
-                Description = protocol.Description
+                Description = protocol.Description,
+                Admin_ID = protocol.Admin_ID
             };
             return protocoldto;
         }
