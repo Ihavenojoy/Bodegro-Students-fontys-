@@ -14,6 +14,7 @@ namespace BLL.ObjectConverter
         public Doctor ConvertToDomain(DoctorDTO dto)
         {
             Doctor doctor = new Doctor(
+                dto.ID,
                 dto.Name,
                 dto.Email,
                 (Regio)dto.Regio,

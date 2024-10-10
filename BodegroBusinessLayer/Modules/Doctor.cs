@@ -24,6 +24,16 @@ namespace BLL.Modules
             this.Admin_ID = Admin_ID;
             this.IsActive = IsActive;
         }
+        public Doctor(int ID, string Name, string Email, Regio Regio, int Admin_ID, bool IsActive) : base(ID, Name, Email)
+        {
+            this.ID = ID;
+            this.Name = Name;
+            this.Email = Email;
+            this.Regio = Regio;
+            this.Patients = new List<Patient>();
+            this.Admin_ID = Admin_ID;
+            this.IsActive = IsActive;
+        }
 
     }
 }

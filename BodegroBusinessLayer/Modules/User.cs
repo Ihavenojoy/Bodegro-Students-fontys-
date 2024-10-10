@@ -10,7 +10,7 @@ namespace BLL.Modules
 {
     public abstract class User
     {
-        public int ID { get;}
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
@@ -19,11 +19,22 @@ namespace BLL.Modules
             this.Name = Name;
             this.Email = Email;
         }
+        public User(int id, string Name, string Email)
+        {
+            this.ID = id;
+            this.Name = Name;
+            this.Email = Email;
+        }
+        
         public User Verification()
         {
             AdminDAL adminDAL = new AdminDAL();
             DoctorDAL doctorDAL = new DoctorDAL();
             return null;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
     
