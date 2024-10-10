@@ -7,21 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bodegro2FALibrary;
 
 namespace Bodegro
 {
     public partial class TwoFactorPage : Form
     {
         public bool Confirmation = false;
+        public byte[] encodedkey = Generate.RandomKey(32);
         public TwoFactorPage()
         {
             InitializeComponent();
+            MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key
+            MessageBox.Show(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30)); // Generates a OTP
         }
 
         private void TwoFactorSubmitButton_Click(object sender, EventArgs e)
         {
             string OTPInput = TwoFactorUserInput.Text;
-            if (OTPInput == OTPInput)
+            if (OTPInput == Generate.OTP(Code32.Encode(encodedkey)));
             {
                 Confirmation = true;
                 this.Close();

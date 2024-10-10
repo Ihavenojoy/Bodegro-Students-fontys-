@@ -16,6 +16,12 @@ namespace BLL.Modules
             this.Email = Email;
         }
 
+        public Admin(int ID ,string Name, string Email) : base(ID, Name, Email)
+        {
+            this.ID = ID;
+            this.Name = Name;
+            this.Email = Email;
+        }
     }
 
 }
