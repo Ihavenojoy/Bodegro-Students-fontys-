@@ -9,6 +9,7 @@ using BLL.Modules;
 using DTO;
 using BLL.DTOConverter;
 using BLL.ObjectConverter;
+using BodegroInterfaces;
 
 namespace BLL.Containers
 {
@@ -17,6 +18,7 @@ namespace BLL.Containers
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         DoctorDAL doctorDAL = new DoctorDAL();
+        public readonly ILogin _InlogService = new LoginDal();
         public int CreateDoctor(Doctor doctor)
         {
             if (doctorDAL.DoctorExists(doctor.Email))
@@ -53,6 +55,14 @@ namespace BLL.Containers
                 doctors.Add(objectConverter.ConvertToDomain(doctor));
             }
             return doctors;
+        }
+
+        
+        public Doctor Login(string EmailInput, string PasswordInput)
+        {
+            DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
+            Doctor doctoracc = objectConverter.ConvertToDomain(doctorDTO);
+            return doctoracc;
         }
     }
 }

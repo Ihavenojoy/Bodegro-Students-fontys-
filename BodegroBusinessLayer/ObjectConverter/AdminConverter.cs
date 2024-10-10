@@ -14,6 +14,7 @@ namespace BLL.ObjectConverter
         {
             Admin admin = new Admin
             (
+                adminDTO.ID,
                 adminDTO.Name,
                 adminDTO.Email
             );
