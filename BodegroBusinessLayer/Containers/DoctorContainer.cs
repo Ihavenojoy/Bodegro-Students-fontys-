@@ -18,25 +18,26 @@ namespace BLL.Containers
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         DoctorDAL doctorDAL = new DoctorDAL();
+        private readonly IDoctor iDoctor;
         public readonly ILogin _InlogService = new LoginDal();
-        public int CreateDoctor(Doctor doctor)
+        public int CreateDoctor(Doctor doctor, string password)
         {
-            if (doctorDAL.DoctorExists(doctor.Email))
+            if (iDoctor.DoctorExists(doctor.Email))
             {
                 return -1;
             }
             else
             {
-                return doctorDAL.CreateDoctor(docConverter.ConvertToDTO(doctor), "");
+                return (iDoctor.CreateDoctor(docConverter.ConvertToDTO(doctor), password));
             }
         }
         public bool DoctorExists(string email)
         {
-            return doctorDAL.DoctorExists(email);
+            return iDoctor.DoctorExists(email);
         }
         public bool DeleteDoctor(int doctorId)
         {
-            bool isDeleted = doctorDAL.SoftDeleteDoctor(doctorId);
+            bool isDeleted = iDoctor.SoftDeleteDoctor(doctorId);
             if (!isDeleted)
             {
                 return false;
@@ -48,7 +49,7 @@ namespace BLL.Containers
         public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new();
-            List<DoctorDTO> doctorDTOS = doctorDAL.GetAllDoctors();
+            List<DoctorDTO> doctorDTOS = iDoctor.GetAllDoctors();
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {

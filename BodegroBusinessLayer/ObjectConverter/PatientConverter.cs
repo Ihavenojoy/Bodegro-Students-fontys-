@@ -15,15 +15,12 @@ namespace BLL.ObjectConverter
     {
         private Patient DTOToObject(PatientDTO patientDTO)
         {
-            SubscriptionConverter subscriptionConverter = new SubscriptionConverter();
             Patient patient = new Patient(
                 patientDTO.ID,
                 patientDTO.Name,
                 patientDTO.Email,
                 patientDTO.PhoneNumber,
                 patientDTO.MedicalHistory,
-                subscriptionConverter.DTOToObject(patientDTO.subscriptions),
-                (Regio)patientDTO.Regio,
                 patientDTO.Doctor_ID);
             return patient;
         }
