@@ -34,6 +34,10 @@ namespace BLL.Modules
             this.Admin_ID = Admin_ID;
             this.IsActive = IsActive;
         }
+        public override string ToString()
+        {
+            return Name;
+        }
 
     }
 }

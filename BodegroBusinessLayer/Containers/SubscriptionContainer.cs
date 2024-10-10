@@ -63,7 +63,7 @@ namespace BLL.Containers
                     if (patients[i].Name == patient) { patien = i; }
                 }
                 Subscription subscription = new Subscription(SDate, EDate, prot);
-                patients[patien].Subscriptions.Add(subscription);
+                //patients[patien].Subscriptions.Add(subscription);
                 return "Succesvol toegevoegt";
             }
             return "Onverwacht probleem gededecteert";
@@ -72,10 +72,10 @@ namespace BLL.Containers
         {// Komt uiteindelijk te vervallen
             List<string> medicalHistory = new List<string>();
             List<Subscription> subscriptions = new List<Subscription>();
-            Patient Mock1 = new Patient(0,"Piet", "pietpuk@gmail.com", 45963049, medicalHistory, subscriptions, Regio.Hart_voor_Brabant, 1);
-            Patient Mock2 = new Patient(1,"Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, subscriptions, Regio.Amsterdam, 1);
-            Patient Mock3 = new Patient(2,"Jan", "janjansen@gmail.com", 98379626, medicalHistory, subscriptions, Regio.Brabant_Zuidoost, 1);
-            Patient Mock4 = new Patient(3,"Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, subscriptions, Regio.West_Brabant, 1);
+            Patient Mock1 = new Patient(0,"Piet", "pietpuk@gmail.com", 45963049, medicalHistory, 1);
+            Patient Mock2 = new Patient(1,"Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, 1);
+            Patient Mock3 = new Patient(2,"Jan", "janjansen@gmail.com", 98379626, medicalHistory, 1);
+            Patient Mock4 = new Patient(3,"Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, 1);
             patients.Add(Mock1);
             patients.Add(Mock2);
             patients.Add(Mock3);

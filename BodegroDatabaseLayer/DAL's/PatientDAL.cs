@@ -23,7 +23,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (Doctor_ID, Name, Email, PhoneNumber, MedicalHistory, Regio) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory, @Regio); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (Doctor_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -33,7 +33,6 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
                         cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
                         cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
-                        cmd.Parameters.AddWithValue("@Regio", patient.Regio);
 
                         conn.Open();
                         insertedId = Convert.ToInt32(cmd.ExecuteScalar());

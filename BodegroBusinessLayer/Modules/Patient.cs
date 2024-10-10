@@ -15,21 +15,20 @@ namespace BLL.Modules
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public List<string> MedicalHistory { get; set; }
-        public Regio Regio { get; set; }
-        public List<Subscription> Subscriptions { get; set; }
-        public int DoctorID { get; set; }
+        public int Doctor_ID { get; set; }
 
-        public Patient(int ID, string Name, string Email, int PhoneNumber, List<string> MedicalHistory,List<Subscription>Subscriptions, Regio Regio, int doctorID)
+        public Patient(string Name, string Email, int PhoneNumber, List<string> MedicalHistory, int doctor_ID)
         {
-            this.ID = ID;
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
-            this.Regio = Regio;
+            Doctor_ID = doctor_ID;
+        }
+        public Patient(int ID, string Name, string Email, int PhoneNumber, List<string> MedicalHistory, int doctor_ID):this(Name, Email, PhoneNumber, MedicalHistory, doctor_ID)
+        {
+            this.ID = ID;
             ID = 1;
-            DoctorID = doctorID;
-            this.Subscriptions = Subscriptions;
         }
         public bool IDCheck(int checkID)
         {
@@ -40,7 +39,7 @@ namespace BLL.Modules
             }
             return check;
         }
-        public string ToString()
+        public override string ToString()
         {
             return Name;
         }

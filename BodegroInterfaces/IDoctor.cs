@@ -10,5 +10,8 @@ namespace BodegroInterfaces
     public interface IDoctor
     {
         public int CreateDoctor(DoctorDTO doctor, string password);
+        public bool DoctorExists(string email);
+        public bool SoftDeleteDoctor(int id);
+        public List<DoctorDTO> GetAllDoctors();
     }
 }
