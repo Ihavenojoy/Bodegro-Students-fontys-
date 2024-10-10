@@ -15,7 +15,13 @@ namespace BLL.DTOConverter
             List<StepDTO> list = new List<StepDTO>();
             foreach (Step step in steps)
             {
-                StepDTO stepDTO = new StepDTO();
+                StepDTO stepDTO = new StepDTO { 
+                    Name = step.Name,
+                    Discription = step.Discription,
+                    Order = step.Order,
+                    Test = step.Test,
+                    Interval = step.Interval
+                };
                 list.Add(stepDTO);
             }
             return list;

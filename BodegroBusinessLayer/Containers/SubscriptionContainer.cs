@@ -77,10 +77,10 @@ namespace BLL.Containers
             patients.Add(Mock3);
             patients.Add(Mock4);
             List<Step> steps = new List<Step>();
-            Protocol Mock5 = new Protocol("Diabetus", steps);
-            Protocol Mock6 = new Protocol("Hepatitus", steps);
-            Protocol Mock7 = new Protocol("Ebola", steps);
-            Protocol Mock8 = new Protocol("HIV", steps);
+            Protocol Mock5 = new Protocol("Diabetus", steps, "");
+            Protocol Mock6 = new Protocol("Hepatitus", steps, "");
+            Protocol Mock7 = new Protocol("Ebola", steps, "");
+            Protocol Mock8 = new Protocol("HIV", steps, "");
             protocols.Add(Mock5);
             protocols.Add(Mock6);
             protocols.Add(Mock7);

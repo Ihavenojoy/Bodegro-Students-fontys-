@@ -15,7 +15,7 @@ namespace BLL.ObjectConverter
             List<Step> list = new List<Step>();
             foreach (StepDTO stepDTO in stepsDTO)
             {
-                Step step = new Step();
+                Step step = new Step(stepDTO.ID, stepDTO.Name, stepDTO.Discription, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
                 list.Add(step);
             }
             return list;
