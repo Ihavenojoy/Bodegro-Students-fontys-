@@ -9,7 +9,6 @@ namespace BLL.Modules
 {
     public class Step
     {
-        public int Time { get; set; }
         public string Discription { get; set; }
     }
 }

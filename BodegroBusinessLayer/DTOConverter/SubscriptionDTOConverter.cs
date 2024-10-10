@@ -17,7 +17,7 @@ namespace BLL.DTOConverter
             List<SubscriptionDTO> list = new List<SubscriptionDTO>();
             foreach (Subscription subscription in subscriptions)
             {
-                SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, subscription.EndDate, protocolDTOConverter.ObjectToDTO(subscription.Protocol));
+                SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, protocolDTOConverter.ObjectToDTO(subscription.Protocol));
                 list.Add(subscriptionDTO);
             }
             return list;

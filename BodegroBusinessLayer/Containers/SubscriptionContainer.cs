@@ -47,10 +47,8 @@ namespace BLL.Containers
             }
             return list;
         }
-        public string AddSubscription(string protocol, string patient, DateTime SDate, DateTime EDate)
+        public string AddSubscription(string protocol, string patient, DateTime SDate)
         {
-            if (Datumcheck(SDate, EDate))
-            {
                 int proto = 0;
                 for (int i = 0; i < protocols.Count; i++)
                 {
@@ -62,11 +60,9 @@ namespace BLL.Containers
                 {
                     if (patients[i].Name == patient) { patien = i; }
                 }
-                Subscription subscription = new Subscription(SDate, EDate, prot);
+                Subscription subscription = new Subscription(SDate, prot);
                 patients[patien].Subscriptions.Add(subscription);
                 return "Succesvol toegevoegt";
-            }
-            return "Onverwacht probleem gededecteert";
         }
         private void GetMockData()
         {// Komt uiteindelijk te vervallen
