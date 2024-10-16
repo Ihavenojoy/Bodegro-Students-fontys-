@@ -40,13 +40,22 @@ namespace Bodegro
         private void NewStep_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AddStepForm addStepForm = new AddStepForm();
+            AddStepForm addStepForm = new AddStepForm(user);
             addStepForm.Closed += (s, args) => this.Close();
             addStepForm.Show();
         }
         private void UpdateUI()
         {
 
+        }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+            Doctor temp = new Doctor("Tom", "temp@gmail.com", BLL.Enums.Regio.Amsterdam, 0, false);
+            this.Hide();
+            NewSubscription newSubscription = new NewSubscription(temp);
+            newSubscription.Closed += (s, args) => this.Close();
+            newSubscription.Show();
         }
     }
 }

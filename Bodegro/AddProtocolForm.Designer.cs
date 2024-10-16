@@ -35,6 +35,7 @@
             DescriptionBox = new TextBox();
             NewStep = new Button();
             AddProtocol = new Button();
+            BackButton = new Button();
             SuspendLayout();
             // 
             // ProtocolSteps
@@ -99,11 +100,22 @@
             AddProtocol.UseVisualStyleBackColor = true;
             AddProtocol.Click += AddProtocol_Click;
             // 
+            // BackButton
+            // 
+            BackButton.Location = new Point(12, 415);
+            BackButton.Name = "BackButton";
+            BackButton.Size = new Size(75, 23);
+            BackButton.TabIndex = 7;
+            BackButton.Text = "Terug";
+            BackButton.UseVisualStyleBackColor = true;
+            BackButton.Click += BackButton_Click;
+            // 
             // AddProtocolForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(BackButton);
             Controls.Add(AddProtocol);
             Controls.Add(NewStep);
             Controls.Add(DescriptionBox);
@@ -126,5 +138,6 @@
         private TextBox DescriptionBox;
         private Button NewStep;
         private Button AddProtocol;
+        private Button BackButton;
     }
 }

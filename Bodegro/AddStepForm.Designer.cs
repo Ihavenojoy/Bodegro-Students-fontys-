@@ -39,6 +39,7 @@
             DescriptionLabel = new Label();
             DescriptionBox = new TextBox();
             AddStep = new Button();
+            BackButton = new Button();
             SuspendLayout();
             // 
             // NaamLabel
@@ -133,11 +134,22 @@
             AddStep.UseVisualStyleBackColor = true;
             AddStep.Click += AddStep_Click;
             // 
+            // BackButton
+            // 
+            BackButton.Location = new Point(12, 415);
+            BackButton.Name = "BackButton";
+            BackButton.Size = new Size(75, 23);
+            BackButton.TabIndex = 13;
+            BackButton.Text = "Terug";
+            BackButton.UseVisualStyleBackColor = true;
+            BackButton.Click += BackButton_Click;
+            // 
             // AddStepForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(BackButton);
             Controls.Add(AddStep);
             Controls.Add(DescriptionBox);
             Controls.Add(DescriptionLabel);
@@ -168,5 +180,6 @@
         private Label DescriptionLabel;
         private TextBox DescriptionBox;
         private Button AddStep;
+        private Button BackButton;
     }
 }
