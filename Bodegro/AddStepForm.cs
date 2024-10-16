@@ -14,14 +14,11 @@ namespace Bodegro
 {
     public partial class AddStepForm : Form
     {
-        Admin admin;
         Protocol protocol;
-        StepContainer stepContainer = new StepContainer();
         Step step;
-        public AddStepForm(Admin admin, Protocol protocol)
+        public AddStepForm(Protocol protocol)
         {
             InitializeComponent();
-            this.admin = admin;
             this.protocol = protocol;
         }
 
