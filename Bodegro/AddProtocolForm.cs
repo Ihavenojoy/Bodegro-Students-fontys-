@@ -26,7 +26,8 @@ namespace Bodegro
 
         private void AddProtocol_Click(object sender, EventArgs e)
         {
-            bool check = true;
+            bool check1 = true;
+            bool check2 = true;
             if (NameBox.Text != null && DescriptionBox.Text != null && StepAmount.Value > 0)
             {
                 Protocol protocol = new Protocol(NameBox.Text, DescriptionBox.Text, user.ID);
@@ -47,15 +48,22 @@ namespace Bodegro
                 {
                     if (IntervalTime - step.Interval <= 0)
                     {
-                        check = false;
+                        check1 = false;
                         break;
                     }
                     else
                     {
                         IntervalTime -= step.Interval;
                     }
+                    for (int i = 0; i < steps.Count; i++) 
+                    {
+                        if (step.Order == steps[i].Order)
+                        {
+                            check2 = false;
+                        }
+                    }
                 }
-                if (check)
+                if (check1 && check2)
                 {
                     foreach (Step step in steps)
                     {
@@ -63,11 +71,14 @@ namespace Bodegro
                     }
                     MessageBox.Show("creatie succesvol");
                 }
-                else
+                else if (check2)
                 {
                     MessageBox.Show("ongeldige interval selectie, maak het protocol opnieuw");
                 }
-                Doctor temp = new Doctor("Tom", "temp@gmail.com", BLL.Enums.Regio.Amsterdam, 0, false);
+                else if (check1)
+                {
+                    MessageBox.Show("een ordernummer komt meerdere keren voor, maak het protocol opnieuw");
+                }
                 Form1 form1 = new Form1();
                 form1.Closed += (s, args) => this.Close();
                 form1.Show();
@@ -75,7 +86,6 @@ namespace Bodegro
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
-            Doctor temp = new Doctor("Tom", "temp@gmail.com", BLL.Enums.Regio.Amsterdam, 0, false);
             this.Hide();
             Form1 form1 = new Form1();
             form1.Closed += (s, args) => this.Close();
