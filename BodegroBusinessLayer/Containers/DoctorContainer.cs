@@ -18,7 +18,7 @@ namespace BLL.Containers
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         DoctorDAL doctorDAL = new DoctorDAL();
-        private readonly IDoctor iDoctor;
+        private readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
         public int CreateDoctor(Doctor doctor, string password)
         {

@@ -24,7 +24,7 @@ namespace DAL
             DoctorDTO doctorDTO = new DoctorDTO();
             try
             {
-                string insert = "Select ID, Name, Email, Admin_ID From Doctor WHERE Email = @Email AND Password = @Password";
+                string insert = "Select ID, Name, Email, Regio, Admin_ID From Doctor WHERE Email = @Email AND Password = @Password";
 
                 using (conn)
                 {

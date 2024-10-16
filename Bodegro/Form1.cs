@@ -30,6 +30,8 @@ public partial class Form1 : Form
         {
 
         }
+        CreateUser createUser = new CreateUser();
+        createUser.Show();
     }
 
     private void button1_Click(object sender, EventArgs e)
