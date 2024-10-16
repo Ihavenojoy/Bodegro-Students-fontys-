@@ -10,21 +10,16 @@ namespace BLL.DTOConverter
 {
     public class StepDTOConverter
     {
-        public List<StepDTO> ObjectToDTO(List<Step> steps)
+        public StepDTO ObjectToDTO(Step step)
         {
-            List<StepDTO> list = new List<StepDTO>();
-            foreach (Step step in steps)
-            {
-                StepDTO stepDTO = new StepDTO { 
-                    Name = step.Name,
-                    Discription = step.Discription,
-                    Order = step.Order,
-                    Test = step.Test,
-                    Interval = step.Interval
-                };
-                list.Add(stepDTO);
-            }
-            return list;
+            StepDTO stepDTO = new StepDTO { 
+                Name = step.Name,
+                Discription = step.Discription,
+                Order = step.Order,
+                Test = step.Test,
+                Interval = step.Interval
+            };
+            return stepDTO;
         }
     }
 }

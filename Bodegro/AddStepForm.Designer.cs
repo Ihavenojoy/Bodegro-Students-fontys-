@@ -131,6 +131,7 @@
             // IntervalBox
             // 
             IntervalBox.Location = new Point(389, 86);
+            IntervalBox.Maximum = new decimal(new int[] { 365, 0, 0, 0 });
             IntervalBox.Name = "IntervalBox";
             IntervalBox.Size = new Size(120, 23);
             IntervalBox.TabIndex = 15;

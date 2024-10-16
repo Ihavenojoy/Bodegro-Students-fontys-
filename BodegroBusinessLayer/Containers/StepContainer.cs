@@ -16,22 +16,11 @@ namespace BLL.Containers
     public class StepContainer
     {
         IStep Dal = new StepDAL();
-        StepConverter stepConverter = new StepConverter();
-        public void AddStep(string name, string description, int interval, int order, string test)
+        StepDTOConverter stepConverter = new StepDTOConverter();
+        public void AddStep(Step step)
         {
-            StepDTO step = new StepDTO
-            {
-                Name = name,
-                Discription = description,
-                Order = order,
-                Test = test,
-                Interval = interval
-            };
-            Dal.CreateStep(step);
+            StepDTO stepDTO = stepConverter.ObjectToDTO(step);
+            Dal.CreateStep(stepDTO);
         }
-        //public Step GetStep(StepDTO stepDTO)
-        //{
-        //    return stepConverter.DTOToObject(stepDTO);
-        //}
     }
 }

@@ -26,5 +26,14 @@ namespace BLL.Modules
             this.Test = Test;
             this.Interval = Interval;
         }
+        public Step(int ProtocolID, string Name, string Discription, int Order, string Test, int Interval)
+        {
+            this.ProtocolID = ProtocolID;
+            this.Name = Name;
+            this.Discription = Discription;
+            this.Order = Order;
+            this.Test = Test;
+            this.Interval = Interval;
+        }
     }
 }

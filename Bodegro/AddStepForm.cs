@@ -17,6 +17,7 @@ namespace Bodegro
         Admin admin;
         Protocol protocol;
         StepContainer stepContainer = new StepContainer();
+        Step step;
         public AddStepForm(Admin admin, Protocol protocol)
         {
             InitializeComponent();
@@ -26,11 +27,19 @@ namespace Bodegro
 
         private void AddStep_Click(object sender, EventArgs e)
         {
-            if (NameBox.Text != null && OrderBox.Value > 0 && IntervalBox.Value > 0 && DescriptionBox.Text != null && TestenBox.Text != null)
+            if (NameBox.Text != null && OrderBox.Value >= 0 && IntervalBox.Value > 0 && DescriptionBox.Text != null && TestenBox.Text != null)
             {
-                stepContainer.AddStep(NameBox.Text, DescriptionBox.Text, Convert.ToInt32(IntervalBox.Value), Convert.ToInt32(OrderBox.Value), TestenBox.Text);
+                step = new Step(protocol.ID, NameBox.Text, DescriptionBox.Text, Convert.ToInt32(OrderBox.Value), TestenBox.Text, Convert.ToInt32(IntervalBox.Value));
                 this.Close();
             }
+            else
+            {
+                MessageBox.Show("Niet alle gegevens zijn ingevuld");
+            }
+        }
+        public Step GetStep()
+        {
+            return step;
         }
     }
 }
