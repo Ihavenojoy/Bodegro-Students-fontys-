@@ -15,7 +15,7 @@ namespace BLL.ObjectConverter
         StepConverter stepConverter;
         public Protocol DTOToObject(ProtocolDTO protocolDTO)
         {
-            Protocol protocol = new Protocol(protocolDTO.Name, stepConverter.DTOToObject(protocolDTO.Steps));
+            Protocol protocol = new Protocol(protocolDTO.Name, stepConverter.DTOToObject(protocolDTO.Steps), protocolDTO.Description, protocolDTO.Admin_ID);
             return protocol;
         }
     }

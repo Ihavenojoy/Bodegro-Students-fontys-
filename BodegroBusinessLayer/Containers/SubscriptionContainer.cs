@@ -47,10 +47,8 @@ namespace BLL.Containers
             }
             return list;
         }
-        public string AddSubscription(string protocol, string patient, DateTime SDate, DateTime EDate)
+        public string AddSubscription(string protocol, string patient, DateTime SDate)
         {
-            if (Datumcheck(SDate, EDate))
-            {
                 int proto = 0;
                 for (int i = 0; i < protocols.Count; i++)
                 {
@@ -62,11 +60,9 @@ namespace BLL.Containers
                 {
                     if (patients[i].Name == patient) { patien = i; }
                 }
-                Subscription subscription = new Subscription(SDate, EDate, prot);
+                Subscription subscription = new Subscription(SDate, prot);
                 //patients[patien].Subscriptions.Add(subscription);
                 return "Succesvol toegevoegt";
-            }
-            return "Onverwacht probleem gededecteert";
         }
         private void GetMockData()
         {// Komt uiteindelijk te vervallen
@@ -81,10 +77,10 @@ namespace BLL.Containers
             patients.Add(Mock3);
             patients.Add(Mock4);
             List<Step> steps = new List<Step>();
-            Protocol Mock5 = new Protocol("Diabetus", steps);
-            Protocol Mock6 = new Protocol("Hepatitus", steps);
-            Protocol Mock7 = new Protocol("Ebola", steps);
-            Protocol Mock8 = new Protocol("HIV", steps);
+            Protocol Mock5 = new Protocol("Diabetus", steps, "", 0);
+            Protocol Mock6 = new Protocol("Hepatitus", steps, "", 0);
+            Protocol Mock7 = new Protocol("Ebola", steps, "", 0);
+            Protocol Mock8 = new Protocol("HIV", steps, "", 0);
             protocols.Add(Mock5);
             protocols.Add(Mock6);
             protocols.Add(Mock7);
