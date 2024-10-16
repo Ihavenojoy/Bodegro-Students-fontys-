@@ -12,10 +12,9 @@ namespace BLL.ObjectConverter
 {
     public class ProtocolConverter
     {
-        StepConverter stepConverter;
         public Protocol DTOToObject(ProtocolDTO protocolDTO)
         {
-            Protocol protocol = new Protocol(protocolDTO.Name, stepConverter.DTOToObject(protocolDTO.Steps), protocolDTO.Description, protocolDTO.Admin_ID);
+            Protocol protocol = new Protocol(protocolDTO.Name, protocolDTO.Description, protocolDTO.Admin_ID);
             return protocol;
         }
     }

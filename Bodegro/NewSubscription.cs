@@ -39,13 +39,5 @@ namespace Bodegro
                 PatientBox.Items.Add(sub);
             }
         }
-
-        private void AddProtocol_Click(object sender, EventArgs e)
-        {
-            //this.Hide();
-            //AddProtocolForm addProtocolForm = new AddProtocolForm();
-            //addProtocolForm.Closed += (s, args) => this.Close();
-            //addProtocolForm.Show();
-        }
     }
 }

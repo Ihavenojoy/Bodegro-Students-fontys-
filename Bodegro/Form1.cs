@@ -17,6 +17,7 @@ public partial class Form1 : Form
     private void TestButton_Click(object sender, EventArgs e)
     {
         Doctor doctor = new Doctor("Henry", "test@gmail.com", Regio.Hart_voor_Brabant,0,true);
+        Admin admin = new Admin("Henk", "test@gmail.com");
         //MessageBox.Show(Convert.ToString(Generate.OTP)); // Greate OTP without key (does nothing)
         //MessageBox.Show(Convert.ToString(Generate.RandomKey)); //Generates Key (not stringable)
         MessageBox.Show(Convert.ToString(Code32.Encode(Generate.RandomKey(32)))); // Generates a Readable Key
@@ -30,6 +31,10 @@ public partial class Form1 : Form
         {
 
         }
+        AddProtocolForm addProtocolForm = new AddProtocolForm(admin);
+        addProtocolForm.Closed += (s, args) => this.Close();
+        addProtocolForm.Show();
+
     }
 
     private void button1_Click(object sender, EventArgs e)

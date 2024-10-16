@@ -12,13 +12,11 @@ namespace BLL.Modules
         public int ID { get;}
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Step> Steps { get; set; }
         public int Admin_ID { get; set; }
 
-        public Protocol(string Name, List<Step> Steps, string Description, int admin_ID)
+        public Protocol(string Name, string Description, int admin_ID)
         {
             this.Name = Name;
-            this.Steps = Steps;
             this.Description = Description;
             Admin_ID = admin_ID;
         }

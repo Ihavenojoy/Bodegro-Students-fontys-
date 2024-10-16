@@ -31,15 +31,16 @@
             NaamLabel = new Label();
             NameBox = new TextBox();
             OrderLabel = new Label();
-            OrderBox = new TextBox();
             TestLabel = new Label();
             TestenBox = new TextBox();
             IntevalLabel = new Label();
-            IntervalBox = new TextBox();
             DescriptionLabel = new Label();
             DescriptionBox = new TextBox();
             AddStep = new Button();
-            BackButton = new Button();
+            OrderBox = new NumericUpDown();
+            IntervalBox = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)OrderBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IntervalBox).BeginInit();
             SuspendLayout();
             // 
             // NaamLabel
@@ -67,13 +68,6 @@
             OrderLabel.TabIndex = 2;
             OrderLabel.Text = "Volgordenummer";
             // 
-            // OrderBox
-            // 
-            OrderBox.Location = new Point(219, 85);
-            OrderBox.Name = "OrderBox";
-            OrderBox.Size = new Size(100, 23);
-            OrderBox.TabIndex = 3;
-            // 
             // TestLabel
             // 
             TestLabel.AutoSize = true;
@@ -99,13 +93,6 @@
             IntevalLabel.Size = new Size(46, 15);
             IntevalLabel.TabIndex = 6;
             IntevalLabel.Text = "Interval";
-            // 
-            // IntervalBox
-            // 
-            IntervalBox.Location = new Point(389, 85);
-            IntervalBox.Name = "IntervalBox";
-            IntervalBox.Size = new Size(100, 23);
-            IntervalBox.TabIndex = 7;
             // 
             // DescriptionLabel
             // 
@@ -134,35 +121,40 @@
             AddStep.UseVisualStyleBackColor = true;
             AddStep.Click += AddStep_Click;
             // 
-            // BackButton
+            // OrderBox
             // 
-            BackButton.Location = new Point(12, 415);
-            BackButton.Name = "BackButton";
-            BackButton.Size = new Size(75, 23);
-            BackButton.TabIndex = 13;
-            BackButton.Text = "Terug";
-            BackButton.UseVisualStyleBackColor = true;
-            BackButton.Click += BackButton_Click;
+            OrderBox.Location = new Point(219, 86);
+            OrderBox.Name = "OrderBox";
+            OrderBox.Size = new Size(120, 23);
+            OrderBox.TabIndex = 14;
+            // 
+            // IntervalBox
+            // 
+            IntervalBox.Location = new Point(389, 86);
+            IntervalBox.Name = "IntervalBox";
+            IntervalBox.Size = new Size(120, 23);
+            IntervalBox.TabIndex = 15;
             // 
             // AddStepForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(BackButton);
+            Controls.Add(IntervalBox);
+            Controls.Add(OrderBox);
             Controls.Add(AddStep);
             Controls.Add(DescriptionBox);
             Controls.Add(DescriptionLabel);
-            Controls.Add(IntervalBox);
             Controls.Add(IntevalLabel);
             Controls.Add(TestenBox);
             Controls.Add(TestLabel);
-            Controls.Add(OrderBox);
             Controls.Add(OrderLabel);
             Controls.Add(NameBox);
             Controls.Add(NaamLabel);
             Name = "AddStepForm";
             Text = "AddStepForm";
+            ((System.ComponentModel.ISupportInitialize)OrderBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IntervalBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -172,14 +164,13 @@
         private Label NaamLabel;
         private TextBox NameBox;
         private Label OrderLabel;
-        private TextBox OrderBox;
         private Label TestLabel;
         private TextBox TestenBox;
         private Label IntevalLabel;
-        private TextBox IntervalBox;
         private Label DescriptionLabel;
         private TextBox DescriptionBox;
         private Button AddStep;
-        private Button BackButton;
+        private NumericUpDown OrderBox;
+        private NumericUpDown IntervalBox;
     }
 }

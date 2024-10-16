@@ -32,7 +32,6 @@
             ProtocolBox = new ListBox();
             PatientBox = new ListBox();
             StartDate = new DateTimePicker();
-            AddProtocol = new Button();
             SuspendLayout();
             // 
             // Confirm
@@ -72,22 +71,11 @@
             StartDate.TabIndex = 3;
             StartDate.Value = new DateTime(2024, 10, 25, 23, 59, 59, 0);
             // 
-            // AddProtocol
-            // 
-            AddProtocol.Location = new Point(588, 393);
-            AddProtocol.Name = "AddProtocol";
-            AddProtocol.Size = new Size(98, 23);
-            AddProtocol.TabIndex = 5;
-            AddProtocol.Text = "Nieuw Protocol";
-            AddProtocol.UseVisualStyleBackColor = true;
-            AddProtocol.Click += AddProtocol_Click;
-            // 
             // NewSubscription
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(AddProtocol);
             Controls.Add(StartDate);
             Controls.Add(PatientBox);
             Controls.Add(ProtocolBox);
@@ -103,6 +91,5 @@
         private ListBox ProtocolBox;
         private ListBox PatientBox;
         private DateTimePicker StartDate;
-        private Button AddProtocol;
     }
 }

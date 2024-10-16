@@ -17,22 +17,23 @@ namespace DAL
             "Database=dbi500009_grodebo;" +
             "User Id=dbi500009_grodebo;" +
             "Password=Grodebo;";
-        public int CreateStep(StepDTO protocol)
+        public int CreateStep(StepDTO stepDTO)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (ID, Name, Description, Total, Admin_ID) VALUES (@ID, @Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Step] (Protocol_ID, Name, Test, Description, Steps_Number, Interval) VALUES (@Protocol_ID, @Name, @Test, @Description, @Steps_Number, @Interval); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@ID", 1);
-                        cmd.Parameters.AddWithValue("@Name", 1);
-                        cmd.Parameters.AddWithValue("@Description", 1);
-                        cmd.Parameters.AddWithValue("@Total", 1);
-                        cmd.Parameters.AddWithValue("@Admin_ID", 1);
+                        cmd.Parameters.AddWithValue("@Protocol_ID", stepDTO.ProtocolID);
+                        cmd.Parameters.AddWithValue("@Name", stepDTO.Name);
+                        cmd.Parameters.AddWithValue("@Test", stepDTO.Test);
+                        cmd.Parameters.AddWithValue("@Description", stepDTO.Discription);
+                        cmd.Parameters.AddWithValue("@Steps_Number", stepDTO.Order);
+                        cmd.Parameters.AddWithValue("@Interval", stepDTO.Interval);
 
                         conn.Open();
                         insertedId = Convert.ToInt32(cmd.ExecuteScalar());

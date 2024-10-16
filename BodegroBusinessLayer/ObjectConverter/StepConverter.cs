@@ -10,15 +10,10 @@ namespace BLL.ObjectConverter
 {
     public class StepConverter
     {
-        public List<Step> DTOToObject(List<StepDTO> stepsDTO)
+        public Step DTOToObject(StepDTO stepDTO)
         {
-            List<Step> list = new List<Step>();
-            foreach (StepDTO stepDTO in stepsDTO)
-            {
-                Step step = new Step(stepDTO.ID, stepDTO.Name, stepDTO.Discription, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
-                list.Add(step);
-            }
-            return list;
+            Step step = new Step(stepDTO.ID, stepDTO.ProtocolID, stepDTO.Name, stepDTO.Discription, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
+            return step;
         }
     }
 }

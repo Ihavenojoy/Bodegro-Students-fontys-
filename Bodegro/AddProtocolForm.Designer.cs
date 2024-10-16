@@ -28,24 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ProtocolSteps = new ListBox();
             NameBox = new TextBox();
             NameLabel = new Label();
             DescriptionLabel = new Label();
             DescriptionBox = new TextBox();
-            NewStep = new Button();
             AddProtocol = new Button();
             BackButton = new Button();
+            AmountLabel = new Label();
+            StepAmount = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)StepAmount).BeginInit();
             SuspendLayout();
-            // 
-            // ProtocolSteps
-            // 
-            ProtocolSteps.FormattingEnabled = true;
-            ProtocolSteps.ItemHeight = 15;
-            ProtocolSteps.Location = new Point(515, 187);
-            ProtocolSteps.Name = "ProtocolSteps";
-            ProtocolSteps.Size = new Size(201, 184);
-            ProtocolSteps.TabIndex = 0;
             // 
             // NameBox
             // 
@@ -77,18 +69,8 @@
             DescriptionBox.Location = new Point(45, 187);
             DescriptionBox.Multiline = true;
             DescriptionBox.Name = "DescriptionBox";
-            DescriptionBox.Size = new Size(456, 214);
+            DescriptionBox.Size = new Size(590, 214);
             DescriptionBox.TabIndex = 4;
-            // 
-            // NewStep
-            // 
-            NewStep.Location = new Point(632, 158);
-            NewStep.Name = "NewStep";
-            NewStep.Size = new Size(84, 23);
-            NewStep.TabIndex = 5;
-            NewStep.Text = "Nieuwe Stap";
-            NewStep.UseVisualStyleBackColor = true;
-            NewStep.Click += NewStep_Click;
             // 
             // AddProtocol
             // 
@@ -110,34 +92,50 @@
             BackButton.UseVisualStyleBackColor = true;
             BackButton.Click += BackButton_Click;
             // 
+            // AmountLabel
+            // 
+            AmountLabel.AutoSize = true;
+            AmountLabel.Location = new Point(45, 104);
+            AmountLabel.Name = "AmountLabel";
+            AmountLabel.Size = new Size(87, 15);
+            AmountLabel.TabIndex = 9;
+            AmountLabel.Text = "Aantal Stappen";
+            // 
+            // StepAmount
+            // 
+            StepAmount.Location = new Point(45, 122);
+            StepAmount.Name = "StepAmount";
+            StepAmount.Size = new Size(120, 23);
+            StepAmount.TabIndex = 10;
+            // 
             // AddProtocolForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(StepAmount);
+            Controls.Add(AmountLabel);
             Controls.Add(BackButton);
             Controls.Add(AddProtocol);
-            Controls.Add(NewStep);
             Controls.Add(DescriptionBox);
             Controls.Add(DescriptionLabel);
             Controls.Add(NameLabel);
             Controls.Add(NameBox);
-            Controls.Add(ProtocolSteps);
             Name = "AddProtocolForm";
             Text = "AddProtocolForm";
+            ((System.ComponentModel.ISupportInitialize)StepAmount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private ListBox ProtocolSteps;
         private TextBox NameBox;
         private Label NameLabel;
         private Label DescriptionLabel;
         private TextBox DescriptionBox;
-        private Button NewStep;
         private Button AddProtocol;
         private Button BackButton;
+        private Label AmountLabel;
+        private NumericUpDown StepAmount;
     }
 }

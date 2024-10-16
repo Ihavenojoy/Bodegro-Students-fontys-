@@ -8,6 +8,7 @@ using BLL.Modules;
 using DTO;
 using BodegroInterfaces;
 using BLL.DTOConverter;
+using BLL.ObjectConverter;
 
 
 namespace BLL.Containers
@@ -15,7 +16,7 @@ namespace BLL.Containers
     public class StepContainer
     {
         IStep Dal = new StepDAL();
-        StepDTOConverter stepDTOConverter = new StepDTOConverter();
+        StepConverter stepConverter = new StepConverter();
         public void AddStep(string name, string description, int interval, int order, string test)
         {
             StepDTO step = new StepDTO
@@ -28,5 +29,9 @@ namespace BLL.Containers
             };
             Dal.CreateStep(step);
         }
+        //public Step GetStep(StepDTO stepDTO)
+        //{
+        //    return stepConverter.DTOToObject(stepDTO);
+        //}
     }
 }

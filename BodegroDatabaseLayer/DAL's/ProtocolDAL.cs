@@ -32,7 +32,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@ID", protocol.ID);
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
-                        cmd.Parameters.AddWithValue("@Total", protocol.Steps.Count);
+                        cmd.Parameters.AddWithValue("@Total", protocol.StepCount);
                         cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
 
                         conn.Open();

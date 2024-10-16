@@ -14,11 +14,10 @@ namespace BLL.Containers
     public class ProtocolContainer
     {
         IProtocol Dal = new ProtocolDAL();
-        StepContainer StepContainer;
         ProtocolDTOConverter protocolDTOConverter;
-        public void AddProtocol(string Name, string Description, List<Step> Steps, User user)
+        public void AddProtocol(string Name, string Description, User user)
         {
-            Protocol protocol = new Protocol(Name, Steps, Description, user.ID);
+            Protocol protocol = new Protocol(Name, Description, user.ID);
             Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
         }
     }

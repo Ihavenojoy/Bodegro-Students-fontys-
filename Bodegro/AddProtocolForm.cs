@@ -14,7 +14,7 @@ namespace Bodegro
 {
     public partial class AddProtocolForm : Form
     {
-        ProtocolContainer protocolContainer;
+        ProtocolContainer protocolContainer = new ProtocolContainer();
         Admin user;
         public AddProtocolForm(Admin user)
         {
@@ -24,31 +24,26 @@ namespace Bodegro
 
         private void AddProtocol_Click(object sender, EventArgs e)
         {
-            if (NameBox.Text != null && ProtocolSteps.Items.Count > 0)
+            if (NameBox.Text != null && DescriptionBox.Text != null && StepAmount.Value > 0)
             {
-                List<Step> steps = new List<Step>();
-                foreach (var sub in ProtocolSteps.Items)
+                Protocol protocol = new Protocol(NameBox.Text, DescriptionBox.Text, user.ID);
+                protocolContainer.AddProtocol(protocol.Name, protocol.Description, user);
+                this.Hide();
+                for (int i = 0; i < StepAmount.Value; i++)
                 {
-                    if (sub is Step)
+                    AddStepForm addStepForm = new AddStepForm(user, protocol);
+                    addStepForm.Show(); 
+                    if (addStepForm.ShowDialog() == DialogResult.OK)
                     {
-                        steps.Add((Step)sub);
+
                     }
                 }
-                protocolContainer.AddProtocol(NameBox.Text, DescriptionBox.Text, steps, user);
+                Doctor temp = new Doctor("Tom", "temp@gmail.com", BLL.Enums.Regio.Amsterdam, 0, false);
+                NewSubscription newSubscription = new NewSubscription(temp);
+                newSubscription.Closed += (s, args) => this.Close();
+                newSubscription.Show();
             }
         }
-        private void NewStep_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            AddStepForm addStepForm = new AddStepForm(user);
-            addStepForm.Closed += (s, args) => this.Close();
-            addStepForm.Show();
-        }
-        private void UpdateUI()
-        {
-
-        }
-
         private void BackButton_Click(object sender, EventArgs e)
         {
             Doctor temp = new Doctor("Tom", "temp@gmail.com", BLL.Enums.Regio.Amsterdam, 0, false);

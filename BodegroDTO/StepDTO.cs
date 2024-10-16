@@ -9,6 +9,7 @@ namespace DTO
     public record StepDTO
     {
         public int ID { get; }
+        public int ProtocolID { get; }
         public string Name { get; set; }
         public string Discription { get; set; }
         public int Order { get; set; }

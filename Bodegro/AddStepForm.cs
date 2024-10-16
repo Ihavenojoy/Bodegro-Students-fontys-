@@ -1,4 +1,5 @@
-﻿using BLL.Modules;
+﻿using BLL.Containers;
+using BLL.Modules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,31 +15,22 @@ namespace Bodegro
     public partial class AddStepForm : Form
     {
         Admin admin;
-        public AddStepForm(Admin admin)
+        Protocol protocol;
+        StepContainer stepContainer = new StepContainer();
+        public AddStepForm(Admin admin, Protocol protocol)
         {
             InitializeComponent();
             this.admin = admin;
+            this.protocol = protocol;
         }
 
         private void AddStep_Click(object sender, EventArgs e)
         {
-            if (NameBox.Text != null && OrderBox.Text != null && IntervalBox.Text != null && DescriptionBox.Text != null && TestenBox.Text != null)
+            if (NameBox.Text != null && OrderBox.Value > 0 && IntervalBox.Value > 0 && DescriptionBox.Text != null && TestenBox.Text != null)
             {
-
-
-                this.Hide();
-                AddProtocolForm addProtocolForm = new AddProtocolForm(admin);
-                addProtocolForm.Closed += (s, args) => this.Close();
-                addProtocolForm.Show();
+                stepContainer.AddStep(NameBox.Text, DescriptionBox.Text, Convert.ToInt32(IntervalBox.Value), Convert.ToInt32(OrderBox.Value), TestenBox.Text);
+                this.Close();
             }
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            AddProtocolForm addProtocolForm = new AddProtocolForm(admin);
-            addProtocolForm.Closed += (s, args) => this.Close();
-            addProtocolForm.Show();
         }
     }
 }
