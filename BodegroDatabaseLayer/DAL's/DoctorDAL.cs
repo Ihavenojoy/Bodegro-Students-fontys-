@@ -24,7 +24,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Doctor] (Admin_ID, Name, Email, Regio, IsActive) VALUES (@Admin_ID, @Name, @Email, @Regio,@IsActive); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Doctor] (Admin_ID, Name, Email, Regio, IsActive, Password) VALUES (@Admin_ID, @Name, @Email, @Regio,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -205,6 +205,7 @@ namespace DAL
                                     Email = reader.GetString(reader.GetOrdinal("Email")),
                                     Regio = reader.GetInt32(reader.GetOrdinal("Regio")),
                                     Admin_ID = reader.GetInt32(reader.GetOrdinal("Admin_ID"))
+                                    
 
                                 });
                             }

@@ -30,40 +30,40 @@
         {
             tabControl1 = new TabControl();
             Gebruiker = new TabPage();
-            tabPage2 = new TabPage();
-            btnDelete = new Button();
+            btnDeleteUser = new Button();
             label6 = new Label();
             lbAdmin = new ListBox();
             groupBox1 = new GroupBox();
             rbDoctor = new RadioButton();
             rbAdmin = new RadioButton();
-            btnCreate = new Button();
+            btnCreateUser = new Button();
             label5 = new Label();
             lbDoctors = new ListBox();
-            cbRegio = new ComboBox();
-            tbPassword = new TextBox();
-            tbEmail = new TextBox();
-            tbName = new TextBox();
+            cbRegioUser = new ComboBox();
+            tbPasswordUser = new TextBox();
+            tbEmailUser = new TextBox();
+            tbNameUser = new TextBox();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            lbPatient = new Label();
-            listBoxPatient = new ListBox();
-            btnCreatePatient = new Button();
-            btnDeletePatient = new Button();
+            tabPage2 = new TabPage();
+            tbMedical = new TextBox();
+            label11 = new Label();
+            tbTelefoon = new TextBox();
+            label10 = new Label();
             tbPatientEmail = new TextBox();
             tbPatientName = new TextBox();
             label7 = new Label();
             label8 = new Label();
-            tbTelefoon = new TextBox();
-            label10 = new Label();
-            label11 = new Label();
-            tbMedical = new TextBox();
+            btnDeletePatient = new Button();
+            btnCreatePatient = new Button();
+            lbPatient = new Label();
+            listBoxPatient = new ListBox();
             tabControl1.SuspendLayout();
             Gebruiker.SuspendLayout();
-            tabPage2.SuspendLayout();
             groupBox1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -78,17 +78,17 @@
             // 
             // Gebruiker
             // 
-            Gebruiker.Controls.Add(btnDelete);
+            Gebruiker.Controls.Add(btnDeleteUser);
             Gebruiker.Controls.Add(label6);
             Gebruiker.Controls.Add(lbAdmin);
             Gebruiker.Controls.Add(groupBox1);
-            Gebruiker.Controls.Add(btnCreate);
+            Gebruiker.Controls.Add(btnCreateUser);
             Gebruiker.Controls.Add(label5);
             Gebruiker.Controls.Add(lbDoctors);
-            Gebruiker.Controls.Add(cbRegio);
-            Gebruiker.Controls.Add(tbPassword);
-            Gebruiker.Controls.Add(tbEmail);
-            Gebruiker.Controls.Add(tbName);
+            Gebruiker.Controls.Add(cbRegioUser);
+            Gebruiker.Controls.Add(tbPasswordUser);
+            Gebruiker.Controls.Add(tbEmailUser);
+            Gebruiker.Controls.Add(tbNameUser);
             Gebruiker.Controls.Add(label4);
             Gebruiker.Controls.Add(label3);
             Gebruiker.Controls.Add(label2);
@@ -101,36 +101,15 @@
             Gebruiker.Text = "Gebruiker";
             Gebruiker.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // btnDeleteUser
             // 
-            tabPage2.Controls.Add(tbMedical);
-            tabPage2.Controls.Add(label11);
-            tabPage2.Controls.Add(tbTelefoon);
-            tabPage2.Controls.Add(label10);
-            tabPage2.Controls.Add(tbPatientEmail);
-            tabPage2.Controls.Add(tbPatientName);
-            tabPage2.Controls.Add(label7);
-            tabPage2.Controls.Add(label8);
-            tabPage2.Controls.Add(btnDeletePatient);
-            tabPage2.Controls.Add(btnCreatePatient);
-            tabPage2.Controls.Add(lbPatient);
-            tabPage2.Controls.Add(listBoxPatient);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1184, 660);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Patient";
-            tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(334, 575);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(105, 29);
-            btnDelete.TabIndex = 33;
-            btnDelete.Text = "Verwijderen";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDeleteUser.Location = new Point(334, 575);
+            btnDeleteUser.Name = "btnDeleteUser";
+            btnDeleteUser.Size = new Size(105, 29);
+            btnDeleteUser.TabIndex = 33;
+            btnDeleteUser.Text = "Verwijderen";
+            btnDeleteUser.UseVisualStyleBackColor = true;
+            btnDeleteUser.Click += btnDeleteUser_Click;
             // 
             // label6
             // 
@@ -182,14 +161,15 @@
             rbAdmin.Text = "Admin";
             rbAdmin.UseVisualStyleBackColor = true;
             // 
-            // btnCreate
+            // btnCreateUser
             // 
-            btnCreate.Location = new Point(215, 575);
-            btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(113, 29);
-            btnCreate.TabIndex = 27;
-            btnCreate.Text = "Maak";
-            btnCreate.UseVisualStyleBackColor = true;
+            btnCreateUser.Location = new Point(215, 575);
+            btnCreateUser.Name = "btnCreateUser";
+            btnCreateUser.Size = new Size(113, 29);
+            btnCreateUser.TabIndex = 27;
+            btnCreateUser.Text = "Maak";
+            btnCreateUser.UseVisualStyleBackColor = true;
+            btnCreateUser.Click += btnCreateUser_Click;
             // 
             // label5
             // 
@@ -208,34 +188,37 @@
             lbDoctors.Size = new Size(185, 384);
             lbDoctors.TabIndex = 25;
             // 
-            // cbRegio
+            // cbRegioUser
             // 
-            cbRegio.FormattingEnabled = true;
-            cbRegio.Location = new Point(215, 499);
-            cbRegio.Name = "cbRegio";
-            cbRegio.Size = new Size(125, 28);
-            cbRegio.TabIndex = 24;
+            cbRegioUser.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbRegioUser.FormattingEnabled = true;
+            cbRegioUser.Items.AddRange(new object[] { "Zuid_Holland_Zuid", "Amsterdam", "Brabant_Zuidoost", "Drente", "Flevoland", "Fryslân", "Gerderland_Zuid", "Gooi_en_Vechtstreek", "Groningen", "Haaglanden", "Hart_voor_Brabant", "Hollands_Midden", "Hollands_Noorden", "Ijsselland", "Kennemerland", "Limburg_Noord", "Noord__en_Oost_Gelderland", "regio_Utrecht", "Rotterdam_Rijnmond", "Twente", "West_Brabant", "Zaanstreek_Waterland", "Zeeland", "Zuid_Limburg", "Gelderland_Midden" });
+            cbRegioUser.Location = new Point(215, 499);
+            cbRegioUser.Name = "cbRegioUser";
+            cbRegioUser.Size = new Size(125, 28);
+            cbRegioUser.TabIndex = 24;
             // 
-            // tbPassword
+            // tbPasswordUser
             // 
-            tbPassword.Location = new Point(215, 439);
-            tbPassword.Name = "tbPassword";
-            tbPassword.Size = new Size(125, 27);
-            tbPassword.TabIndex = 23;
+            tbPasswordUser.Location = new Point(215, 439);
+            tbPasswordUser.Name = "tbPasswordUser";
+            tbPasswordUser.Size = new Size(125, 27);
+            tbPasswordUser.TabIndex = 23;
+            tbPasswordUser.UseSystemPasswordChar = true;
             // 
-            // tbEmail
+            // tbEmailUser
             // 
-            tbEmail.Location = new Point(215, 373);
-            tbEmail.Name = "tbEmail";
-            tbEmail.Size = new Size(125, 27);
-            tbEmail.TabIndex = 22;
+            tbEmailUser.Location = new Point(215, 373);
+            tbEmailUser.Name = "tbEmailUser";
+            tbEmailUser.Size = new Size(125, 27);
+            tbEmailUser.TabIndex = 22;
             // 
-            // tbName
+            // tbNameUser
             // 
-            tbName.Location = new Point(215, 311);
-            tbName.Name = "tbName";
-            tbName.Size = new Size(125, 27);
-            tbName.TabIndex = 21;
+            tbNameUser.Location = new Point(215, 311);
+            tbNameUser.Name = "tbNameUser";
+            tbNameUser.Size = new Size(125, 27);
+            tbNameUser.TabIndex = 21;
             // 
             // label4
             // 
@@ -273,40 +256,59 @@
             label1.TabIndex = 17;
             label1.Text = "Naam:";
             // 
-            // lbPatient
+            // tabPage2
             // 
-            lbPatient.AutoSize = true;
-            lbPatient.Location = new Point(419, 37);
-            lbPatient.Name = "lbPatient";
-            lbPatient.Size = new Size(57, 20);
-            lbPatient.TabIndex = 34;
-            lbPatient.Text = "Patient:";
+            tabPage2.Controls.Add(tbMedical);
+            tabPage2.Controls.Add(label11);
+            tabPage2.Controls.Add(tbTelefoon);
+            tabPage2.Controls.Add(label10);
+            tabPage2.Controls.Add(tbPatientEmail);
+            tabPage2.Controls.Add(tbPatientName);
+            tabPage2.Controls.Add(label7);
+            tabPage2.Controls.Add(label8);
+            tabPage2.Controls.Add(btnDeletePatient);
+            tabPage2.Controls.Add(btnCreatePatient);
+            tabPage2.Controls.Add(lbPatient);
+            tabPage2.Controls.Add(listBoxPatient);
+            tabPage2.Location = new Point(4, 29);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(1184, 660);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Patient";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listBoxPatient
+            // tbMedical
             // 
-            listBoxPatient.FormattingEnabled = true;
-            listBoxPatient.Location = new Point(419, 69);
-            listBoxPatient.Name = "listBoxPatient";
-            listBoxPatient.Size = new Size(185, 384);
-            listBoxPatient.TabIndex = 33;
+            tbMedical.Location = new Point(218, 213);
+            tbMedical.Name = "tbMedical";
+            tbMedical.Size = new Size(125, 27);
+            tbMedical.TabIndex = 46;
             // 
-            // btnCreatePatient
+            // label11
             // 
-            btnCreatePatient.Location = new Point(218, 295);
-            btnCreatePatient.Name = "btnCreatePatient";
-            btnCreatePatient.Size = new Size(113, 29);
-            btnCreatePatient.TabIndex = 35;
-            btnCreatePatient.Text = "Maak";
-            btnCreatePatient.UseVisualStyleBackColor = true;
+            label11.AutoSize = true;
+            label11.Location = new Point(43, 220);
+            label11.Name = "label11";
+            label11.Size = new Size(169, 20);
+            label11.TabIndex = 45;
+            label11.Text = "Medische geschoedenis:";
             // 
-            // btnDeletePatient
+            // tbTelefoon
             // 
-            btnDeletePatient.Location = new Point(419, 492);
-            btnDeletePatient.Name = "btnDeletePatient";
-            btnDeletePatient.Size = new Size(105, 29);
-            btnDeletePatient.TabIndex = 36;
-            btnDeletePatient.Text = "Verwijderen";
-            btnDeletePatient.UseVisualStyleBackColor = true;
+            tbTelefoon.Location = new Point(218, 170);
+            tbTelefoon.Name = "tbTelefoon";
+            tbTelefoon.Size = new Size(125, 27);
+            tbTelefoon.TabIndex = 44;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(41, 170);
+            label10.Name = "label10";
+            label10.Size = new Size(125, 20);
+            label10.TabIndex = 43;
+            label10.Text = "Telefoonnummer:";
             // 
             // tbPatientEmail
             // 
@@ -340,37 +342,40 @@
             label8.TabIndex = 37;
             label8.Text = "Naam:";
             // 
-            // tbTelefoon
+            // btnDeletePatient
             // 
-            tbTelefoon.Location = new Point(218, 170);
-            tbTelefoon.Name = "tbTelefoon";
-            tbTelefoon.Size = new Size(125, 27);
-            tbTelefoon.TabIndex = 44;
+            btnDeletePatient.Location = new Point(419, 492);
+            btnDeletePatient.Name = "btnDeletePatient";
+            btnDeletePatient.Size = new Size(105, 29);
+            btnDeletePatient.TabIndex = 36;
+            btnDeletePatient.Text = "Verwijderen";
+            btnDeletePatient.UseVisualStyleBackColor = true;
             // 
-            // label10
+            // btnCreatePatient
             // 
-            label10.AutoSize = true;
-            label10.Location = new Point(41, 170);
-            label10.Name = "label10";
-            label10.Size = new Size(125, 20);
-            label10.TabIndex = 43;
-            label10.Text = "Telefoonnummer:";
+            btnCreatePatient.Location = new Point(218, 295);
+            btnCreatePatient.Name = "btnCreatePatient";
+            btnCreatePatient.Size = new Size(113, 29);
+            btnCreatePatient.TabIndex = 35;
+            btnCreatePatient.Text = "Maak";
+            btnCreatePatient.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // lbPatient
             // 
-            label11.AutoSize = true;
-            label11.Location = new Point(43, 220);
-            label11.Name = "label11";
-            label11.Size = new Size(169, 20);
-            label11.TabIndex = 45;
-            label11.Text = "Medische geschoedenis:";
+            lbPatient.AutoSize = true;
+            lbPatient.Location = new Point(419, 37);
+            lbPatient.Name = "lbPatient";
+            lbPatient.Size = new Size(57, 20);
+            lbPatient.TabIndex = 34;
+            lbPatient.Text = "Patient:";
             // 
-            // tbMedical
+            // listBoxPatient
             // 
-            tbMedical.Location = new Point(218, 213);
-            tbMedical.Name = "tbMedical";
-            tbMedical.Size = new Size(125, 27);
-            tbMedical.TabIndex = 46;
+            listBoxPatient.FormattingEnabled = true;
+            listBoxPatient.Location = new Point(419, 69);
+            listBoxPatient.Name = "listBoxPatient";
+            listBoxPatient.Size = new Size(185, 384);
+            listBoxPatient.TabIndex = 33;
             // 
             // CreateUser
             // 
@@ -383,10 +388,10 @@
             tabControl1.ResumeLayout(false);
             Gebruiker.ResumeLayout(false);
             Gebruiker.PerformLayout();
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -394,19 +399,19 @@
 
         private TabControl tabControl1;
         private TabPage Gebruiker;
-        private Button btnDelete;
+        private Button btnDeleteUser;
         private Label label6;
         private ListBox lbAdmin;
         private GroupBox groupBox1;
         private RadioButton rbDoctor;
         private RadioButton rbAdmin;
-        private Button btnCreate;
+        private Button btnCreateUser;
         private Label label5;
         private ListBox lbDoctors;
-        private ComboBox cbRegio;
-        private TextBox tbPassword;
-        private TextBox tbEmail;
-        private TextBox tbName;
+        private ComboBox cbRegioUser;
+        private TextBox tbPasswordUser;
+        private TextBox tbEmailUser;
+        private TextBox tbNameUser;
         private Label label4;
         private Label label3;
         private Label label2;
