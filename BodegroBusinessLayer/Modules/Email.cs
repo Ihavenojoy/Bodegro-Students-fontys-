@@ -22,7 +22,7 @@ namespace BLL.Modules
                     client.UseDefaultCredentials = false;
 
                     // Hardcoded credentials (less secure way)
-                    NetworkCredential credentials = new NetworkCredential("bodegro.students.fontys@outlook.com", "nkgl uupe dtuw mqhz");
+                    NetworkCredential credentials = new NetworkCredential("bodegro.students.fontys@outlook.com", "urff rjxk arsw ywqg");
                     client.EnableSsl = true;
                     client.Credentials = credentials;
 
