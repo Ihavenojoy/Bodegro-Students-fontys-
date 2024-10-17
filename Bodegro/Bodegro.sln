@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroMailLibary", "..\Bod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "..\BodegroDTO\DTO.csproj", "{AC7598B8-6294-4CFD-86B5-E4CA56B38260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodegroInterfaces", "..\BodegroInterfaces\BodegroInterfaces.csproj", "{1DF7688D-2727-4884-96BC-324D58A7BA41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroInterfaces", "..\BodegroInterfaces\BodegroInterfaces.csproj", "{1DF7688D-2727-4884-96BC-324D58A7BA41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodegroTestPlan", "..\BodegroTestPlan\BodegroTestPlan.csproj", "{4CE6837B-C27D-45E7-B5AB-3917013607E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{1DF7688D-2727-4884-96BC-324D58A7BA41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DF7688D-2727-4884-96BC-324D58A7BA41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DF7688D-2727-4884-96BC-324D58A7BA41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE6837B-C27D-45E7-B5AB-3917013607E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE6837B-C27D-45E7-B5AB-3917013607E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE6837B-C27D-45E7-B5AB-3917013607E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE6837B-C27D-45E7-B5AB-3917013607E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
