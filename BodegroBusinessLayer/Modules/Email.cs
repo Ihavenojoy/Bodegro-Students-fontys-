@@ -15,14 +15,14 @@ namespace BLL.Modules
             bool isDone = false;
             try
             {
-                using (SmtpClient client = new SmtpClient("smtp-mail.outlook.com", 587))
+                using (SmtpClient client = new SmtpClient("smtp.gmail.com", 587))
                 {
                     client.Port = 587;
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client.UseDefaultCredentials = false;
 
                     // Hardcoded credentials (less secure way)
-                    NetworkCredential credentials = new NetworkCredential("bodegro.students.fontys@outlook.com", "nkgl uupe dtuw mqhz");
+                    NetworkCredential credentials = new NetworkCredential("no.reply.grodebo@gmail.com", "urff rjxk arsw ywqg");
                     client.EnableSsl = true;
                     client.Credentials = credentials;
 

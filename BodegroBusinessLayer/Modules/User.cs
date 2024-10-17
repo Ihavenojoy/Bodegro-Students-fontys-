@@ -26,12 +26,6 @@ namespace BLL.Modules
             this.Email = Email;
         }
         
-        public User Verification()
-        {
-            AdminDAL adminDAL = new AdminDAL();
-            DoctorDAL doctorDAL = new DoctorDAL();
-            return null;
-        }
         public override string ToString()
         {
             return Name;
