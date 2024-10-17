@@ -24,12 +24,11 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (ID, Name, Description, Total, Admin_ID) VALUES (@ID, @Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description, Total, Admin_ID) VALUES (@Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@ID", protocol.ID);
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
                         cmd.Parameters.AddWithValue("@Total", protocol.StepCount);
