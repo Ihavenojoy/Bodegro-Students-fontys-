@@ -18,7 +18,7 @@ namespace BLL.Containers
         public void AddProtocol(string Name, string Description, User user)
         {
             Protocol protocol = new Protocol(Name, Description, user.ID);
-            Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
+            //Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
         }
     }
 }

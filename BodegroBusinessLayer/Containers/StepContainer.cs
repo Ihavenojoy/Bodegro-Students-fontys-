@@ -20,7 +20,7 @@ namespace BLL.Containers
         public void AddStep(Step step)
         {
             StepDTO stepDTO = stepConverter.ObjectToDTO(step);
-            Dal.CreateStep(stepDTO);
+            //Dal.CreateStep(stepDTO);
         }
     }
 }

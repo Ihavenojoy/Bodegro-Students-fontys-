@@ -18,7 +18,6 @@ namespace BLL.Containers
         ISubscription DAL = new SubscriptionDAL();
         ProtocolContainer ProtocolContainer;
         private Doctor doctor;
-        private List<Patient> patients = new List<Patient> { };
         private List<Protocol> protocols = new List<Protocol> { };
         public SubscriptionContainer(Doctor doctor)
         {
@@ -28,12 +27,12 @@ namespace BLL.Containers
         public List<string> GetPatients()
         {// Komt in de database layer
             List<string> list = new List<string>();
-            for (int i = 0; i < patients.Count; i++)
+            for (int i = 0; i < doctor.Patients.Count; i++)
             {
                 for (int j = 0; j < doctor.Patients.Count(); j++)
                 {
-                    if (patients[i].IDCheck(doctor.Patients[j].ID))
-                    list.Add(patients[i].ToString());
+                    if (doctor.Patients[i].IDCheck(doctor.Patients[j].ID))
+                    list.Add(doctor.Patients[i].ToString());
                 }
             }
             return list;
@@ -56,9 +55,9 @@ namespace BLL.Containers
                 }
                 Protocol prot = protocols[proto];
                 int patien = 0;
-                for (int i = 0; i < patients.Count; i++)
+                for (int i = 0; i < doctor.Patients.Count; i++)
                 {
-                    if (patients[i].Name == patient) { patien = i; }
+                    if (doctor.Patients[i].Name == patient) { patien = i; }
                 }
                 Subscription subscription = new Subscription(SDate, prot);
                 //patients[patien].Subscriptions.Add(subscription);
@@ -72,10 +71,10 @@ namespace BLL.Containers
             Patient Mock2 = new Patient(1,"Henk", "henkklaasen@gmail.com", 54746438, medicalHistory, 1);
             Patient Mock3 = new Patient(2,"Jan", "janjansen@gmail.com", 98379626, medicalHistory, 1);
             Patient Mock4 = new Patient(3,"Tom", "tomvandelest@gmail.com", 74725952, medicalHistory, 1);
-            patients.Add(Mock1);
-            patients.Add(Mock2);
-            patients.Add(Mock3);
-            patients.Add(Mock4);
+            doctor.Patients.Add(Mock1);
+            doctor.Patients.Add(Mock2);
+            doctor.Patients.Add(Mock3);
+            doctor.Patients.Add(Mock4);
             Protocol Mock5 = new Protocol("Diabetus", "", 0);
             Protocol Mock6 = new Protocol("Hepatitus", "", 0);
             Protocol Mock7 = new Protocol("Ebola", "", 0);
