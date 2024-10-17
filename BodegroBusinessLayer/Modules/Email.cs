@@ -21,7 +21,6 @@ namespace BLL.Modules
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client.UseDefaultCredentials = false;
 
-                    // Hardcoded credentials (less secure way)
                     NetworkCredential credentials = new NetworkCredential("no.reply.grodebo@gmail.com", "urff rjxk arsw ywqg");
                     client.EnableSsl = true;
                     client.Credentials = credentials;
