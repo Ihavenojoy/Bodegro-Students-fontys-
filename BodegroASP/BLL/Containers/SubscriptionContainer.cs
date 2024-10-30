@@ -21,12 +21,12 @@ namespace Domain.Containers
         PatientConverter PatConverter = new();
         ProtocolConverter protConverter = new();
         private Doctor doctor;
-        public SubscriptionContainer(Doctor doctor)
+        public SubscriptionContainer(Doctor doctor, SubscriptionDAL Sub, PatientDAL Pat, ProtocolDAL Prot)
         {
             this.doctor = doctor;
-            SubDAL = new SubscriptionDAL();
-            PatDal = new PatientDAL();
-            ProtDal = new ProtocolDAL();
+            SubDAL = Sub;
+            PatDal = Pat;
+            ProtDal = Prot;
         }
         public List<Patient> GetPatients()
         {

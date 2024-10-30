@@ -12,8 +12,11 @@ namespace Domain.Containers
 {
     public class PatientContainer
     {
-        private IPatient Dal = new PatientDAL();
-        private SubscriptionContainer SubscriptionContainer;
+        private IPatient Dal;
+        public PatientContainer(PatientDAL dal) 
+        {
+            Dal = dal;
+        }
         public List<Patient> AskAllPatientsOfDoctor(User user)
         {
             List<Patient> patients = new List<Patient>();

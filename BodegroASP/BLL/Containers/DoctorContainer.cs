@@ -16,9 +16,13 @@ namespace Domain.Containers
     {
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
-        DoctorDAL doctorDAL = new DoctorDAL();
+        DoctorDAL doctorDAL;
         private readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
+        public DoctorContainer(DoctorDAL DAL) 
+        {
+            doctorDAL = DAL;
+        }
         public int CreateDoctor(Doctor doctor, string password)
         {
             if (iDoctor.DoctorExists(doctor.Email))

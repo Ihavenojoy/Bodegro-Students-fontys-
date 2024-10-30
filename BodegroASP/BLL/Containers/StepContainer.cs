@@ -14,8 +14,12 @@ namespace Domain.Containers
 {
     public class StepContainer
     {
-        IStep Dal = new StepDAL();
+        IStep Dal;
         StepDTOConverter stepConverter = new StepDTOConverter();
+        public StepContainer(StepDAL dal)
+        {
+            Dal = dal;
+        }
         public void AddStep(Step step)
         {
             StepDTO stepDTO = stepConverter.ObjectToDTO(step);

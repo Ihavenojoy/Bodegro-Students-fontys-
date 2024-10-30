@@ -13,8 +13,12 @@ namespace Domain.Containers
 {
     public class ProtocolContainer
     {
-        IProtocol Dal = new ProtocolDAL();
+        IProtocol Dal;
         ProtocolDTOConverter protocolDTOConverter = new ProtocolDTOConverter();
+        public ProtocolContainer(ProtocolDAL dal) 
+        { 
+            Dal = dal;
+        }
         public void AddProtocol(Protocol protocol)
         {
             Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
