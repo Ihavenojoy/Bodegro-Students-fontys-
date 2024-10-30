@@ -11,5 +11,7 @@ namespace BodegroInterfaces
     {
         public DoctorDTO DoctorLogin(string Emailinput, string PassWordInput);
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput);
+        public void TwofactorActivation(string UserEmail);
+        public bool TwofactorCheck(string Userinput);
     }
 }
