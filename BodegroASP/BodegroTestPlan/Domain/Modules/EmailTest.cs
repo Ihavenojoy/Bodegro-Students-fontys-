@@ -16,8 +16,12 @@ namespace BodegroTestPlan.BBL_Test.Modules_Test
         public void SendEmailTest()
         {
             //Arange
-            MailMessage mailMessage = new MailMessage();
+            
             Email email = new Email();
+            string emailSender = "bodegro.students.fontys@outlook.com";
+            string emailReceiver = "Luuk.heesbeen@hotmail.com";
+            string subject = "Testing the email";
+            MailMessage mailMessage = email.MailMessage(emailSender, emailReceiver, subject);
 
             //Act
             bool emailsent = email.SendEmail(mailMessage);

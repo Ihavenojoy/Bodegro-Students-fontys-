@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestPlan.BLL_Test.BLL_Modules
+namespace BodegroTestPlan.BLL_Test.BLL_Modules
 {
     [TestClass]
-    internal class PatientTest
+    public class UserTest
     {
-
+        //[TestMethod]
     }
 }
