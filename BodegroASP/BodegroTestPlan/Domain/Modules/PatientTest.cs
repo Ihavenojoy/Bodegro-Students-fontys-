@@ -1,4 +1,4 @@
-﻿using BLL.Modules;
+﻿using Domain.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;

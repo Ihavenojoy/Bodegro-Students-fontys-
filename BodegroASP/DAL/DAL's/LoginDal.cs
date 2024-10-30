@@ -1,8 +1,8 @@
-﻿using BodegroInterfaces;
+﻿using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using Bodegro2FALibrary;
+using Twofactor;
 
 namespace DAL
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
-using BodegroInterfaces;
+using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
 

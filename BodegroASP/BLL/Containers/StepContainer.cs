@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using BLL.Modules;
+using Domain.Modules;
 using DTO;
-using BodegroInterfaces;
-using BLL.DTOConverter;
-using BLL.ObjectConverter;
+using Interfaces;
+using Domain.DTOConverter;
+using Domain.ObjectConverter;
 
 
 namespace Domain.Containers

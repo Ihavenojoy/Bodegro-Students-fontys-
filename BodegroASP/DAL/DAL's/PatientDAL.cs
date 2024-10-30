@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
-using BodegroInterfaces;
+using Interfaces;
 
 namespace DAL
 {

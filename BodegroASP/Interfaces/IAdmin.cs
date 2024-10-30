@@ -1,4 +1,4 @@
-﻿namespace BodegroInterfaces;
+﻿namespace Interfaces;
 using DTO;
     public interface IAdmin
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bodegro2FALibrary
+namespace Twofactor
 {
     public class Code32
     {

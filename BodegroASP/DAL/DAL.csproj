@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\2FA\2FA.csproj" />
+    <ProjectReference Include="..\2FA\TwoFactor.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
   </ItemGroup>

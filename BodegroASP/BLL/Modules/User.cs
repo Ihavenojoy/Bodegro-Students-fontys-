@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 
-namespace BLL.Modules
+namespace Domain.Modules
 {
     public abstract class User
     {
