@@ -1,6 +1,4 @@
-﻿using BLL.Containers;
-using BLL.DTOConverter;
-using BLL.Enums;
+﻿using BLL.DTOConverter;
 using BLL.Modules;
 using DTO;
 using System;
@@ -13,7 +11,7 @@ namespace BLL.ObjectConverter
 {
     public class PatientConverter
     {
-        private Patient DTOToObject(PatientDTO patientDTO)
+        public Patient DTOToObject(PatientDTO patientDTO)
         {
             Patient patient = new Patient(
                 patientDTO.ID,

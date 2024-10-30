@@ -11,13 +11,15 @@ namespace BLL.Modules
     {
         public DateTime StartDate { get; set; }
         public Protocol Protocol { get; set; }
+        public Patient Patient { get; set; }
         public int StepsTaken { get; set; }
 
-        public Subscription(DateTime StarDate, Protocol Protocol)
+        public Subscription(DateTime StarDate, Protocol Protocol, Patient patient)
         {
             StartDate = StarDate;
             this.Protocol = Protocol;
             StepsTaken = 0;
+            Patient = patient;
         }
     }
 }

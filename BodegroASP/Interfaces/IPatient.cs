@@ -10,5 +10,7 @@ namespace BodegroInterfaces
     public interface IPatient
     {
         public int CreatePatient(PatientDTO patient);
+        public List<int> GetPatientIDOfDoctor(int id);
+        public PatientDTO GetPatient(int id, int DoctorID);
     }
 }

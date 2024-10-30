@@ -1,6 +1,6 @@
-﻿using BLL.Containers;
-using BLL.DTOConverter;
+﻿using BLL.DTOConverter;
 using BLL.Modules;
+using DAL;
 using DTO;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,16 @@ namespace BLL.ObjectConverter
         {
             Protocol protocol = new Protocol(protocolDTO.Name, protocolDTO.Description, protocolDTO.Admin_ID);
             return protocol;
+        }
+        public List<Protocol> DTOToObjectList(List<ProtocolDTO> protocolDTOList)
+        {
+            List<Protocol> protocolList = new List<Protocol>();
+            foreach (var sub in protocolDTOList)
+            {
+                Protocol protocol = new Protocol(sub.Name, sub.Description, sub.Admin_ID);
+                protocolList.Add(protocol);
+            }
+            return protocolList;
         }
     }
 }

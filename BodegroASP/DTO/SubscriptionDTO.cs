@@ -10,13 +10,7 @@ namespace DTO
     {
         public DateTime StartDate { get; set; }
         public ProtocolDTO Protocol { get; set; }
+        public PatientDTO Patient { get; set; }
         public int StepsTaken { get; set; }
-
-        public SubscriptionDTO(DateTime StarDate, ProtocolDTO Protocol) 
-        { 
-            this.StartDate = StarDate;
-            this.Protocol = Protocol;
-            StepsTaken = 0;
-        }
     }
 }

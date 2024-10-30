@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace BodegroInterfaces
 {
     public interface ISubscription
     {
+        public int CreateSubscription(SubscriptionDTO subscriptionDTO);
     }
 }
