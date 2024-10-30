@@ -58,7 +58,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description, Total, Admin_ID FROM Product";
+                string select = "SELECT ID, Name, Description, Total, Admin_ID FROM Protocol";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -86,7 +86,7 @@ namespace DAL
 
             catch (SqlException ex)
             {
-                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
                 return null;
             }
             finally
