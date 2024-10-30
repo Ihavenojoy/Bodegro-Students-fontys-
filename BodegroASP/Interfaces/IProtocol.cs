@@ -10,5 +10,6 @@ namespace BodegroInterfaces
     public interface IProtocol
     {
         public int CreateProtocol(ProtocolDTO protocol);
+        public List<ProtocolDTO> GetAllProtocols();
     }
 }
