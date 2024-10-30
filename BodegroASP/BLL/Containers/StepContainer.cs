@@ -10,7 +10,6 @@ using BodegroInterfaces;
 using BLL.DTOConverter;
 using BLL.ObjectConverter;
 
-
 namespace Domain.Containers
 {
     public class StepContainer
