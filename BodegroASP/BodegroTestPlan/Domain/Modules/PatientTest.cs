@@ -15,8 +15,7 @@ namespace TestPlan.BLL_Test.BLL_Modules
         {
             //Arrange
             int i = 6;
-            List<string> list = new List<string>();
-            Patient patient = new Patient(6,"","",0,list,0);
+            Patient patient = new Patient(6,"","",0,"",0);
             //ACT
             bool check = patient.IDCheck(6);
             //Assert

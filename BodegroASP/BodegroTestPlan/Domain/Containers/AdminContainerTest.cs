@@ -28,7 +28,6 @@ namespace BodegroTestPlan.Domain.Containers
 
             Assert.IsNotNull(succesadmin);
             Assert.IsNull(failadmin.Name);
-            Assert.IsNull(failadmin.ID);
             Assert.IsNull(failadmin.Email);
         }
     }

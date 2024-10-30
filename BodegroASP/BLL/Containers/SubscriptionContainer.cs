@@ -51,14 +51,12 @@ namespace Domain.Containers
         public bool Datumcheck(DateTime StartDate, DateTime EndDate)
         {
             bool check = false;
-            int SDay = Convert.ToInt32(GetDate(StartDate.ToString(), 0, 1));
-            int EDay = Convert.ToInt32(GetDate(EndDate.ToString(), 0, 1));
-            string[] Ssubs = StartDate.ToString().Split('/');
-            string[] Esubs = EndDate.ToString().Split('/');
-            int SMonth = Convert.ToInt32(Ssubs[1]);
-            int EMonth = Convert.ToInt32(Esubs[1]);
-            int SYear = Convert.ToInt32(GetDate(Ssubs[2], 0, 3));
-            int EYear = Convert.ToInt32(GetDate(Esubs[2], 0, 3));
+            int SDay = StartDate.Day;
+            int EDay = EndDate.Day;
+            int SMonth = StartDate.Month;
+            int EMonth = EndDate.Month;
+            int SYear = StartDate.Year;
+            int EYear = EndDate.Year;
             if (SDay <= EDay && SMonth <= EMonth && SYear <= EYear)
             {
                 check = true;

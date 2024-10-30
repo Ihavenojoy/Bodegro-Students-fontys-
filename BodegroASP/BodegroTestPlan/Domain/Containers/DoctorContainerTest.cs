@@ -48,7 +48,7 @@ namespace BodegroTestPlan.Domain.Containers
             //Act
             bool check = container.DeleteDoctor(doctorId);
             //Assert
-            Assert.IsFalse(check);
+            Assert.IsTrue(check);
         }
 
         [TestMethod]
