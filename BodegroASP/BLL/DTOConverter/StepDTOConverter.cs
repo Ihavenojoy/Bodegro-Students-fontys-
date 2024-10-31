@@ -13,8 +13,10 @@ namespace Domain.DTOConverter
         public StepDTO ObjectToDTO(Step step)
         {
             StepDTO stepDTO = new StepDTO { 
+                ID = step.ID,
+                ProtocolID = step.ProtocolID,
                 Name = step.Name,
-                Discription = step.Discription,
+                Description = step.Description,
                 Order = step.Order,
                 Test = step.Test,
                 Interval = step.Interval
