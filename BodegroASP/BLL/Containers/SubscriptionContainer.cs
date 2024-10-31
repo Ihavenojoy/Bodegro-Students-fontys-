@@ -40,7 +40,7 @@ namespace Domain.Containers
         }
         public List<Protocol> GetProtocols()
         {
-            return protConverter.DTOToObjectList(ProtDal.GetAllProtocols());
+            return protConverter.ListDTOToListObject(ProtDal.GetAllProtocols());
         }
         public string AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
         {

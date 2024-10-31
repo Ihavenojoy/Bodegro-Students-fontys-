@@ -17,7 +17,7 @@ namespace Domain.Containers
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         DoctorDAL doctorDAL;
-        private readonly IDoctor iDoctor = new DoctorDAL();
+        public readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
         public DoctorContainer(DoctorDAL DAL) 
         {
@@ -56,7 +56,7 @@ namespace Domain.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(objectConverter.ConvertToDomain(doctor));
+                doctors.Add(objectConverter.DTOToObject(doctor));
             }
             return doctors;
         }
@@ -65,7 +65,7 @@ namespace Domain.Containers
         public Doctor Login(string EmailInput, string PasswordInput)
         {
             DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
-            Doctor doctoracc = objectConverter.ConvertToDomain(doctorDTO);
+            Doctor doctoracc = objectConverter.DTOToObject(doctorDTO);
             return doctoracc;
         }
     }
