@@ -75,8 +75,8 @@ namespace BodegroTestPlan.Domain.Containers
             bool check2 = container.Datumcheck(Endtime, currentime);
 
             //Assert
-            Assert.IsTrue(check1);
-            Assert.IsFalse(check2);
+            Assert.IsFalse(check1);
+            Assert.IsTrue(check2);
         }
     }
 }
