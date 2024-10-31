@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -15,7 +16,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void Login()
         {
             //Arrange
-            AdminContainer adminContainer = new AdminContainer();
+            AdminDAL admindal = new AdminDAL();
+            AdminContainer adminContainer = new AdminContainer(admindal);
             string Emailinput = "Abed007";
             string PasswordInput = "1234";
             string WrongEmail = "432423";
