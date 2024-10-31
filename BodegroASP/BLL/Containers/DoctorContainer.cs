@@ -9,6 +9,7 @@ using DTO;
 using Domain.DTOConverter;
 using Domain.ObjectConverter;
 using Interfaces;
+using System.Data;
 
 namespace Domain.Containers
 {
@@ -19,7 +20,7 @@ namespace Domain.Containers
         DoctorDAL doctorDAL;
         private readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
-        public DoctorContainer(DoctorDAL DAL) 
+        public DoctorContainer(IDoctor DAL) 
         {
             doctorDAL = DAL;
         }

@@ -13,7 +13,7 @@ namespace Domain.Containers
     public class PatientContainer
     {
         private IPatient Dal;
-        public PatientContainer(PatientDAL dal) 
+        public PatientContainer(IPatient dal) 
         {
             Dal = dal;
         }

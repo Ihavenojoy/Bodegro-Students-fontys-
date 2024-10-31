@@ -18,7 +18,7 @@ namespace Domain.Containers
         public AdminConverter AdminConverter = new AdminConverter();
         public readonly ILogin _InlogService = new LoginDal();
         IAdmin AdminDAL;
-        public AdminContainer(AdminDAL DAL)
+        public AdminContainer(IAdmin DAL)
         {
             AdminDAL = DAL;
         }
