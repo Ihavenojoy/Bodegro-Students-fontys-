@@ -57,7 +57,11 @@ namespace Domain.Containers
             int EMonth = EndDate.Month;
             int SYear = StartDate.Year;
             int EYear = EndDate.Year;
-            if (SDay <= EDay && SMonth <= EMonth && SYear <= EYear)
+            if (StartDate.Hour < EndDate.Hour && SDay <= EDay && SMonth <= EMonth && SYear <= EYear)
+            {
+                check = true;
+            }
+            if (SDay < EDay && SMonth <= EMonth && SYear <= EYear)
             {
                 check = true;
             }

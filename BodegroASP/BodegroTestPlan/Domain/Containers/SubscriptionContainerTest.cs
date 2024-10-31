@@ -1,4 +1,5 @@
 ﻿using BLL.Modules;
+using DAL;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,10 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL SubDal = new();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL ProtocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
 
             //Act
             List<Patient> patiens = container.GetPatients();
@@ -36,7 +40,10 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL SubDal = new();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL ProtocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
 
             //Act
             List<Protocol> list = container.GetProtocols();
@@ -57,7 +64,10 @@ namespace BodegroTestPlan.Domain.Containers
             DateTime currentime = DateTime.Now;
             DateTime Endtime = DateTime.Today;
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL SubDal = new();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL ProtocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
 
             //Act
             bool check1 = container.Datumcheck(currentime, Endtime);

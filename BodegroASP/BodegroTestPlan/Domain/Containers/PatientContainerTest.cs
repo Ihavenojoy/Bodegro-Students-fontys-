@@ -1,4 +1,5 @@
 ﻿using BLL.Modules;
+using DAL;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void AskAllPatientsOfDoctor()
         {
             //Arrange
-            PatientContainer Container = new PatientContainer();
+            PatientDAL patientDAL = new PatientDAL();
+            PatientContainer Container = new PatientContainer(patientDAL);
             User user = new Doctor(5, "timo", "timoo",Regio.Ijsselland,1,true);
 
             //Act

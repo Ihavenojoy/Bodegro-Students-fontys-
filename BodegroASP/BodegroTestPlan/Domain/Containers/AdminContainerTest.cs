@@ -1,4 +1,5 @@
 ﻿using BLL.Modules;
+using DAL;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void Login()
         {
             //Arrange
-            AdminContainer adminContainer = new AdminContainer();
+            AdminDAL adminDAL = new AdminDAL();
+            AdminContainer adminContainer = new AdminContainer(adminDAL);
             string Emailinput = "Abed007";
             string PasswordInput = "1234";
             string WrongEmail = "432423";

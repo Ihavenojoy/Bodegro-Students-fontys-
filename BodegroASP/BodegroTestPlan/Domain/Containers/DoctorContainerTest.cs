@@ -1,4 +1,5 @@
 ﻿using BLL.Modules;
+using DAL;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void CreatDoctor()
         {
             //Arrange
-            DoctorContainer container = new DoctorContainer();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorContainer container = new DoctorContainer(doctorDAL);
             Doctor doctor = new Doctor(6,"","",Regio.Drente,0,false);
             string Password = "password";
             //Act
@@ -30,7 +32,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void DoctorExist()
         {
             //Arrange
-            DoctorContainer container = new DoctorContainer();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorContainer container = new DoctorContainer(doctorDAL);
             string doctormail = "1";
             //Act
             bool check = container.DoctorExists(doctormail);
@@ -43,7 +46,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void DeleteDoctor()
         {
             //Arrange
-            DoctorContainer container = new DoctorContainer();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorContainer container = new DoctorContainer(doctorDAL);
             int doctorId = 4;
             //Act
             bool check = container.DeleteDoctor(doctorId);
@@ -55,7 +59,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void GetAllDoctors()
         {
             //Arrange
-            DoctorContainer container = new DoctorContainer();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorContainer container = new DoctorContainer(doctorDAL);
             //Act
             List<Doctor> check = container.GetAllDoctors();
             //Assert
@@ -66,7 +71,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void Login()
         {
             //Arrange
-            DoctorContainer container = new DoctorContainer();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorContainer container = new DoctorContainer(doctorDAL);
             string Emailinput = "timoo";
             string PasswordInput = "Welkom01???";
             string WrongEmail = "432423";
