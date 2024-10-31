@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using BLL;
 using DTO;
-using BodegroInterfaces;
+using Interfaces;
 using System.Security.Cryptography.X509Certificates;
-using BLL.DTOConverter;
-using BLL.ObjectConverter;
-using BLL.Modules;
+using Domain.DTOConverter;
+using Domain.ObjectConverter;
+using Domain.Modules;
 
 namespace Domain.Containers
 {

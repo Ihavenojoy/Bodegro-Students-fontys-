@@ -1,11 +1,11 @@
-﻿using BLL.Modules;
-using DAL;
+﻿using Domain.Modules;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -17,8 +17,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void AskAllPatientsOfDoctor()
         {
             //Arrange
-            PatientDAL patientDAL = new PatientDAL();
-            PatientContainer Container = new PatientContainer(patientDAL);
+            PatientContainer Container = new PatientContainer();
             User user = new Doctor(5, "timo", "timoo",Regio.Ijsselland,1,true);
 
             //Act

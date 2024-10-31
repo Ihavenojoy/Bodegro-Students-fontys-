@@ -1,11 +1,11 @@
-﻿using BLL.Modules;
-using DAL;
+﻿using Domain.Modules;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -18,10 +18,7 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionDAL SubDal = new();
-            PatientDAL patientDAL = new PatientDAL();
-            ProtocolDAL ProtocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(doctor);
 
             //Act
             List<Patient> patiens = container.GetPatients();
@@ -40,10 +37,7 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionDAL SubDal = new();
-            PatientDAL patientDAL = new PatientDAL();
-            ProtocolDAL ProtocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(doctor);
 
             //Act
             List<Protocol> list = container.GetProtocols();
@@ -64,10 +58,7 @@ namespace BodegroTestPlan.Domain.Containers
             DateTime currentime = DateTime.Now;
             DateTime Endtime = DateTime.Today;
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionDAL SubDal = new();
-            PatientDAL patientDAL = new PatientDAL();
-            ProtocolDAL ProtocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, SubDal, patientDAL, ProtocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(doctor);
 
             //Act
             bool check1 = container.Datumcheck(currentime, Endtime);

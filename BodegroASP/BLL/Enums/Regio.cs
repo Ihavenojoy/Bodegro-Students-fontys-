@@ -1,4 +1,5 @@
-﻿public enum Regio
+﻿namespace Domain.Enums;
+public enum Regio
 {
     Zuid_Holland_Zuid,
     Amsterdam,

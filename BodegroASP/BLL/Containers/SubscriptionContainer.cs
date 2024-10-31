@@ -1,4 +1,4 @@
-﻿using BLL.Modules;
+﻿using Domain.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DTO;
-using BodegroInterfaces;
-using BLL.ObjectConverter;
-using BLL.DTOConverter;
+using Interfaces;
+using Domain.ObjectConverter;
+using Domain.DTOConverter;
 
 namespace Domain.Containers
 {

@@ -1,4 +1,4 @@
-﻿using BLL.Modules;
+﻿using Domain.Modules;
 using DTO;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOConverter
+namespace Domain.DTOConverter
 {
     public class SubscriptionDTOConverter
     {

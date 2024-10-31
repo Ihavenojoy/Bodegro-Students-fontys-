@@ -1,11 +1,11 @@
-﻿using BLL.Modules;
-using DAL;
+﻿using Domain.Modules;
 using Domain.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -17,8 +17,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void CreatDoctor()
         {
             //Arrange
-            DoctorDAL doctorDAL = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctorDAL);
+            DoctorContainer container = new DoctorContainer();
             Doctor doctor = new Doctor(6,"","",Regio.Drente,0,false);
             string Password = "password";
             //Act
@@ -32,8 +31,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void DoctorExist()
         {
             //Arrange
-            DoctorDAL doctorDAL = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctorDAL);
+            DoctorContainer container = new DoctorContainer();
             string doctormail = "1";
             //Act
             bool check = container.DoctorExists(doctormail);
@@ -46,8 +44,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void DeleteDoctor()
         {
             //Arrange
-            DoctorDAL doctorDAL = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctorDAL);
+            DoctorContainer container = new DoctorContainer();
             int doctorId = 4;
             //Act
             bool check = container.DeleteDoctor(doctorId);
@@ -59,8 +56,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void GetAllDoctors()
         {
             //Arrange
-            DoctorDAL doctorDAL = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctorDAL);
+            DoctorContainer container = new DoctorContainer();
             //Act
             List<Doctor> check = container.GetAllDoctors();
             //Assert
@@ -71,8 +67,7 @@ namespace BodegroTestPlan.Domain.Containers
         public void Login()
         {
             //Arrange
-            DoctorDAL doctorDAL = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctorDAL);
+            DoctorContainer container = new DoctorContainer();
             string Emailinput = "timoo";
             string PasswordInput = "Welkom01???";
             string WrongEmail = "432423";

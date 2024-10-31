@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using Domain.Enums;
 
-namespace BLL.Modules
+namespace Domain.Modules
 {
     public class Doctor : User
     {

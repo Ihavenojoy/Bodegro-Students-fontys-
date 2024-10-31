@@ -1,4 +1,4 @@
-﻿namespace Bodegro2FALibrary;
+﻿namespace Twofactor;
 using System.Security.Cryptography;
 public class Generate
 {
