@@ -51,39 +51,23 @@ namespace Domain.Containers
         public bool Datumcheck(DateTime StartDate, DateTime EndDate)
         {
             bool check = false;
-            int SDay = StartDate.Day;
-            int EDay = EndDate.Day;
-            int SMonth = StartDate.Month;
-            int EMonth = EndDate.Month;
-            int SYear = StartDate.Year;
-            int EYear = EndDate.Year;
-            if (StartDate.Hour < EndDate.Hour && SDay <= EDay && SMonth <= EMonth && SYear <= EYear)
+            if (StartDate.Hour < EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
             {
                 check = true;
             }
-            if (SDay < EDay && SMonth <= EMonth && SYear <= EYear)
+            else if (StartDate.Day < EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
             {
                 check = true;
             }
-            else if (SMonth < EMonth && SYear <= EYear)
+            else if (StartDate.Month < EndDate.Month && StartDate.Year <= EndDate.Year)
             {
                 check = true;
             }
-            else if (SYear < EYear)
+            else if (StartDate.Year < EndDate.Year)
             {
                 check = true;
             }
             return check;
-        }
-        private string GetDate(string input, int min, int max)
-        {
-            string Date = "";
-            for (int i = min; i <= max; i++)
-            {
-                char temp = input[i];
-                Date += temp;
-            }
-            return Date;
         }
     }
 }
