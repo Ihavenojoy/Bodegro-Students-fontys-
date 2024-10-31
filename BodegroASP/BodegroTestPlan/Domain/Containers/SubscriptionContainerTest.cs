@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Enums;
+using DAL;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -18,7 +19,10 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL protocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
 
             //Act
             List<Patient> patiens = container.GetPatients();
@@ -37,7 +41,10 @@ namespace BodegroTestPlan.Domain.Containers
         {
             //Arrange
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL protocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
 
             //Act
             List<Protocol> list = container.GetProtocols();
@@ -58,7 +65,10 @@ namespace BodegroTestPlan.Domain.Containers
             DateTime currentime = DateTime.Now;
             DateTime Endtime = DateTime.Today;
             Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
-            SubscriptionContainer container = new SubscriptionContainer(doctor);
+            SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL protocolDAL = new ProtocolDAL();
+            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL,protocolDAL);
 
             //Act
             bool check1 = container.Datumcheck(currentime, Endtime);
