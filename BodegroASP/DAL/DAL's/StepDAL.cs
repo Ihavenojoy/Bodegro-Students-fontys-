@@ -31,7 +31,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Protocol_ID", stepDTO.ProtocolID);
                         cmd.Parameters.AddWithValue("@Name", stepDTO.Name);
                         cmd.Parameters.AddWithValue("@Test", stepDTO.Test);
-                        cmd.Parameters.AddWithValue("@Description", stepDTO.Discription);
+                        cmd.Parameters.AddWithValue("@Description", stepDTO.Description);
                         cmd.Parameters.AddWithValue("@Steps_Number", stepDTO.Order);
                         cmd.Parameters.AddWithValue("@Interval", stepDTO.Interval);
 

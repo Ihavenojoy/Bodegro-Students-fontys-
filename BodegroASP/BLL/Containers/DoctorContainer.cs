@@ -32,7 +32,7 @@ namespace Domain.Containers
             }
             else
             {
-                return iDoctor.CreateDoctor(docConverter.ConvertToDTO(doctor), password);
+                return iDoctor.CreateDoctor(docConverter.ObjectToDTO(doctor), password);
             }
         }
         public bool DoctorExists(string email)

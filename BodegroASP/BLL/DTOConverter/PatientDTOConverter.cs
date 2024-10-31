@@ -15,6 +15,7 @@ namespace Domain.DTOConverter
         {
             return new PatientDTO
             {
+                ID = patient.ID,
                 Name = patient.Name,
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber,

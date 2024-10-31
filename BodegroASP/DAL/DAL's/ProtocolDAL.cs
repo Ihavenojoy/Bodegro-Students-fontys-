@@ -24,14 +24,13 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (Name, Description, Total, Admin_ID) VALUES (@Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description, Admin_ID) VALUES (@Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
-                        cmd.Parameters.AddWithValue("@Total", protocol.StepCount);
                         cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
 
                         conn.Open();
@@ -74,7 +73,6 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    StepCount = Convert.ToInt32(reader["Total"]),
                                     Admin_ID = Convert.ToInt32(reader["Admin_ID"])
                                 };
                                 list.Add(protocol);
