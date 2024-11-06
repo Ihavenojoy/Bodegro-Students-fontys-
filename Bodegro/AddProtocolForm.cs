@@ -1,5 +1,5 @@
-﻿using BLL.Containers;
-using BLL.Modules;
+﻿using Domain.Containers;
+using Domain.Modules;
 using BodegroInterfaces;
 using System;
 using System.Collections.Generic;
@@ -10,16 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DAL;
 
 namespace Bodegro
 {
     public partial class AddProtocolForm : Form
     {
-        ProtocolContainer protocolContainer = new ProtocolContainer();
-        StepContainer stepContainer = new StepContainer();
+        ProtocolContainer protocolContainer;
+        StepContainer stepContainer;
         Admin user;
         public AddProtocolForm(Admin User)
         {
+            ProtocolDAL protocolDAL = new ProtocolDAL();
+            protocolContainer = new ProtocolContainer(protocolDAL);
+            StepDAL stepDAL = new StepDAL();
+            stepContainer = new StepContainer(stepDAL);
             InitializeComponent();
             user = User;
         }
@@ -27,20 +32,17 @@ namespace Bodegro
         {
             if (NameBox.Text != null && DescriptionBox.Text != null && StepAmount.Value > 0)
             {
-                Protocol protocol = new Protocol(NameBox.Text, DescriptionBox.Text, user.ID);
+                List<Step> steps = new List<Step>();
+                Protocol protocol = new Protocol(NameBox.Text, DescriptionBox.Text, steps, user.ID);
                 protocolContainer.AddProtocol(protocol);
                 this.Hide();
-                List<Step> steps = new List<Step>();
                 for (int i = 0; i < StepAmount.Value; i++)
                 {
                     AddStepForm addStepForm = new AddStepForm(protocol);
-                    if (addStepForm.ShowDialog() == DialogResult.OK)
-                    {
-
-                    }
-                    steps.Add(addStepForm.GetStep());
+                    if (addStepForm.ShowDialog() == DialogResult.OK) { }
+                    protocol.Steps.Add(addStepForm.GetStep());
                 }
-                ErrorCheck(steps);
+                ErrorCheck(protocol.Steps);
                 Form1 form1 = new Form1();
                 form1.Closed += (s, args) => this.Close();
                 form1.Show();

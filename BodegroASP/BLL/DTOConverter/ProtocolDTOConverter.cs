@@ -13,6 +13,7 @@ namespace Domain.DTOConverter
         public ProtocolDTO ObjectToDTO(Protocol protocol)
         {
             ProtocolDTO protocoldto = new ProtocolDTO {
+                ID = protocol.ID,
                 Name = protocol.Name,
                 Description = protocol.Description,
                 Admin_ID = protocol.Admin_ID

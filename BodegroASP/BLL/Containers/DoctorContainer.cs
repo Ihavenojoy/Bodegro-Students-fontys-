@@ -9,6 +9,7 @@ using DTO;
 using Domain.DTOConverter;
 using Domain.ObjectConverter;
 using Interfaces;
+using System.Data;
 
 namespace Domain.Containers
 {
@@ -16,9 +17,13 @@ namespace Domain.Containers
     {
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
-        DoctorDAL doctorDAL = new DoctorDAL();
+        IDoctor doctorDAL;
         private readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
+        public DoctorContainer(IDoctor DAL) 
+        {
+            doctorDAL = DAL;
+        }
         public int CreateDoctor(Doctor doctor, string password)
         {
             if (iDoctor.DoctorExists(doctor.Email))
@@ -27,7 +32,7 @@ namespace Domain.Containers
             }
             else
             {
-                return iDoctor.CreateDoctor(docConverter.ConvertToDTO(doctor), password);
+                return iDoctor.CreateDoctor(docConverter.ObjectToDTO(doctor), password);
             }
         }
         public bool DoctorExists(string email)

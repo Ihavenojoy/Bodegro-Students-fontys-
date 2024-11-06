@@ -10,10 +10,11 @@ namespace Domain.DTOConverter
 {
     public class DoctorDTOConverter
     {
-        public DoctorDTO ConvertToDTO(Doctor doctor)
+        public DoctorDTO ObjectToDTO(Doctor doctor)
         {
             return new DoctorDTO
             {
+                ID = doctor.ID,
                 Name = doctor.Name,
                 Email = doctor.Email,
                 IsActive = doctor.IsActive,

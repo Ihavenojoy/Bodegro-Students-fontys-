@@ -12,8 +12,19 @@ namespace Domain.ObjectConverter
     {
         public Step DTOToObject(StepDTO stepDTO)
         {
-            Step step = new Step(stepDTO.ID, stepDTO.ProtocolID, stepDTO.Name, stepDTO.Discription, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
+            Step step = new Step(stepDTO.ID, stepDTO.ProtocolID, stepDTO.Name, stepDTO.Description, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
             return step;
+        }
+
+        public List<Step> ListDTOToListObject(List<StepDTO> stepDTOs)
+        {
+            List<Step> list = new List<Step>();
+            foreach (var stepDTO in stepDTOs)
+            {
+                Step step = new Step(stepDTO.ID, stepDTO.ProtocolID, stepDTO.Name, stepDTO.Description, stepDTO.Order, stepDTO.Test, stepDTO.Interval);
+                list.Add(step);
+            }
+            return list;
         }
     }
 }

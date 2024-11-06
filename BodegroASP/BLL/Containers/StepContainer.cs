@@ -10,13 +10,16 @@ using Interfaces;
 using Domain.DTOConverter;
 using Domain.ObjectConverter;
 
-
 namespace Domain.Containers
 {
     public class StepContainer
     {
-        IStep Dal = new StepDAL();
+        IStep Dal;
         StepDTOConverter stepConverter = new StepDTOConverter();
+        public StepContainer(IStep dal)
+        {
+            Dal = dal;
+        }
         public void AddStep(Step step)
         {
             StepDTO stepDTO = stepConverter.ObjectToDTO(step);

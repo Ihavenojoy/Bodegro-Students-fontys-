@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BLL\Domain.csproj" />
+    <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
-﻿using BLL.Modules;
-using BLL.Containers;
+﻿using Domain.Modules;
+using Domain.Containers;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,27 +15,41 @@ namespace Bodegro
 {
     public partial class NewSubscription : Form
     {
-        SubscriptionContainer domain;
+        SubscriptionContainer SubscriptionDomain;
+        PatientContainer PatientDomain;
+        ProtocolContainer ProtocolDomain;
         Doctor doctor;
         public NewSubscription(Doctor doctor)
         {
-            InitializeComponent();
-            domain = new SubscriptionContainer(doctor);
+            InitializeComponent(); 
+            SubscriptionDAL subscriptionDAL = new();
+            PatientDAL patientDAL = new();
+            ProtocolDAL protocolDAL = new();
+            SubscriptionDomain = new(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            PatientDomain = new(patientDAL);
+            ProtocolDomain = new(protocolDAL);
             this.doctor = doctor;
             UpdateUI();
         }
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(domain.AddSubscription(ProtocolBox.Text, PatientBox.Text, StartDate.Value));
+            if (ProtocolBox.SelectedItem is Protocol && PatientBox.SelectedItem is Patient)
+            {
+                SubscriptionDomain.AddSubscription((Protocol)ProtocolBox.SelectedItem, (Patient)PatientBox.SelectedItem, StartDate.Value);
+                MessageBox.Show("Succesvol toegevoegd");
+            }
+            else
+            {
+                MessageBox.Show("Er is iets fout gegaan");
+            }
         }
-        private void UpdateUI()
-        {
-            foreach (var sub in domain.GetProtocols())
+        private void UpdateUI(){
+            foreach (var sub in ProtocolDomain.GetProtocols())
             {
                 ProtocolBox.Items.Add(sub);
             }
-            foreach (var sub in domain.GetPatients())
+            foreach (var sub in PatientDomain.GetPatients(doctor))
             {
                 PatientBox.Items.Add(sub);
             }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Enums;
+using DAL;
 
 namespace BodegroTestPlan.Domain.Containers
 {
@@ -17,7 +18,8 @@ namespace BodegroTestPlan.Domain.Containers
         public void AskAllPatientsOfDoctor()
         {
             //Arrange
-            PatientContainer Container = new PatientContainer();
+            PatientDAL patient = new PatientDAL();
+            PatientContainer Container = new PatientContainer(patient);
             User user = new Doctor(5, "timo", "timoo",Regio.Ijsselland,1,true);
 
             //Act
