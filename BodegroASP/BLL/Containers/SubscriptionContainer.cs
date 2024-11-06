@@ -19,7 +19,7 @@ namespace Domain.Containers
         IProtocol ProtDal;
         SubscriptionDTOConverter SubConverter = new();
         PatientConverter PatConverter = new();
-        ProtocolConverter protConverter = new();
+        ProtocolConverter ProtConverter = new();
         private Doctor doctor;
         public SubscriptionContainer(Doctor doctor, ISubscription Sub, IPatient Pat, IProtocol Prot)
         {
@@ -40,7 +40,7 @@ namespace Domain.Containers
         }
         public List<Protocol> GetProtocols()
         {
-            return protConverter.ListDTOToListObject(ProtDal.GetAllProtocols());
+            return ProtConverter.DTOToObjectList(ProtDal.GetAllProtocols());
         }
         public string AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
         {
