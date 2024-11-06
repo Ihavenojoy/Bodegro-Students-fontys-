@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroTestPlan", "BodegroT
 		{D6F24713-AF0B-4505-9990-D4A0AFE294D8} = {D6F24713-AF0B-4505-9990-D4A0AFE294D8}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bodegro", "..\Bodegro\Bodegro.csproj", "{275E997F-159D-4168-800A-25F3E5AB2EA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{A1DA12B2-FE31-49BE-A61A-DEEEDEED0CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1DA12B2-FE31-49BE-A61A-DEEEDEED0CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1DA12B2-FE31-49BE-A61A-DEEEDEED0CE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{275E997F-159D-4168-800A-25F3E5AB2EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{275E997F-159D-4168-800A-25F3E5AB2EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{275E997F-159D-4168-800A-25F3E5AB2EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{275E997F-159D-4168-800A-25F3E5AB2EA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,25 +12,25 @@ namespace Domain.Modules
         public int ID { get; set; }
         public int ProtocolID { get; set; }
         public string Name { get; set; }
-        public string Discription { get; set; }
+        public string Description { get; set; }
         public int Order {  get; set; }
         public string Test { get; set; }
         public int Interval { get; set; }
-        public Step(int ID,int ProtocolID, string Name, string Discription, int Order, string Test, int Interval)
+        public Step(int ID,int ProtocolID, string Name, string Description, int Order, string Test, int Interval)
         {
             this.ID = ID;
             this.ProtocolID = ProtocolID;
             this.Name = Name;
-            this.Discription = Discription;
+            this.Description = Description;
             this.Order = Order;
             this.Test = Test;
             this.Interval = Interval;
         }
-        public Step(int ProtocolID, string Name, string Discription, int Order, string Test, int Interval)
+        public Step(int ProtocolID, string Name, string Description, int Order, string Test, int Interval)
         {
             this.ProtocolID = ProtocolID;
             this.Name = Name;
-            this.Discription = Discription;
+            this.Description = Description;
             this.Order = Order;
             this.Test = Test;
             this.Interval = Interval;
