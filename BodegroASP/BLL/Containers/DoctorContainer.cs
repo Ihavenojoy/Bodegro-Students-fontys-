@@ -9,6 +9,7 @@ using DTO;
 using Domain.DTOConverter;
 using Domain.ObjectConverter;
 using Interfaces;
+using System.Data;
 
 namespace Domain.Containers
 {
@@ -16,10 +17,10 @@ namespace Domain.Containers
     {
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
-        DoctorDAL doctorDAL;
-        public readonly IDoctor iDoctor = new DoctorDAL();
+        IDoctor doctorDAL;
+        private readonly IDoctor iDoctor = new DoctorDAL();
         public readonly ILogin _InlogService = new LoginDal();
-        public DoctorContainer(DoctorDAL DAL) 
+        public DoctorContainer(IDoctor DAL) 
         {
             doctorDAL = DAL;
         }
@@ -56,7 +57,7 @@ namespace Domain.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(objectConverter.DTOToObject(doctor));
+                doctors.Add(objectConverter.ConvertToDomain(doctor));
             }
             return doctors;
         }
@@ -65,7 +66,7 @@ namespace Domain.Containers
         public Doctor Login(string EmailInput, string PasswordInput)
         {
             DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
-            Doctor doctoracc = objectConverter.DTOToObject(doctorDTO);
+            Doctor doctoracc = objectConverter.ConvertToDomain(doctorDTO);
             return doctoracc;
         }
     }

@@ -16,7 +16,7 @@ namespace Domain.Containers
     {
         IStep Dal;
         StepDTOConverter stepConverter = new StepDTOConverter();
-        public StepContainer(StepDAL dal)
+        public StepContainer(IStep dal)
         {
             Dal = dal;
         }

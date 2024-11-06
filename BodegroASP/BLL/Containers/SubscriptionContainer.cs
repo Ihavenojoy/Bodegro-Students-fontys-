@@ -21,7 +21,7 @@ namespace Domain.Containers
         PatientConverter PatConverter = new();
         ProtocolConverter protConverter = new();
         private Doctor doctor;
-        public SubscriptionContainer(Doctor doctor, SubscriptionDAL Sub, PatientDAL Pat, ProtocolDAL Prot)
+        public SubscriptionContainer(Doctor doctor, ISubscription Sub, IPatient Pat, IProtocol Prot)
         {
             this.doctor = doctor;
             SubDAL = Sub;
@@ -51,11 +51,7 @@ namespace Domain.Containers
         public bool Datumcheck(DateTime StartDate, DateTime EndDate)
         {
             bool check = false;
-            if (StartDate.Hour < EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
-            {
-                check = true;
-            }
-            else if (StartDate.Day < EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            if (StartDate.Year < EndDate.Year)
             {
                 check = true;
             }
@@ -63,7 +59,19 @@ namespace Domain.Containers
             {
                 check = true;
             }
-            else if (StartDate.Year < EndDate.Year)
+            else if (StartDate.Day < EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Hour < EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Minute < EndDate.Minute && StartDate.Hour <= EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Second < EndDate.Second && StartDate.Minute <= EndDate.Minute && StartDate.Hour <= EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
             {
                 check = true;
             }

@@ -15,7 +15,7 @@ namespace Domain.Containers
     {
         IProtocol Dal;
         ProtocolDTOConverter protocolDTOConverter = new ProtocolDTOConverter();
-        public ProtocolContainer(ProtocolDAL dal) 
+        public ProtocolContainer(IProtocol dal) 
         { 
             Dal = dal;
         }
