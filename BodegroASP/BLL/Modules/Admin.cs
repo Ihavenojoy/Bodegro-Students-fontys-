@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DAL;
 using DTO;
 
-namespace BLL.Modules
+namespace Domain.Modules
 {
     public class Admin : User
     {

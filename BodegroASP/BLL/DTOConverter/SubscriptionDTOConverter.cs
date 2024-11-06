@@ -1,5 +1,4 @@
-﻿using BLL.Containers;
-using BLL.Modules;
+﻿using Domain.Modules;
 using DTO;
 using System;
 using System.Collections.Generic;
@@ -7,20 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.DTOConverter
+namespace Domain.DTOConverter
 {
     public class SubscriptionDTOConverter
     {
-        ProtocolDTOConverter protocolDTOConverter;
-        public List<SubscriptionDTO> ObjectToDTO(List<Subscription> subscriptions)
+        ProtocolDTOConverter protocolDTOConverter = new();
+        PatientDTOConverter patientDTOConverter = new();
+        public SubscriptionDTO ObjectToDTO(Subscription subscription)
         {
-            List<SubscriptionDTO> list = new List<SubscriptionDTO>();
-            foreach (Subscription subscription in subscriptions)
+            SubscriptionDTO subscriptionDTO = new SubscriptionDTO
             {
-                SubscriptionDTO subscriptionDTO = new SubscriptionDTO(subscription.StartDate, protocolDTOConverter.ObjectToDTO(subscription.Protocol));
-                list.Add(subscriptionDTO);
-            }
-            return list;
+                StartDate = subscription.StartDate,
+                Protocol = protocolDTOConverter.ObjectToDTO(subscription.Protocol),
+                Patient = patientDTOConverter.ObjectToDTO(subscription.Patient)
+            };
+            return subscriptionDTO;
         }
     }
 }

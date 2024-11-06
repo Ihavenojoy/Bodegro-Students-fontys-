@@ -1,12 +1,14 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroInterfaces
+namespace Interfaces
 {
     public interface ISubscription
     {
+        public int CreateSubscription(SubscriptionDTO subscriptionDTO);
     }
 }

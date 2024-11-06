@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using BLL.Modules;
-using BodegroInterfaces;
+using Domain.Modules;
+using Interfaces;
 using DTO;
-using BLL.DTOConverter;
+using Domain.DTOConverter;
 
 namespace Domain.Containers
 {

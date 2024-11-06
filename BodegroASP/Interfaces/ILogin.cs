@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BodegroInterfaces
+namespace Interfaces
 {
     public interface ILogin
     {
         public DoctorDTO DoctorLogin(string Emailinput, string PassWordInput);
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput);
+        public void TwofactorActivation(string UserEmail);
+        public bool TwofactorCheck(string Userinput);
     }
 }

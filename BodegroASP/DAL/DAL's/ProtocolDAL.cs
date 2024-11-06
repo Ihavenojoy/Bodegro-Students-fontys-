@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BodegroInterfaces;
+using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
 
@@ -52,46 +52,49 @@ namespace DAL
         }
 
         // Method to read a product record by ID
-        //public ProductDTO GetProductById(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string select = "SELECT ID, Type, Standard_Value FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(select, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
+        public List<ProtocolDTO> GetAllProtocols()
+        {
+            List<ProtocolDTO> list = new List<ProtocolDTO>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Description, Total, Admin_ID FROM Protocol";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
 
-        //                conn.Open();
-        //                using (SqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    if (reader.Read())
-        //                    {
-        //                        return new ProductDTO
-        //                        {
-        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value"))
-        //                        };
-        //                    }
-        //                    return null;
-        //                }
-        //            }
-        //        }
-        //    }
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProtocolDTO protocol = new ProtocolDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Description = Convert.ToString(reader["ID"]),
+                                    StepCount = Convert.ToInt32(reader["Total"]),
+                                    Admin_ID = Convert.ToInt32(reader["Admin_ID"])
+                                };
+                                list.Add(protocol);
+                            }
+                        }
+                    }
+                }
+            }
 
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
 
         //// Method to update a product record
         //public bool UpdateProduct(ProductDTO product)

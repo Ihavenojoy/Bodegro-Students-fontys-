@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
-using BodegroInterfaces;
+using Interfaces;
 
 namespace DAL
 {
@@ -52,46 +52,84 @@ namespace DAL
         }
 
         // Method to read a product record by ID
-        //public ProductDTO GetProductById(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string select = "SELECT ID, Type, Standard_Value FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(select, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
+        public List<int> GetPatientIDOfDoctor(int id)
+        {
+            List<int> list = new List<int>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT Doctor_ID, Patient_ID FROM Doctor_Patient WHERE Doctor_ID = @Doctor_ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Doctor_ID", id);
 
-        //                conn.Open();
-        //                using (SqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    if (reader.Read())
-        //                    {
-        //                        return new ProductDTO
-        //                        {
-        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value"))
-        //                        };
-        //                    }
-        //                    return null;
-        //                }
-        //            }
-        //        }
-        //    }
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(Convert.ToInt32(reader["Patient_ID"]));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+        public PatientDTO GetPatient(int id, int DoctorID)
+        {
+            PatientDTO patient = new PatientDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
 
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                patient = new PatientDTO 
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                    Doctor_ID = DoctorID
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return patient;
+        }
 
         //// Method to update a product record
         //public bool UpdateProduct(ProductDTO product)

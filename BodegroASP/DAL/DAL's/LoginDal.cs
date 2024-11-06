@@ -1,12 +1,8 @@
-﻿using DTO;
+﻿using Interfaces;
+using DTO;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BodegroInterfaces;
+using Twofactor;
 
 namespace DAL
 {
@@ -37,7 +33,7 @@ namespace DAL
                         {
                             if (reader.Read())
                             {
-                                doctorDTO= new DoctorDTO
+                                doctorDTO = new DoctorDTO
                                 {
                                     ID = (int)reader["ID"],
                                     Name = (string)reader["Name"],
@@ -101,6 +97,16 @@ namespace DAL
             }
             return adminDTO;
         }
-
+        public void TwofactorActivation(string UserEmail)
+        {
+            int OTP = Convert.ToInt32(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30));
+        }
+        public bool TwofactorCheck(string Userinput)
+        {
+            return false;
+        }
     }
 }
+
+
+
