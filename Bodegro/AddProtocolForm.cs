@@ -39,10 +39,7 @@ namespace Bodegro
                 for (int i = 0; i < StepAmount.Value; i++)
                 {
                     AddStepForm addStepForm = new AddStepForm(protocol);
-                    if (addStepForm.ShowDialog() == DialogResult.OK)
-                    {
-
-                    }
+                    if (addStepForm.ShowDialog() == DialogResult.OK) { }
                     protocol.Steps.Add(addStepForm.GetStep());
                 }
                 ErrorCheck(protocol.Steps);

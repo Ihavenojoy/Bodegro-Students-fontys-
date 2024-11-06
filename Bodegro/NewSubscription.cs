@@ -15,15 +15,19 @@ namespace Bodegro
 {
     public partial class NewSubscription : Form
     {
-        SubscriptionContainer domain;
+        SubscriptionContainer SubscriptionDomain;
+        PatientContainer PatientDomain;
+        ProtocolContainer ProtocolDomain;
         Doctor doctor;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent(); 
-            SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
-            PatientDAL patientDAL = new PatientDAL();
-            ProtocolDAL protocolDAL = new ProtocolDAL();
-            domain = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            SubscriptionDAL subscriptionDAL = new();
+            PatientDAL patientDAL = new();
+            ProtocolDAL protocolDAL = new();
+            SubscriptionDomain = new(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            PatientDomain = new(patientDAL);
+            ProtocolDomain = new(protocolDAL);
             this.doctor = doctor;
             UpdateUI();
         }
@@ -32,16 +36,20 @@ namespace Bodegro
         {
             if (ProtocolBox.SelectedItem is Protocol && PatientBox.SelectedItem is Patient)
             {
-                MessageBox.Show(domain.AddSubscription((Protocol)ProtocolBox.SelectedItem, (Patient)PatientBox.SelectedItem, StartDate.Value));
+                SubscriptionDomain.AddSubscription((Protocol)ProtocolBox.SelectedItem, (Patient)PatientBox.SelectedItem, StartDate.Value);
+                MessageBox.Show("Succesvol toegevoegd");
+            }
+            else
+            {
+                MessageBox.Show("Er is iets fout gegaan");
             }
         }
-        private void UpdateUI()
-        {
-            foreach (var sub in domain.GetProtocols())
+        private void UpdateUI(){
+            foreach (var sub in ProtocolDomain.GetProtocols())
             {
                 ProtocolBox.Items.Add(sub);
             }
-            foreach (var sub in domain.GetPatients())
+            foreach (var sub in PatientDomain.GetPatients(doctor))
             {
                 PatientBox.Items.Add(sub);
             }
