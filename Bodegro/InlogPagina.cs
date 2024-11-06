@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain.Containers;
 using Domain.Modules;
-using BodegroInterfaces;
+using Interfaces;
 using DAL;
+using Domain.Enums;
 
 namespace Bodegro
 {
@@ -28,6 +29,7 @@ namespace Bodegro
             InitializeComponent();
             doctorContainer = new DoctorContainer(doctorDAL);
             adminContainer = new AdminContainer(adminDAL);
+            EmailInputUser.Text = "timHaiwan";
         }
         public bool inlog = false;
 
@@ -52,6 +54,21 @@ namespace Bodegro
                 if (twoFactorPage.Confirmation)
                 {
                     this.Close();
+                    if (Inlogaccount is Doctor doctortest)
+                    {
+                        Doctor doctor = (Doctor)Inlogaccount;
+                        MainPage mainPage = new MainPage((Doctor)Inlogaccount);
+                        mainPage.Show();
+                    }
+                    else if (Inlogaccount is Admin admintest)
+                    {
+                        Admin admin = (Admin)Inlogaccount;
+                        MainPage mainPage = new MainPage((Admin)Inlogaccount);
+                        mainPage.Show();
+                    }
+
+
+
                 }
             }
             

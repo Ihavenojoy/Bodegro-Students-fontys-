@@ -1,5 +1,5 @@
 namespace Bodegro;
-using Bodegro2FALibrary;
+using Twofactor;
 using Domain.Enums;
 using Domain.Modules;
 using System.Net.Mail;
@@ -11,6 +11,9 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         email = new Email();
+        InlogPagina inlog = new InlogPagina();
+        inlog.Show();
+        this.Shown += (s, e) => this.Hide();
     }
 
     private void TestButton_Click(object sender, EventArgs e)
@@ -25,16 +28,9 @@ public partial class Form1 : Form
         NewSubscription newSubscription = new NewSubscription(doctor);
         newSubscription.Closed += (s, args) => this.Close();
         newSubscription.Show();
-        InlogPagina inlog = new InlogPagina();
-        if (inlog.ShowDialog() == DialogResult.OK && inlog.inlog == true)
-        {
-
-        }
         AddProtocolForm addProtocolForm = new AddProtocolForm(admin);
         addProtocolForm.Closed += (s, args) => this.Close();
         addProtocolForm.Show();
-        CreateUser createUser = new CreateUser();
-        createUser.Show();
     }
 
     private void button1_Click(object sender, EventArgs e)
