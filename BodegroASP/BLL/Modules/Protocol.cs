@@ -12,7 +12,7 @@ namespace Domain.Modules
         public int ID { get;}
         public string Name { get; set; }
         public string Description { get; set; }
-        List<Step> Steps { get; set; }
+        public List<Step> Steps { get; set; }
         public int Admin_ID { get; set; }
 
         public Protocol(string Name, string Description, List<Step> Steps, int Admin_ID)

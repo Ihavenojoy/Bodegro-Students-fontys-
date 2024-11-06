@@ -7,20 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL.Containers;
-using BLL.Modules;
-using BLL.Enums;
+using Domain.Containers;
+using Domain.Modules;
+using Domain.Enums;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing.Text;
 using System.Text.RegularExpressions;
+using DAL;
 namespace Bodegro
 {
     public partial class CreateUser : Form
     {
-        DoctorContainer doctorContainer = new DoctorContainer();
+        DoctorContainer doctorContainer;
         public CreateUser()
         {
             InitializeComponent();
+            DoctorDAL doctorDAL = new DoctorDAL();
+            doctorContainer = new DoctorContainer(doctorDAL);
             LoadDoctors();
         }
         private bool IsValidPassword(string password)

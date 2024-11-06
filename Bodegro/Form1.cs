@@ -1,8 +1,7 @@
 namespace Bodegro;
 using Bodegro2FALibrary;
-using BLL.Enums;
-using BLL.Modules;
-using BLL;
+using Domain.Enums;
+using Domain.Modules;
 using System.Net.Mail;
 
 public partial class Form1 : Form

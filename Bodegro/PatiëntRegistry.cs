@@ -1,5 +1,5 @@
-﻿using BLL.Containers;
-using BLL.Modules;
+﻿using Domain.Containers;
+using Domain.Modules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

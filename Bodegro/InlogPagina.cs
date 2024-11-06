@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using BLL.Containers;
-using BLL.Modules;
+using Domain.Containers;
+using Domain.Modules;
 using BodegroInterfaces;
 using DAL;
 
@@ -19,14 +18,16 @@ namespace Bodegro
     public partial class InlogPagina : Form
     {
         public object Inlogaccount;
-        private readonly IDoctor _Doctoracces = new DoctorDAL();
-        private readonly IAdmin _Adminacces =  new AdminDAL();
-        private readonly DoctorContainer doctorContainer = new DoctorContainer();
-        private readonly AdminContainer adminContainer = new AdminContainer();
+        private readonly DoctorDAL doctorDAL = new DoctorDAL();
+        private readonly AdminDAL adminDAL =  new AdminDAL();
+        private readonly DoctorContainer doctorContainer;
+        private readonly AdminContainer adminContainer;
 
         public InlogPagina()
         {
             InitializeComponent();
+            doctorContainer = new DoctorContainer(doctorDAL);
+            adminContainer = new AdminContainer(adminDAL);
         }
         public bool inlog = false;
 
