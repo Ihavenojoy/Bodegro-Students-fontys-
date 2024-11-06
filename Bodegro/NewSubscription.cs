@@ -1,5 +1,6 @@
-﻿using BLL.Modules;
-using BLL.Containers;
+﻿using Domain.Modules;
+using Domain.Containers;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,15 +19,21 @@ namespace Bodegro
         Doctor doctor;
         public NewSubscription(Doctor doctor)
         {
-            InitializeComponent();
-            domain = new SubscriptionContainer(doctor);
+            InitializeComponent(); 
+            SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
+            PatientDAL patientDAL = new PatientDAL();
+            ProtocolDAL protocolDAL = new ProtocolDAL();
+            domain = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
             this.doctor = doctor;
             UpdateUI();
         }
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(domain.AddSubscription(ProtocolBox.Text, PatientBox.Text, StartDate.Value));
+            if (ProtocolBox.SelectedItem is Protocol && PatientBox.SelectedItem is Patient)
+            {
+                MessageBox.Show(domain.AddSubscription((Protocol)ProtocolBox.SelectedItem, (Patient)PatientBox.SelectedItem, StartDate.Value));
+            }
         }
         private void UpdateUI()
         {
