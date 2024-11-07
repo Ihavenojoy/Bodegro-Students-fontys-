@@ -57,7 +57,7 @@ namespace Domain.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(objectConverter.ConvertToDomain(doctor));
+                doctors.Add(objectConverter.DTOToObject(doctor));
             }
             return doctors;
         }
@@ -66,7 +66,7 @@ namespace Domain.Containers
         public Doctor Login(string EmailInput, string PasswordInput)
         {
             DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
-            Doctor doctoracc = objectConverter.ConvertToDomain(doctorDTO);
+            Doctor doctoracc = objectConverter.DTOToObject(doctorDTO);
             return doctoracc;
         }
     }

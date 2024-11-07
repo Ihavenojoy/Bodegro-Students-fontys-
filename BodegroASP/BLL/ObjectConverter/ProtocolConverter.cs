@@ -18,7 +18,7 @@ namespace Domain.ObjectConverter
             Protocol protocol = new Protocol(protocolDTO.Name, protocolDTO.Description, stepconverter.ListDTOToListObject(protocolDTO.Steps), protocolDTO.Admin_ID);
             return protocol;
         }
-        public List<Protocol> DTOToObjectList(List<ProtocolDTO> protocolDTOList)
+        public List<Protocol> ListDTOToListObject(List<ProtocolDTO> protocolDTOList)
         {
             List<Protocol> protocolList = new List<Protocol>();
             foreach (var sub in protocolDTOList)

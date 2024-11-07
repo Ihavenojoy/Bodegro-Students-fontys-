@@ -13,7 +13,7 @@ namespace Domain.ObjectConverter
     {
         ProtocolConverter protocolConverter = new();
         PatientConverter patientConverter = new();
-        public List<Subscription> DTOToObject(List<SubscriptionDTO> subscriptionsDTO)
+        public List<Subscription> ListDTOToListObject(List<SubscriptionDTO> subscriptionsDTO)
         {
             List<Subscription> list = new List<Subscription>();
             foreach (SubscriptionDTO subscriptionDTO in subscriptionsDTO)

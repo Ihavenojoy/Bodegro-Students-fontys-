@@ -11,7 +11,7 @@ namespace Domain.ObjectConverter
 {
     public class DoctorConverter
     {
-        public Doctor ConvertToDomain(DoctorDTO dto)
+        public Doctor DTOToObject(DoctorDTO dto)
         {
             Doctor doctor = new Doctor(
                 dto.ID,

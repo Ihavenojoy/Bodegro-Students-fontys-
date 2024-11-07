@@ -30,14 +30,14 @@
         {
             TestButton = new Button();
             button1 = new Button();
+            sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             SuspendLayout();
             // 
             // TestButton
             // 
-            TestButton.Location = new Point(409, 320);
-            TestButton.Margin = new Padding(3, 4, 3, 4);
+            TestButton.Location = new Point(358, 240);
             TestButton.Name = "TestButton";
-            TestButton.Size = new Size(86, 31);
+            TestButton.Size = new Size(75, 23);
             TestButton.TabIndex = 0;
             TestButton.Text = "Test";
             TestButton.UseVisualStyleBackColor = true;
@@ -45,22 +45,27 @@
             // 
             // button1
             // 
-            button1.Location = new Point(457, 156);
+            button1.Location = new Point(400, 117);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(82, 22);
             button1.TabIndex = 1;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // sqlCommand1
+            // 
+            sqlCommand1.CommandTimeout = 30;
+            sqlCommand1.EnableOptimizedParameterBinding = false;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(800, 450);
             Controls.Add(button1);
             Controls.Add(TestButton);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -70,5 +75,6 @@
 
         private Button TestButton;
         private Button button1;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
     }
 }

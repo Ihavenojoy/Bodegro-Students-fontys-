@@ -7,6 +7,7 @@ using DAL;
 using Domain.Modules;
 using Interfaces;
 using DTO;
+using System.Numerics;
 using Domain.ObjectConverter;
 
 namespace Domain.Containers
@@ -14,7 +15,7 @@ namespace Domain.Containers
     public class PatientContainer
     {
         private IPatient Dal;
-        PatientConverter Converter = new();
+        private PatientConverter objectconverter = new();
         public PatientContainer(IPatient dal) 
         {
             Dal = dal;
@@ -25,16 +26,18 @@ namespace Domain.Containers
             //foreach loop met de database waar PatientDTO wordt opgehaald en wordt Convert waarna het in de list komt
             return patients;
         }
-        public List<Patient> GetPatients(Doctor doctor)
+        public List<Patient> GetPatientsOfDoctor(Doctor doctor)
         {
             List<Patient> list = new List<Patient>();
             List<int> PatientIDs = Dal.GetPatientIDOfDoctor(doctor.ID);
-            for (int i = 0; i < PatientIDs.Count; i++)
+            foreach (int i in PatientIDs)
             {
-                list.Add(Converter.DTOToObject(Dal.GetPatient(PatientIDs[i], doctor.ID)));
+                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i, doctor.ID));
+                list.Add(patient);
             }
             return list;
         }
+        
 
     }
 }
