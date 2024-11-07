@@ -74,7 +74,13 @@ namespace Bodegro
 
         private void AddProtocolToPatientButton_Click(object sender, EventArgs e)
         {
+            NewSubscription newSubscription = new(doctor);
+            this.Hide();
+            if (newSubscription.ShowDialog() == DialogResult.OK)
+            {
 
+            }
+            this.Show();
         }
 
         private void CreatePatientButton_Click(object sender, EventArgs e)
@@ -129,6 +135,7 @@ namespace Bodegro
         private void ComboDoctorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateUI();
+            doctor = (Doctor)ComboDoctorBox.SelectedItem;
         }
         public void Firstdoctor()
         {

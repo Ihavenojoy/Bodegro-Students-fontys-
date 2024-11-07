@@ -23,7 +23,7 @@ namespace Domain.Containers
         }
         public List<Protocol> GetProtocols()
         {
-            return ProtConverter.DTOToObjectList(Dal.GetAllProtocols());
+            return ProtConverter.ListDTOToListObject(Dal.GetAllProtocols());
         }
         public void AddProtocol(Protocol protocol)
         {
