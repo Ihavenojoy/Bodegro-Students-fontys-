@@ -8,18 +8,18 @@ public class DatabaseConnection
 {
     private string connectionString = "TrustServerCertificate=True;Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;";
 
-    public string OpenConnection()
+    public bool ConnectionTest()
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             try
             {
                 connection.Open();
-                return "Connection succecsfull";
+                return true;
             }
             catch (SqlException ex)
             {
-                return $"Connection failure {Convert.ToString(ex)}";
+                return false;
             }
         }
     }
