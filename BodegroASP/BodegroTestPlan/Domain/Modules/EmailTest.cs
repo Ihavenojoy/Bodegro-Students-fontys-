@@ -18,7 +18,7 @@ namespace BodegroTestPlan.BBL_Test.Modules_Test
         {
             //Arange
             
-            Email email = new Email();
+            Email email = new Email("",EmailBody.TWOFACTOR);
             string emailSender = "bodegro.students.fontys@outlook.com";
             string emailReceiver = "Luuk.heesbeen@hotmail.com";
             string subject = "Testing the email";

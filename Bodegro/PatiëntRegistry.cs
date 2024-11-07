@@ -33,9 +33,12 @@ namespace Bodegro
         private List<Patient> PatiëntFill()
         {
             List<Patient> list = new List<Patient>();
-            foreach (Patient patient in _container.AskAllPatientsOfDoctor(user))
+            if (user is Doctor)
             {
-                list.Add(patient);
+                foreach (Patient patient in _container.GetPatientsOfDoctor((Doctor)user))
+                {
+                    list.Add(patient);
+                }
             }
             return list;
         }

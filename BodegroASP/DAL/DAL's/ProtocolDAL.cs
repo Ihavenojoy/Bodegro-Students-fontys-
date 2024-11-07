@@ -50,7 +50,6 @@ namespace DAL
             return insertedId;
         }
 
-        // Method to read a product record by ID
         public List<ProtocolDTO> GetAllProtocols()
         {
             List<ProtocolDTO> list = new List<ProtocolDTO>();

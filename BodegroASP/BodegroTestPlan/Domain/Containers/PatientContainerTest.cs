@@ -23,7 +23,7 @@ namespace BodegroTestPlan.Domain.Containers
             User user = new Doctor(5, "timo", "timoo",Regio.Ijsselland,1,true);
 
             //Act
-            List<Patient> list = Container.AskAllPatientsOfDoctor(user);
+            List<Patient> list = Container.GetPatientsOfDoctor((Doctor)user);
 
             //Assert
             Assert.IsNotNull(list);
