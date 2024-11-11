@@ -14,7 +14,8 @@ namespace Domain.Containers
 {
     public class ProtocolContainer
     {
-        IProtocol Dal;
+        IProtocol Dal; 
+        GetFromContainer GetSteps = new GetFromContainer();
         ProtocolDTOConverter protocolDTOConverter = new ();
         ProtocolConverter ProtConverter = new();
         public ProtocolContainer(IProtocol dal) 
@@ -23,7 +24,8 @@ namespace Domain.Containers
         }
         public List<Protocol> GetProtocols()
         {
-            return ProtConverter.ListDTOToListObject(Dal.GetAllProtocols());
+            List<Protocol> Protocols = GetSteps.AskStepsFormProtocol(ProtConverter.ListDTOToListObject(Dal.GetAllProtocols()));
+            return Protocols;
         }
         public void AddProtocol(Protocol protocol)
         {

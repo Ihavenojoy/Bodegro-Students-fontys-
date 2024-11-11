@@ -15,15 +15,20 @@ namespace Domain.Containers
     public class StepContainer
     {
         IStep Dal;
-        StepDTOConverter stepConverter = new StepDTOConverter();
+        StepDTOConverter stepDTOConverter = new StepDTOConverter();
+        StepConverter stepConverter = new StepConverter();
         public StepContainer(IStep dal)
         {
             Dal = dal;
         }
         public void AddStep(Step step)
         {
-            StepDTO stepDTO = stepConverter.ObjectToDTO(step);
+            StepDTO stepDTO = stepDTOConverter.ObjectToDTO(step);
             Dal.CreateStep(stepDTO);
+        }
+        public List<Step> GetStepsOfProtocol(Protocol protocol)
+        {
+            return stepConverter.ListDTOToListObject(Dal.GetStepsOfProtocol(protocol.ID));
         }
     }
 }
