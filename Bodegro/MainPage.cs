@@ -44,14 +44,14 @@ namespace Bodegro
         {
             List<Doctor> list = new List<Doctor>();
 
-            if (user is Admin admin)
+            if (user is Admin)
             {
                 foreach (Doctor doctor in _doctorContainer.GetAllDoctors())
                 {
                     list.Add(doctor);
                 }
             }
-            else if (user is Doctor doctor)
+            else if (user is Doctor)
             {
                 list.Add((Doctor)user);
             }
@@ -134,8 +134,8 @@ namespace Bodegro
 
         private void ComboDoctorBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateUI();
             doctor = (Doctor)ComboDoctorBox.SelectedItem;
+            UpdateUI();
         }
         public void Firstdoctor()
         {
