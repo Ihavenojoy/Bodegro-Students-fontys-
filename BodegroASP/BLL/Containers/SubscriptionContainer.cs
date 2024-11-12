@@ -15,32 +15,10 @@ namespace Domain.Containers
     public class SubscriptionContainer
     {
         ISubscription SubDAL;
-        IPatient PatDal;
-        IProtocol ProtDal;
         SubscriptionDTOConverter SubConverter = new();
-        PatientConverter PatConverter = new();
-        ProtocolConverter ProtConverter = new();
-        private Doctor doctor;
         public SubscriptionContainer(Doctor doctor, ISubscription Sub, IPatient Pat, IProtocol Prot)
         {
-            this.doctor = doctor;
             SubDAL = Sub;
-            PatDal = Pat;
-            ProtDal = Prot;
-        }
-        public List<Patient> GetPatients()
-        {
-            List<Patient> list = new List<Patient>();
-            List<int> PatientIDs = PatDal.GetPatientIDOfDoctor(doctor.ID);
-            for (int i = 0; i < PatientIDs.Count; i++)
-            {
-                list.Add(PatConverter.DTOToObject(PatDal.GetPatient(PatientIDs[i], doctor.ID)));
-            }
-            return list;
-        }
-        public List<Protocol> GetProtocols()
-        {
-            return ProtConverter.ListDTOToListObject(ProtDal.GetAllProtocols());
         }
         public string AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
         {

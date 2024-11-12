@@ -51,5 +51,48 @@ namespace DAL
             }
             return insertedId;
         }
+        public List<StepDTO> GetStepsOfProtocol(int protocolID)
+        {
+            List<StepDTO> list = new List<StepDTO>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string insert = "SELECT ID, Protocol_ID, Name, Test, Description, Steps_Number, Interval  FROM Step WHERE Protocol_ID = @Protocol_ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(insert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Protocol_ID", protocolID);
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                StepDTO step = new StepDTO 
+                                { 
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Test = Convert.ToString(reader["Test"]),
+                                    Description = Convert.ToString(reader["Description"]),
+                                    Order = Convert.ToInt32(reader["Steps_Number"]),
+                                    Interval = Convert.ToInt32(reader["Interval"])
+                                };
+                                list.Add(step);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while creating a protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
     }
 }
