@@ -18,30 +18,28 @@ namespace Domain.Containers
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         IDoctor doctorDAL;
-        private readonly IDoctor iDoctor = new DoctorDAL();
-        public readonly IUser _InlogService = new UserDal();
         public DoctorContainer(IDoctor DAL) 
         {
             doctorDAL = DAL;
         }
         public int CreateDoctor(Doctor doctor, string password)
         {
-            if (iDoctor.DoctorExists(doctor.Email))
+            if (doctorDAL.DoctorExists(doctor.Email))
             {
                 return -1;
             }
             else
             {
-                return iDoctor.CreateDoctor(docConverter.ObjectToDTO(doctor), password);
+                return doctorDAL.CreateDoctor(docConverter.ObjectToDTO(doctor), password);
             }
         }
         public bool DoctorExists(string email)
         {
-            return iDoctor.DoctorExists(email);
+            return doctorDAL.DoctorExists(email);
         }
         public bool DeleteDoctor(int doctorId)
         {
-            bool isDeleted = iDoctor.SoftDeleteDoctor(doctorId);
+            bool isDeleted = doctorDAL.SoftDeleteDoctor(doctorId);
             if (!isDeleted)
             {
                 return false;
@@ -53,7 +51,7 @@ namespace Domain.Containers
         public List<Doctor> GetAllDoctors()
         {
             List<Doctor> doctors = new();
-            List<DoctorDTO> doctorDTOS = iDoctor.GetAllDoctors();
+            List<DoctorDTO> doctorDTOS = doctorDAL.GetAllDoctors();
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
@@ -63,11 +61,6 @@ namespace Domain.Containers
         }
 
 
-        public Doctor Login(string EmailInput, string PasswordInput)
-        {
-            DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
-            Doctor doctoracc = objectConverter.DTOToObject(doctorDTO);
-            return doctoracc;
-        }
+        
     }
 }

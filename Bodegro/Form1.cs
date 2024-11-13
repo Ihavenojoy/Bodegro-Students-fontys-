@@ -3,6 +3,7 @@ using Twofactor;
 using Domain.Enums;
 using Domain.Modules;
 using System.Net.Mail;
+using DAL;
 
 public partial class Form1 : Form
 {
@@ -11,7 +12,7 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         email = new Email("",EmailBody.TWOFACTOR);
-        InlogPagina inlog = new InlogPagina();
+        InlogPagina inlog = new InlogPagina(new UserDal());
         inlog.Show();
         this.Shown += (s, e) => this.Hide();
     }

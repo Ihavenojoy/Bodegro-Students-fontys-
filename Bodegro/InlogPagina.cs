@@ -21,14 +21,12 @@ namespace Bodegro
         public object Inlogaccount;
         private readonly DoctorDAL doctorDAL = new DoctorDAL();
         private readonly AdminDAL adminDAL =  new AdminDAL();
-        private readonly DoctorContainer doctorContainer;
-        private readonly AdminContainer adminContainer;
+        private readonly UserContainer userContainer; 
 
-        public InlogPagina()
+        public InlogPagina(IUser context)
         {
             InitializeComponent();
-            doctorContainer = new DoctorContainer(doctorDAL);
-            adminContainer = new AdminContainer(adminDAL);
+            userContainer = new UserContainer(context);
             EmailInputUser.Text = "timHaiwan";
         }
         public bool inlog = false;
@@ -37,11 +35,11 @@ namespace Bodegro
         {
             string EmailInput = EmailInputUser.Text;
             string PasswordInput = PassWordInputUser.Text;
-            Inlogaccount = doctorContainer.Login(EmailInput, PasswordInput);
+            Inlogaccount = userContainer.DoctorLogin(EmailInput, PasswordInput);
 
             if (HasValidID(Inlogaccount) == false)
             {
-                Inlogaccount = adminContainer.Login(EmailInput, PasswordInput);
+                Inlogaccount = userContainer.AdminLogin(EmailInput, PasswordInput);
             }
             if (HasValidID(Inlogaccount))
             {
