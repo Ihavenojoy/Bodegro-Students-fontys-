@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Twofactor
 {
-    internal class Validation
+    public static class Validation
     {
         public static bool OTP(string secretKey, string inputCode, int digits = 6, int timeStep = 30, int allowedDrift = 1)
         {

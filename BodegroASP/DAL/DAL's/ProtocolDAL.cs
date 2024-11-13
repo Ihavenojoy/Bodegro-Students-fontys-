@@ -50,7 +50,6 @@ namespace DAL
             return insertedId;
         }
 
-        // Method to read a product record by ID
         public List<ProtocolDTO> GetAllProtocols()
         {
             List<ProtocolDTO> list = new List<ProtocolDTO>();
@@ -73,7 +72,8 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    Admin_ID = Convert.ToInt32(reader["Admin_ID"])
+                                    Admin_ID = Convert.ToInt32(reader["Admin_ID"]),
+                                    Steps = new List<StepDTO>()
                                 };
                                 list.Add(protocol);
                             }

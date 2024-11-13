@@ -17,13 +17,14 @@ namespace Domain.Containers
         ISubscription SubDAL;
         SubscriptionDTOConverter SubConverter = new();
         public SubscriptionContainer(Doctor doctor, ISubscription Sub, IPatient Pat, IProtocol Prot)
-        {// doctor, sub, pat en prot kunnen weg als we weeg allemaal gemerged zijn
+        {
             SubDAL = Sub;
         }
-        public void AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
+        public string AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
         {
             Subscription subscription = new(SDate, protocol, patient);
             SubDAL.CreateSubscription(SubConverter.ObjectToDTO(subscription));
+            return "Succesvol toegevoegt";
         }
         public bool Datumcheck(DateTime StartDate, DateTime EndDate)
         {

@@ -19,12 +19,19 @@ namespace Bodegro
     public partial class CreateUser : Form
     {
         DoctorContainer doctorContainer;
-        public CreateUser()
+        User user;
+        public CreateUser(int selectedtab,User user)
         {
             InitializeComponent();
             DoctorDAL doctorDAL = new DoctorDAL();
             doctorContainer = new DoctorContainer(doctorDAL);
             LoadDoctors();
+            this.tabControl1.SelectTab(selectedtab);
+            if (user is Doctor doctor)
+            {
+                    tabControl1.TabPages.RemoveAt(0);
+            }
+
         }
         private bool IsValidPassword(string password)
         {

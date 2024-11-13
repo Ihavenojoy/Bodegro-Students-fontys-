@@ -30,7 +30,7 @@ namespace Domain.Modules
             this.Steps = Steps;
             this.Admin_ID = Admin_ID;
         }
-        public string ToString()
+        public override string ToString()
         {
             return Name;
         }

@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bodegro2FALibrary\Bodegro2FALibrary.csproj" />
     <ProjectReference Include="..\BodegroASP\2FA\TwoFactor.csproj" />
     <ProjectReference Include="..\BodegroASP\BLL\Domain.csproj" />
     <ProjectReference Include="..\BodegroASP\DAL\DAL.csproj" />

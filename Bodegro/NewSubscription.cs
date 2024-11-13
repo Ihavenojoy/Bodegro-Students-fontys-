@@ -49,7 +49,7 @@ namespace Bodegro
             {
                 ProtocolBox.Items.Add(sub);
             }
-            foreach (var sub in PatientDomain.GetPatients(doctor))
+            foreach (var sub in PatientDomain.GetPatientsOfDoctor(doctor))
             {
                 PatientBox.Items.Add(sub);
             }
