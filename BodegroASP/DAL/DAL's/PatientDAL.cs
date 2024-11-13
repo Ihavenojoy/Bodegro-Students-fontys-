@@ -135,7 +135,7 @@ namespace DAL
         {
             List<PatientDTO> list = new List<PatientDTO>();
 
-            string select = "SELECT Doctor_ID, Patient_ID, Name, Email, PhoneNumber, MedicalHistory FROM Doctor_Patient";
+            string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Doctor_Patient";
 
             try
             {
