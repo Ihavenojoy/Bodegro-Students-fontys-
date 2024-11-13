@@ -22,11 +22,11 @@ namespace Domain.Containers
         {
             doctorDAL = DAL;
         }
-        public int CreateDoctor(Doctor doctor, string password)
+        public bool CreateDoctor(Doctor doctor, string password)
         {
             if (doctorDAL.DoctorExists(doctor.Email))
             {
-                return -1;
+                return false;
             }
             else
             {

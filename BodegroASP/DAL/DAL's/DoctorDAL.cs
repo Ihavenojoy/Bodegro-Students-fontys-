@@ -20,9 +20,9 @@ namespace DAL
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public int CreateDoctor(DoctorDTO doctor, string password)
+        public bool CreateDoctor(DoctorDTO doctor, string password)
         {
-            int insertedId = -1;
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -39,7 +39,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -52,7 +53,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
         public bool DoctorExists(string email)
         {

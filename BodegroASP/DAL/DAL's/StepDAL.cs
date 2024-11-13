@@ -18,9 +18,9 @@ namespace DAL
         {
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public int CreateStep(StepDTO stepDTO)
+        public bool CreateStep(StepDTO stepDTO)
         {
-            int insertedId = -1;
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -37,7 +37,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Interval", stepDTO.Interval);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -50,7 +51,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
         public List<StepDTO> GetStepsOfProtocol(int protocolID)
         {
@@ -71,7 +72,7 @@ namespace DAL
                             {
                                 StepDTO step = new StepDTO 
                                 { 
-                                    ID = Convert.ToInt32(reader["ID"]),
+                                    ID = (int)(reader["ID"]),
                                     ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Test = Convert.ToString(reader["Test"]),

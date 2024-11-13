@@ -24,9 +24,9 @@ namespace DAL
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public int CreateAdmin(AdminDTO admin,string Password)
+        public bool CreateAdmin(AdminDTO admin,string Password)
         {
-            int insertedId = -1;
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -40,7 +40,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Password", Password);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -53,7 +54,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput)
