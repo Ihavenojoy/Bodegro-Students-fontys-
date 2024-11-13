@@ -4,15 +4,17 @@ using Domain.Enums;
 using Domain.Modules;
 using System.Net.Mail;
 using DAL;
+using Microsoft.Extensions.Configuration;
 
 public partial class Form1 : Form
 {
     Email email;
+    private readonly IConfiguration iConfiguration;
     public Form1()
     {
         InitializeComponent();
         email = new Email("",EmailBody.TWOFACTOR);
-        InlogPagina inlog = new InlogPagina(new UserDal());
+        InlogPagina inlog = new InlogPagina(new UserDal(iConfiguration));
         inlog.Show();
         this.Shown += (s, e) => this.Hide();
     }

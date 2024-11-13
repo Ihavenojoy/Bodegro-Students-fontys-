@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class StepDAL : IStep
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
-        public int CreateStep(StepDTO stepDTO)
+        private readonly string connectionString;
+        public StepDAL(IConfiguration configuration)
         {
-            int insertedId = -1;
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+        public bool CreateStep(StepDTO stepDTO)
+        {
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -36,7 +37,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Interval", stepDTO.Interval);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -49,7 +51,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
         public List<StepDTO> GetStepsOfProtocol(int protocolID)
         {
@@ -70,7 +72,7 @@ namespace DAL
                             {
                                 StepDTO step = new StepDTO 
                                 { 
-                                    ID = Convert.ToInt32(reader["ID"]),
+                                    ID = (int)(reader["ID"]),
                                     ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Test = Convert.ToString(reader["Test"]),

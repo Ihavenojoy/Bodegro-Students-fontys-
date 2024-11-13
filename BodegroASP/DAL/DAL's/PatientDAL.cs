@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class PatientDAL : IPatient
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+        private readonly string connectionString;
+        public PatientDAL(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
         public int CreatePatient(PatientDTO patient)
         {
             int insertedId = -1;
@@ -79,7 +80,6 @@ namespace DAL
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-                return null;
             }
             finally
             {

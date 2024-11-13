@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class SubscriptionDAL : ISubscription
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+        private readonly string connectionString;
+        public SubscriptionDAL(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
         public int CreateSubscription(SubscriptionDTO subscriptionDTO)
         {
             int insertedId = -1;

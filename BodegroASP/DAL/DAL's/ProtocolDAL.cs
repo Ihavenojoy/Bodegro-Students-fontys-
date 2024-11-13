@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class ProtocolDAL : IProtocol
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
-
-        public int CreateProtocol(ProtocolDTO protocol)
+        private readonly string connectionString;
+        public ProtocolDAL(IConfiguration configuration)
         {
-            int insertedId = -1;
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+        public bool CreateProtocol(ProtocolDTO protocol)
+        {
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -34,7 +34,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -47,7 +48,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         public List<ProtocolDTO> GetAllProtocols()
@@ -85,7 +86,6 @@ namespace DAL
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
-                return null;
             }
             finally
             {

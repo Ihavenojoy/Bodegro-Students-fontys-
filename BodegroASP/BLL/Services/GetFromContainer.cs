@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using Domain.Containers;
+using Domain.Modules;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 
-namespace Domain.Modules
+namespace Domain.Services
 {
     internal class GetFromContainer
     {
         StepContainer StepContainer;
+        private readonly IConfiguration iConfiguration;
         public GetFromContainer()
         {
-            StepDAL SDal = new();
+            StepDAL SDal = new(iConfiguration);
             StepContainer = new(SDal);
         }
         public List<Protocol> AskStepsFormProtocol(List<Protocol> protocols)
