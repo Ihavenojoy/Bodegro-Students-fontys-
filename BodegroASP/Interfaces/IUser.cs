@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    public interface ILogin
+    public interface IUser
     {
         public DoctorDTO DoctorLogin(string Emailinput, string PassWordInput);
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput);
