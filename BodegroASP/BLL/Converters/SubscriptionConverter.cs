@@ -1,11 +1,6 @@
-﻿using Domain.DTOConverter;
+﻿
 using Domain.Modules;
 using DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.ObjectConverter
 {
@@ -23,5 +18,17 @@ namespace Domain.ObjectConverter
             }
             return list;
         }
+
+        public SubscriptionDTO ObjectToDTO(Subscription subscription)
+        {
+            SubscriptionDTO subscriptionDTO = new SubscriptionDTO
+            {
+                StartDate = subscription.StartDate,
+                Protocol = protocolConverter.ObjectToDTO(subscription.Protocol),
+                Patient = patientConverter.ObjectToDTO(subscription.Patient)
+            };
+            return subscriptionDTO;
+        }
+
     }
 }

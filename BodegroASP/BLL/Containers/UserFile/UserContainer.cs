@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Containers
+namespace Domain.Containers.UserFile
 {
-    public class UserContainer
+    public class UserContainer : IUserContainer
     {
         private readonly IUser _InlogService;
         DoctorConverter docconverter = new DoctorConverter();

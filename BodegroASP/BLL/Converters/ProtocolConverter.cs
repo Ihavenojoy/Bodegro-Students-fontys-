@@ -1,4 +1,4 @@
-﻿using Domain.DTOConverter;
+﻿
 using Domain.Modules;
 using DAL;
 using DTO;
@@ -27,6 +27,17 @@ namespace Domain.ObjectConverter
                 protocolList.Add(protocol);
             }
             return protocolList;
+        }
+        public ProtocolDTO ObjectToDTO(Protocol protocol)
+        {
+            ProtocolDTO protocoldto = new ProtocolDTO
+            {
+                ID = protocol.ID,
+                Name = protocol.Name,
+                Description = protocol.Description,
+                Admin_ID = protocol.Admin_ID
+            };
+            return protocoldto;
         }
     }
 }

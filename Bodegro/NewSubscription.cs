@@ -1,5 +1,4 @@
 ﻿using Domain.Modules;
-using Domain.Containers;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Configuration;
+using Domain.Containers.PatientFile;
+using Domain.Containers.ProtocolFile;
+using Domain.Containers.SubscriptionFile;
 
 namespace Bodegro
 {

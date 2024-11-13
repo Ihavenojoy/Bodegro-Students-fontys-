@@ -10,13 +10,13 @@ using DTO;
 using System.Numerics;
 using Domain.ObjectConverter;
 
-namespace Domain.Containers
+namespace Domain.Containers.PatientFile
 {
-    public class PatientContainer
+    public class PatientContainer : IPatientContainer
     {
         private IPatient Dal;
         private PatientConverter objectconverter = new();
-        public PatientContainer(IPatient dal) 
+        public PatientContainer(IPatient dal)
         {
             Dal = dal;
         }

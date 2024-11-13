@@ -7,30 +7,29 @@ using DAL;
 using Domain.Modules;
 using Interfaces;
 using DTO;
-using Domain.DTOConverter;
 using Domain.ObjectConverter;
 using Domain.Services;
 
-namespace Domain.Containers
+namespace Domain.Containers.ProtocolFile
 {
-    public class ProtocolContainer
+    public class ProtocolContainer : IProtocolContainer
     {
-        IProtocol Dal; 
+        IProtocol Dal;
         GetFromContainer GetSteps = new GetFromContainer();
-        ProtocolDTOConverter protocolDTOConverter = new ();
-        ProtocolConverter ProtConverter = new();
-        public ProtocolContainer(IProtocol dal) 
-        { 
+        ProtocolConverter protocolConverter;
+        public ProtocolContainer(IProtocol dal, ProtocolConverter protocolConverter)
+        {
             Dal = dal;
+            this.protocolConverter = protocolConverter;
         }
         public List<Protocol> GetProtocols()
         {
-            List<Protocol> Protocols = GetSteps.AskStepsFormProtocol(ProtConverter.ListDTOToListObject(Dal.GetAllProtocols()));
+            List<Protocol> Protocols = GetSteps.AskStepsFormProtocol(protocolConverter.ListDTOToListObject(Dal.GetAllProtocols()));
             return Protocols;
         }
         public bool AddProtocol(Protocol protocol)
         {
-            bool isdone = Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
+            bool isdone = Dal.CreateProtocol(protocolConverter.ObjectToDTO(protocol));
             return isdone;
         }
     }

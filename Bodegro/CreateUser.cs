@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Domain.Containers;
 using Domain.Modules;
 using Domain.Enums;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -15,6 +14,7 @@ using System.Drawing.Text;
 using System.Text.RegularExpressions;
 using DAL;
 using Microsoft.Extensions.Configuration;
+using Domain.Containers.DoctorFile;
 namespace Bodegro
 {
     public partial class CreateUser : Form
