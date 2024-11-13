@@ -16,17 +16,10 @@ namespace Domain.Containers
     public class AdminContainer
     {
         public AdminConverter AdminConverter = new AdminConverter();
-        public readonly ILogin _InlogService = new LoginDal();
         IAdmin AdminDAL;
         public AdminContainer(IAdmin DAL)
         {
             AdminDAL = DAL;
-        }
-        public Admin Login(string EmailInput, string PasswordInput)
-        {
-            AdminDTO admindto = _InlogService.AdminLogin(EmailInput, PasswordInput);
-            Admin adminacc = AdminConverter.DTOToObject(admindto);
-            return adminacc;
         }
     }
 }

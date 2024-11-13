@@ -39,5 +39,25 @@ namespace Domain.Containers
         }
         
 
+        public List<Patient> GetAllPatients()
+        {
+            List<Patient> allPatients = new List<Patient>();
+            List<PatientDTO> dtos = Dal.GetAllPatients();
+
+            foreach (PatientDTO dto in dtos)
+            {
+                Patient p = new Patient(
+                    dto.ID,
+                    dto.Name,
+                    dto.Email,
+                    dto.PhoneNumber,
+                    dto.MedicalHistory,
+                    dto.Doctor_ID);
+                allPatients.Add(p);
+            }
+
+            return allPatients;
+        }
+
     }
 }

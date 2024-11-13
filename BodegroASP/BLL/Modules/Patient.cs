@@ -24,6 +24,8 @@ namespace Domain.Modules
             this.MedicalHistory = MedicalHistory;
             Doctor_ID = doctor_ID;
         }
+
+         
         public Patient(int ID, string Name, string Email, int PhoneNumber, string MedicalHistory, int doctor_ID):this(Name, Email, PhoneNumber, MedicalHistory, doctor_ID)
         {
             this.ID = ID;
