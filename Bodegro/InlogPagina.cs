@@ -19,8 +19,8 @@ namespace Bodegro
     public partial class InlogPagina : Form
     {
         public object Inlogaccount;
-        private readonly DoctorDAL doctorDAL = new DoctorDAL();
-        private readonly AdminDAL adminDAL =  new AdminDAL();
+        //private readonly DoctorDAL doctorDAL = new DoctorDAL();
+       // private readonly AdminDAL adminDAL =  new AdminDAL();
         private readonly UserContainer userContainer; 
 
         public InlogPagina(IUser context)

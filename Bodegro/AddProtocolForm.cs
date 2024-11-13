@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DAL;
+using Microsoft.Extensions.Configuration;
 
 namespace Bodegro
 {
@@ -19,11 +20,12 @@ namespace Bodegro
         ProtocolContainer protocolContainer;
         StepContainer stepContainer;
         Admin user;
+        private readonly IConfiguration iConfiguration;
         public AddProtocolForm(Admin User)
         {
-            ProtocolDAL protocolDAL = new ProtocolDAL();
+            ProtocolDAL protocolDAL = new ProtocolDAL(iConfiguration);
             protocolContainer = new ProtocolContainer(protocolDAL);
-            StepDAL stepDAL = new StepDAL();
+            StepDAL stepDAL = new StepDAL(iConfiguration);
             stepContainer = new StepContainer(stepDAL);
             InitializeComponent();
             user = User;

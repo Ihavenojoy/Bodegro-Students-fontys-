@@ -14,16 +14,18 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing.Text;
 using System.Text.RegularExpressions;
 using DAL;
+using Microsoft.Extensions.Configuration;
 namespace Bodegro
 {
     public partial class CreateUser : Form
     {
         DoctorContainer doctorContainer;
         User user;
+        private readonly IConfiguration iConfiguration;
         public CreateUser(int selectedtab,User user)
         {
             InitializeComponent();
-            DoctorDAL doctorDAL = new DoctorDAL();
+            DoctorDAL doctorDAL = new DoctorDAL(iConfiguration);
             doctorContainer = new DoctorContainer(doctorDAL);
             LoadDoctors();
             this.tabControl1.SelectTab(selectedtab);

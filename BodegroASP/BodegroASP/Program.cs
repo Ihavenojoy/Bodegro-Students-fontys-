@@ -1,3 +1,7 @@
+using Interfaces;
+using DAL;
+using Domain.Containers;
+
 namespace BodegroASP
 {
     public class Program
@@ -5,9 +9,17 @@ namespace BodegroASP
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // DI - Container
+            services.AddSingleton<UserContainer>();
+
+            // DI - Interface, implementation
+            services.AddSingleton<IUser, UserDal>();
 
             var app = builder.Build();
 

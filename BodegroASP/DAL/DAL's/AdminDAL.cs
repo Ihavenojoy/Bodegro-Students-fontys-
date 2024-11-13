@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
 
 
 namespace DAL
 {
     public class AdminDAL : IAdmin
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+       
+        private readonly string connectionString;
+
+        public AdminDAL(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
 
         public int CreateAdmin(AdminDTO admin,string Password)
         {

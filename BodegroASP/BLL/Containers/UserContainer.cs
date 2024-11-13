@@ -13,13 +13,14 @@ namespace Domain.Containers
 {
     public class UserContainer
     {
-        IUser _InlogService;
+        private readonly IUser _InlogService;
         DoctorConverter docconverter = new DoctorConverter();
         AdminConverter adminconverter = new AdminConverter();
         public UserContainer(IUser context)
         {
             _InlogService = context;
         }
+
         public Doctor DoctorLogin(string EmailInput, string PasswordInput)
         {
             DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
