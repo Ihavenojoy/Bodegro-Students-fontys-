@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 using DAL;
 using Domain.Modules;
 using DTO;
-using Domain.DTOConverter;
+using Domain.ObjectConverter;
 using Interfaces;
 using System.Data;
-using Domain.Converters;
 
-namespace Domain.Containers
+namespace Domain.Containers.DoctorFile
 {
     public class DoctorContainer : IDoctorContainer
     {
-        DoctorDTOConverter docConverter = new DoctorDTOConverter();
-        DoctorConverter objectConverter = new DoctorConverter();
+        DoctorConverter docConverter;
         IDoctor doctorDAL;
-        public DoctorContainer(IDoctor DAL)
+        public DoctorContainer(IDoctor DAL, DoctorConverter docConverter)
         {
             doctorDAL = DAL;
+            this.docConverter = docConverter;
         }
         public bool CreateDoctor(Doctor doctor, string password)
         {
@@ -55,7 +54,7 @@ namespace Domain.Containers
 
             foreach (DoctorDTO doctor in doctorDTOS)
             {
-                doctors.Add(objectConverter.DTOToObject(doctor));
+                doctors.Add(docConverter.DTOToObject(doctor));
             }
             return doctors;
         }

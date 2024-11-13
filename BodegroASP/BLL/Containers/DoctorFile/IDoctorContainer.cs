@@ -1,6 +1,6 @@
 ﻿using Domain.Modules;
 
-namespace Domain.Containers
+namespace Domain.Containers.DoctorFile
 {
     public interface IDoctorContainer
     {

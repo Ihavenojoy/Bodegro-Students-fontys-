@@ -20,5 +20,15 @@ namespace Domain.ObjectConverter
             );
             return admin;
         }
+        public AdminDTO ObjectToDTO(Admin admin)
+        {
+            AdminDTO admindto = new AdminDTO
+            {
+                ID = admin.ID,
+                Name = admin.Name,
+                Email = admin.Email
+            };
+            return admindto;
+        }
     }
 }

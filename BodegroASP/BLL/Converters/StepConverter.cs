@@ -26,5 +26,19 @@ namespace Domain.ObjectConverter
             }
             return list;
         }
+        public StepDTO ObjectToDTO(Step step)
+        {
+            StepDTO stepDTO = new StepDTO
+            {
+                ID = step.ID,
+                ProtocolID = step.ProtocolID,
+                Name = step.Name,
+                Description = step.Description,
+                Order = step.Order,
+                Test = step.Test,
+                Interval = step.Interval
+            };
+            return stepDTO;
+        }
     }
 }

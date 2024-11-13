@@ -1,5 +1,6 @@
 ﻿using DAL;
-using Domain.Containers;
+using Domain.Containers.DoctorFile;
+using Domain.Containers.PatientFile;
 using Domain.Modules;
 using Interfaces;
 using Microsoft.Extensions.Configuration;

@@ -8,9 +8,9 @@ using System.Net;
 using Domain.Modules;
 using Domain.Enums;
 
-namespace Domain.Containers
+namespace Domain.Containers.EmailFile
 {
-    public class EmailContainer
+    public class EmailContainer : IEmailContainer
     {
         public bool SendEmail(MailMessage message)
         {

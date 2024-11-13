@@ -1,5 +1,4 @@
 ﻿using Domain.Modules;
-using Domain.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Enums;
 using DAL;
+using Domain.Containers.SubscriptionFile;
 
 namespace BodegroTestPlan.Domain.Containers
 {

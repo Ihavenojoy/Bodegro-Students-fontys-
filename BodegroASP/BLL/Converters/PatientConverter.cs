@@ -1,4 +1,4 @@
-﻿using Domain.DTOConverter;
+﻿
 using Domain.Modules;
 using DTO;
 using System;
@@ -21,6 +21,18 @@ namespace Domain.ObjectConverter
                 patientDTO.MedicalHistory,
                 patientDTO.Doctor_ID);
             return patient;
+        }
+        public PatientDTO ObjectToDTO(Patient patient)
+        {
+            return new PatientDTO
+            {
+                ID = patient.ID,
+                Name = patient.Name,
+                Email = patient.Email,
+                PhoneNumber = patient.PhoneNumber,
+                MedicalHistory = patient.MedicalHistory,
+                Doctor_ID = patient.Doctor_ID
+            };
         }
     }
 }
