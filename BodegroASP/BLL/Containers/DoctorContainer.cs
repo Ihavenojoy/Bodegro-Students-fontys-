@@ -19,7 +19,7 @@ namespace Domain.Containers
         DoctorConverter objectConverter = new DoctorConverter();
         IDoctor doctorDAL;
         private readonly IDoctor iDoctor = new DoctorDAL();
-        public readonly ILogin _InlogService = new LoginDal();
+        public readonly IUser _InlogService = new UserDal();
         public DoctorContainer(IDoctor DAL) 
         {
             doctorDAL = DAL;

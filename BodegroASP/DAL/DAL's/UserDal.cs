@@ -6,7 +6,7 @@ using Twofactor;
 
 namespace DAL
 {
-    public class LoginDal : ILogin
+    public class UserDal : IUser
     {
         private readonly string connectionString = "TrustServerCertificate=True;" +
             "Server=mssqlstud.fhict.local;" +
