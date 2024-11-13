@@ -131,6 +131,48 @@ namespace DAL
             return patient;
         }
 
+        public List<PatientDTO> GetAllPatients()
+        {
+            List<PatientDTO> list = new List<PatientDTO>();
+
+            string select = "SELECT Doctor_ID, Patient_ID, Name, Email, PhoneNumber, MedicalHistory FROM Doctor_Patient";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(select, conn))
+                {
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PatientDTO patient = new PatientDTO
+                            {
+                                ID = Convert.ToInt32(reader["Patient_ID"]),
+                                Doctor_ID = Convert.ToInt32(reader["Doctor_ID"]),
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                MedicalHistory = reader["MedicalHistory"].ToString()
+                            };
+
+                            list.Add(patient);
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while retrieving patients: " + ex.Message);
+            }
+
+            return list;
+        }
+
+
+
         //// Method to update a product record
         //public bool UpdateProduct(ProductDTO product)
         //{
