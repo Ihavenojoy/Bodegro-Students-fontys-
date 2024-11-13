@@ -8,7 +8,8 @@ using Domain.Modules;
 using DTO;
 using Interfaces;
 using Domain.DTOConverter;
-using Domain.ObjectConverter;
+using System.Runtime.CompilerServices;
+using Domain.Converters;
 
 namespace Domain.Containers
 {
@@ -21,10 +22,10 @@ namespace Domain.Containers
         {
             Dal = dal;
         }
-        public void AddStep(Step step)
+        public bool AddStep(Step step)
         {
             StepDTO stepDTO = stepDTOConverter.ObjectToDTO(step);
-            Dal.CreateStep(stepDTO);
+            return Dal.CreateStep(stepDTO);
         }
         public List<Step> GetStepsOfProtocol(Protocol protocol)
         {

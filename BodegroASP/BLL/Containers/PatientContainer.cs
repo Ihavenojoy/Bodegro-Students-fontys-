@@ -8,7 +8,7 @@ using Domain.Modules;
 using Interfaces;
 using DTO;
 using System.Numerics;
-using Domain.ObjectConverter;
+using Domain.Converters;
 
 namespace Domain.Containers
 {
@@ -19,12 +19,6 @@ namespace Domain.Containers
         public PatientContainer(IPatient dal) 
         {
             Dal = dal;
-        }
-        public List<Patient> AskAllPatientsOfDoctor(User user)
-        {
-            List<Patient> patients = new List<Patient>();
-            //foreach loop met de database waar PatientDTO wordt opgehaald en wordt Convert waarna het in de list komt
-            return patients;
         }
         public List<Patient> GetPatientsOfDoctor(Doctor doctor)
         {
@@ -37,7 +31,5 @@ namespace Domain.Containers
             }
             return list;
         }
-        
-
     }
 }
