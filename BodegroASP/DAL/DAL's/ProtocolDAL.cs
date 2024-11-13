@@ -18,9 +18,9 @@ namespace DAL
         {
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public int CreateProtocol(ProtocolDTO protocol)
+        public bool CreateProtocol(ProtocolDTO protocol)
         {
-            int insertedId = -1;
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -34,7 +34,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -47,7 +48,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         public List<ProtocolDTO> GetAllProtocols()
@@ -85,7 +86,6 @@ namespace DAL
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
-                return null;
             }
             finally
             {

@@ -80,7 +80,6 @@ namespace DAL
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-                return null;
             }
             finally
             {

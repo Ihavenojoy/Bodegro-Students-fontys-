@@ -9,6 +9,7 @@ using Interfaces;
 using DTO;
 using Domain.DTOConverter;
 using Domain.ObjectConverter;
+using Domain.Services;
 
 namespace Domain.Containers
 {
@@ -27,9 +28,10 @@ namespace Domain.Containers
             List<Protocol> Protocols = GetSteps.AskStepsFormProtocol(ProtConverter.ListDTOToListObject(Dal.GetAllProtocols()));
             return Protocols;
         }
-        public void AddProtocol(Protocol protocol)
+        public bool AddProtocol(Protocol protocol)
         {
-            Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
+            bool isdone = Dal.CreateProtocol(protocolDTOConverter.ObjectToDTO(protocol));
+            return isdone;
         }
     }
 }
