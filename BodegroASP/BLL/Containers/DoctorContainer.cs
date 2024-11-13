@@ -13,12 +13,12 @@ using Domain.Converters;
 
 namespace Domain.Containers
 {
-    public class DoctorContainer
+    public class DoctorContainer : IDoctorContainer
     {
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         IDoctor doctorDAL;
-        public DoctorContainer(IDoctor DAL) 
+        public DoctorContainer(IDoctor DAL)
         {
             doctorDAL = DAL;
         }
@@ -61,6 +61,6 @@ namespace Domain.Containers
         }
 
 
-        
+
     }
 }
