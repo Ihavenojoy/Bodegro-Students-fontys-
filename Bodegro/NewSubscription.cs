@@ -54,5 +54,34 @@ namespace Bodegro
                 PatientBox.Items.Add(sub);
             }
         }
+        public bool Datumcheck(DateTime StartDate, DateTime EndDate)
+        {
+            bool check = false;
+            if (StartDate.Year < EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Month < EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Day < EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Hour < EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Minute < EndDate.Minute && StartDate.Hour <= EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            else if (StartDate.Second < EndDate.Second && StartDate.Minute <= EndDate.Minute && StartDate.Hour <= EndDate.Hour && StartDate.Day <= EndDate.Day && StartDate.Month <= EndDate.Month && StartDate.Year <= EndDate.Year)
+            {
+                check = true;
+            }
+            return check;
+        }
     }
 }
