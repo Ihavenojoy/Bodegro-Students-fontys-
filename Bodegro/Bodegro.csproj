@@ -13,8 +13,6 @@
     <ProjectReference Include="..\BodegroASP\2FA\TwoFactor.csproj" />
     <ProjectReference Include="..\BodegroASP\BLL\Domain.csproj" />
     <ProjectReference Include="..\BodegroASP\DAL\DAL.csproj" />
-    <ProjectReference Include="..\BodegroBusinessLayer\BLL.csproj" />
-    <ProjectReference Include="..\BodegroInterfaces\BodegroInterfaces.csproj" />
   </ItemGroup>
 
 </Project>

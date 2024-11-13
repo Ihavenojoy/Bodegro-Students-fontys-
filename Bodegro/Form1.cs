@@ -10,7 +10,6 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-        email = new Email();
     }
 
     private void TestButton_Click(object sender, EventArgs e)
@@ -39,7 +38,6 @@ public partial class Form1 : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        MailMessage message = email.MailMessage("bodegro.students.fontys@outlook.com", "Luuk.heesbeen@hotmail.com", "Testing the email");
-        email.SendEmail(message);
+      
     }
 }

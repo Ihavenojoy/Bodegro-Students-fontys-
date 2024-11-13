@@ -1,6 +1,6 @@
-﻿using BLL.Modules;
-using DAL;
+﻿using DAL;
 using Domain.Containers;
+using Domain.Modules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,16 +16,21 @@ namespace Bodegro
     public partial class AddPatientToDoctor : Form
     {
         PatientContainer patientContainer;
+        DoctorContainer doctorContainer;
+
         List<Patient> allPatients;
+        List<Doctor> allDoctors;
         public AddPatientToDoctor()
         {
             patientContainer = new PatientContainer(new PatientDAL());
+            doctorContainer = new DoctorContainer(new DoctorDAL());
             InitializeComponent();
         }
 
         private void AddPatientToDoctor_Load(object sender, EventArgs e)
         {
             allPatients = patientContainer.GetAllPatients();
+            allDoctors = doctorContainer.GetAllDoctors();
         }
     }
 }
