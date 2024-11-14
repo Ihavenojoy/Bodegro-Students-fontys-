@@ -1,6 +1,6 @@
 ﻿using DAL;
+using Domain.Converter;
 using Domain.Modules;
-using Domain.ObjectConverter;
 using DTO;
 using Interfaces;
 using System;
@@ -13,26 +13,57 @@ namespace Domain.Containers.UserFile
 {
     public class UserContainer : IUserContainer
     {
-        private readonly IUser _InlogService;
-        DoctorConverter docconverter = new DoctorConverter();
-        AdminConverter adminconverter = new AdminConverter();
+        private readonly IUser _UserService;
+        UserConverter docconverter = new UserConverter();
+        UserConverter Userconverter = new UserConverter();
         public UserContainer(IUser context)
         {
-            _InlogService = context;
+            _UserService = context;
         }
 
-        public Doctor DoctorLogin(string EmailInput, string PasswordInput)
+        public User UserLogin(string EmailInput, string PasswordInput)
         {
-            DoctorDTO doctorDTO = _InlogService.DoctorLogin(EmailInput, PasswordInput);
-            Doctor doctoracc = docconverter.DTOToObject(doctorDTO);
-            return doctoracc;
-        }
-        public Admin AdminLogin(string EmailInput, string PasswordInput)
-        {
-            AdminDTO admindto = _InlogService.AdminLogin(EmailInput, PasswordInput);
-            Admin adminacc = adminconverter.DTOToObject(admindto);
-            return adminacc;
+            UserDTO UserDTO = _UserService.UserLogin(EmailInput, PasswordInput);
+            User Useracc = docconverter.DTOToObject(UserDTO);
+            return Useracc;
         }
 
+        public bool CreateUser(User User, string password)
+        {
+            if (_UserService.UserExists(User.Email))
+            {
+                return false;
+            }
+            else
+            {
+                return _UserService.CreateUser(Userconverter.ObjectToDTO(User), password);
+            }
+        }
+        public bool UserExists(string email)
+        {
+            return _UserService.UserExists(email);
+        }
+        public bool DeleteUser(int UserId)
+        {
+            bool isDeleted = _UserService.SoftDeleteUser(UserId);
+            if (!isDeleted)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public List<User> GetAllUsers()
+        {
+            List<User> Users = new();
+            List<UserDTO> UserDTOS = _UserService.GetAllUsers();
+
+            foreach (UserDTO User in UserDTOS)
+            {
+                Users.Add(docconverter.DTOToObject(User));
+            }
+            return Users;
+        }
     }
 }

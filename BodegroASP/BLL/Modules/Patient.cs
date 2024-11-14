@@ -14,17 +14,17 @@ namespace Domain.Modules
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public string MedicalHistory { get; set; }
-        public int Doctor_ID { get; set; }
+        public int User_ID { get; set; }
 
-        public Patient(string Name, string Email, int PhoneNumber, string MedicalHistory, int doctor_ID)
+        public Patient(string Name, string Email, int PhoneNumber, string MedicalHistory, int User_ID)
         {
             this.Name = Name;
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
-            Doctor_ID = doctor_ID;
+            User_ID = User_ID;
         }
-        public Patient(int ID, string Name, string Email, int PhoneNumber, string MedicalHistory, int doctor_ID):this(Name, Email, PhoneNumber, MedicalHistory, doctor_ID)
+        public Patient(int ID, string Name, string Email, int PhoneNumber, string MedicalHistory, int User_ID):this(Name, Email, PhoneNumber, MedicalHistory, User_ID)
         {
             this.ID = ID;
             ID = 1;

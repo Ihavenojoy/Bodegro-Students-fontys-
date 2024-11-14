@@ -15,15 +15,15 @@ namespace BodegroTestPlan.Domain.Containers
     {
         [TestMethod]
 
-        public void AskAllPatientsOfDoctor()
+        public void AskAllPatientsOfUser()
         {
             //Arrange
             PatientDAL patient = new PatientDAL();
             PatientContainer Container = new PatientContainer(patient);
-            User user = new Doctor(5, "timo", "timoo",Regio.Ijsselland,1,true);
+            User user = new User(5, "timo", "timoo",Regio.Ijsselland,1,true);
 
             //Act
-            List<Patient> list = Container.GetPatientsOfDoctor((Doctor)user);
+            List<Patient> list = Container.GetPatientsOfUser((User)user);
 
             //Assert
             Assert.IsNotNull(list);

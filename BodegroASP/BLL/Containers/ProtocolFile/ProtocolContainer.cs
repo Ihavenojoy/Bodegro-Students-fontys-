@@ -7,7 +7,7 @@ using DAL;
 using Domain.Modules;
 using Interfaces;
 using DTO;
-using Domain.ObjectConverter;
+using Domain.Converter;
 using Domain.Services;
 
 namespace Domain.Containers.ProtocolFile
@@ -15,12 +15,12 @@ namespace Domain.Containers.ProtocolFile
     public class ProtocolContainer : IProtocolContainer
     {
         IProtocol Dal;
-        GetFromContainer GetSteps = new GetFromContainer();
-        ProtocolConverter protocolConverter;
-        public ProtocolContainer(IProtocol dal, ProtocolConverter protocolConverter)
+        GetFromContainer GetSteps;
+        ProtocolConverter protocolConverter = new();
+        public ProtocolContainer(IProtocol pdal,IStep Sdal)
         {
-            Dal = dal;
-            this.protocolConverter = protocolConverter;
+            Dal = pdal;
+            GetSteps = new(Sdal);
         }
         public List<Protocol> GetProtocols()
         {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ObjectConverter
+namespace Domain.Converter
 {
     public class PatientConverter
     {
@@ -19,7 +19,7 @@ namespace Domain.ObjectConverter
                 patientDTO.Email,
                 patientDTO.PhoneNumber,
                 patientDTO.MedicalHistory,
-                patientDTO.Doctor_ID);
+                patientDTO.User_ID);
             return patient;
         }
         public PatientDTO ObjectToDTO(Patient patient)
@@ -31,7 +31,7 @@ namespace Domain.ObjectConverter
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber,
                 MedicalHistory = patient.MedicalHistory,
-                Doctor_ID = patient.Doctor_ID
+                User_ID = patient.User_ID
             };
         }
     }

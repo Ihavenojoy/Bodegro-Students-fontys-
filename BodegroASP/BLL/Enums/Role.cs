@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace BodegroTestPlan.BBL_Test.Modules_Test
+namespace Domain.Enums
 {
-    [TestClass]
-    public class UserTest
+    public enum Role
     {
+        Unkown = 0,
+        User = 1,
+        Doctor = 2
     }
 }

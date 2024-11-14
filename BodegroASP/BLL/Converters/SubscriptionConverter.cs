@@ -2,7 +2,7 @@
 using Domain.Modules;
 using DTO;
 
-namespace Domain.ObjectConverter
+namespace Domain.Converter
 {
     public class SubscriptionConverter
     {

@@ -26,8 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BodegroTestPlan", "BodegroT
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bodegro", "..\Bodegro\Bodegro.csproj", "{275E997F-159D-4168-800A-25F3E5AB2EA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{160E3C3A-7592-4D41-90AA-A61FE56CA496} = {160E3C3A-7592-4D41-90AA-A61FE56CA496}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockDal", "MockDal\MockDal.csproj", "{BF6C64F0-C3A3-4308-B618-F443075B3F90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockDal", "MockDal\MockDal.csproj", "{BF6C64F0-C3A3-4308-B618-F443075B3F90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

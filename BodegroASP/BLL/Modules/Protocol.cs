@@ -13,22 +13,22 @@ namespace Domain.Modules
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Step> Steps { get; set; }
-        public int Admin_ID { get; set; }
+        public int User_ID { get; set; }
 
-        public Protocol(string Name, string Description, List<Step> Steps, int Admin_ID)
+        public Protocol(string Name, string Description, List<Step> Steps, int User_ID)
         {
             this.Name = Name;
             this.Description = Description;
             this.Steps = Steps;
-            this.Admin_ID = Admin_ID;
+            this.User_ID = User_ID;
         }
-        public Protocol(int ID, string Name, string Description, List<Step> Steps, int Admin_ID)
+        public Protocol(int ID, string Name, string Description, List<Step> Steps, int User_ID)
         {
             this.ID = ID;
             this.Name = Name;
             this.Description = Description;
             this.Steps = Steps;
-            this.Admin_ID = Admin_ID;
+            this.User_ID = User_ID;
         }
         public override string ToString()
         {

@@ -33,9 +33,9 @@
             AddProtocolToPatientButton = new Button();
             CreatePatientButton = new Button();
             CreateArtsButton = new Button();
-            CreateAdminButton = new Button();
-            ComboDoctorBox = new ComboBox();
-            DoctorTextLable = new Label();
+            CreateUserButton = new Button();
+            ComboUserBox = new ComboBox();
+            UserTextLable = new Label();
             SuspendLayout();
             // 
             // PatientListBox
@@ -87,42 +87,42 @@
             CreateArtsButton.UseVisualStyleBackColor = true;
             CreateArtsButton.Click += CreateArtsButton_Click;
             // 
-            // CreateAdminButton
+            // CreateUserButton
             // 
-            CreateAdminButton.Location = new Point(535, 48);
-            CreateAdminButton.Name = "CreateAdminButton";
-            CreateAdminButton.Size = new Size(128, 23);
-            CreateAdminButton.TabIndex = 5;
-            CreateAdminButton.Text = "Nieuwe beheerders";
-            CreateAdminButton.UseVisualStyleBackColor = true;
-            CreateAdminButton.Click += CreateAdminButton_Click;
+            CreateUserButton.Location = new Point(535, 48);
+            CreateUserButton.Name = "CreateUserButton";
+            CreateUserButton.Size = new Size(128, 23);
+            CreateUserButton.TabIndex = 5;
+            CreateUserButton.Text = "Nieuwe beheerders";
+            CreateUserButton.UseVisualStyleBackColor = true;
+            CreateUserButton.Click += CreateUserButton_Click;
             // 
-            // ComboDoctorBox
+            // ComboUserBox
             // 
-            ComboDoctorBox.FormattingEnabled = true;
-            ComboDoctorBox.Location = new Point(56, 12);
-            ComboDoctorBox.Name = "ComboDoctorBox";
-            ComboDoctorBox.Size = new Size(200, 23);
-            ComboDoctorBox.TabIndex = 6;
-            ComboDoctorBox.SelectedIndexChanged += ComboDoctorBox_SelectedIndexChanged;
+            ComboUserBox.FormattingEnabled = true;
+            ComboUserBox.Location = new Point(56, 12);
+            ComboUserBox.Name = "ComboUserBox";
+            ComboUserBox.Size = new Size(200, 23);
+            ComboUserBox.TabIndex = 6;
+            ComboUserBox.SelectedIndexChanged += ComboUserBox_SelectedIndexChanged;
             // 
-            // DoctorTextLable
+            // UserTextLable
             // 
-            DoctorTextLable.AutoSize = true;
-            DoctorTextLable.Location = new Point(12, 15);
-            DoctorTextLable.Name = "DoctorTextLable";
-            DoctorTextLable.Size = new Size(43, 15);
-            DoctorTextLable.TabIndex = 7;
-            DoctorTextLable.Text = "Doctor";
+            UserTextLable.AutoSize = true;
+            UserTextLable.Location = new Point(12, 15);
+            UserTextLable.Name = "UserTextLable";
+            UserTextLable.Size = new Size(43, 15);
+            UserTextLable.TabIndex = 7;
+            UserTextLable.Text = "User";
             // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1056, 655);
-            Controls.Add(DoctorTextLable);
-            Controls.Add(ComboDoctorBox);
-            Controls.Add(CreateAdminButton);
+            Controls.Add(UserTextLable);
+            Controls.Add(ComboUserBox);
+            Controls.Add(CreateUserButton);
             Controls.Add(CreateArtsButton);
             Controls.Add(CreatePatientButton);
             Controls.Add(AddProtocolToPatientButton);
@@ -141,8 +141,8 @@
         private Button AddProtocolToPatientButton;
         private Button CreatePatientButton;
         private Button CreateArtsButton;
-        private Button CreateAdminButton;
-        private ComboBox ComboDoctorBox;
-        private Label DoctorTextLable;
+        private Button CreateUserButton;
+        private ComboBox ComboUserBox;
+        private Label UserTextLable;
     }
 }

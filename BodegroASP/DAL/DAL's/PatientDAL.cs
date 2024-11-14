@@ -18,25 +18,26 @@ namespace DAL
         {
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public int CreatePatient(PatientDTO patient)
+        public bool CreatePatient(PatientDTO patient)
         {
-            int insertedId = -1;
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (Doctor_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (User_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@User_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Doctor_ID", patient.Doctor_ID);
+                        cmd.Parameters.AddWithValue("@User_ID", patient.User_ID);
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
                         cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
                         cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -49,22 +50,22 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         // Method to read a product record by ID
-        public List<int> GetPatientIDOfDoctor(int id)
+        public List<int> GetPatientIDOfUser(int id)
         {
             List<int> list = new List<int>();
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT Doctor_ID, Patient_ID FROM Doctor_Patient WHERE Doctor_ID = @Doctor_ID";
+                string select = "SELECT User_ID, Patient_ID FROM User_Patient WHERE User_ID = @User_ID";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Doctor_ID", id);
+                        cmd.Parameters.AddWithValue("@User_ID", id);
 
                         conn.Open();
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -87,7 +88,7 @@ namespace DAL
             }
             return list;
         }
-        public PatientDTO GetPatient(int id, int DoctorID)
+        public PatientDTO GetPatient(int id, int UserID)
         {
             PatientDTO patient = new PatientDTO();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -112,7 +113,7 @@ namespace DAL
                                     Email = Convert.ToString(reader["Email"]),
                                     PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
                                     MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
-                                    Doctor_ID = DoctorID
+                                    User_ID = UserID
                                 };
                             }
                         }

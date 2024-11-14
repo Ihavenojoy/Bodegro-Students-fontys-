@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-namespace BodegroTestPlan.BBL_Test.Modules_Test
+namespace MockDal
 {
-    [TestClass]
-    public class UserTest
+    internal class MockSubscriptionDAL
     {
     }
 }
