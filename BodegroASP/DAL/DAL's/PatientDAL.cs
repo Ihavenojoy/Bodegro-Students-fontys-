@@ -135,7 +135,7 @@ namespace DAL
         {
             List<PatientDTO> list = new List<PatientDTO>();
 
-            string select = "SELECT Doctor_ID, Patient_ID, Name, Email, PhoneNumber, MedicalHistory FROM Doctor_Patient";
+            string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient";
 
             try
             {
@@ -150,8 +150,7 @@ namespace DAL
                         {
                             PatientDTO patient = new PatientDTO
                             {
-                                ID = Convert.ToInt32(reader["Patient_ID"]),
-                                Doctor_ID = Convert.ToInt32(reader["Doctor_ID"]),
+                                ID = Convert.ToInt32(reader["ID"]),
                                 Name = reader["Name"].ToString(),
                                 Email = reader["Email"].ToString(),
                                 PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
