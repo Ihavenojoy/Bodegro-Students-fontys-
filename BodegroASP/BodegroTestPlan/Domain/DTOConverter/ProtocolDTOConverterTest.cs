@@ -28,7 +28,7 @@ namespace BodegroTestPlan.Domain.DTOConverter
             Assert.AreEqual(test.ID, testdto.ID);
             Assert.AreEqual(test.Name, testdto.Name);
             Assert.AreEqual(test.Description, testdto.Description);
-            Assert.AreEqual(test.Admin_ID, testdto.Admin_ID);
+            Assert.AreEqual(test.User_ID, testdto.User_ID);
         }
     }
 }

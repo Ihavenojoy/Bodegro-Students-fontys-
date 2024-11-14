@@ -30,7 +30,7 @@ namespace BodegroTestPlan.Domain.DTOConverter
             Assert.AreEqual(test.Email, testdto.Email);
             Assert.AreEqual(test.PhoneNumber, testdto.PhoneNumber);
             Assert.AreEqual(test.MedicalHistory, testdto.MedicalHistory);
-            Assert.AreEqual(test.Doctor_ID, testdto.Doctor_ID);
+            Assert.AreEqual(test.User_ID, testdto.User_ID);
         }
     }
 }

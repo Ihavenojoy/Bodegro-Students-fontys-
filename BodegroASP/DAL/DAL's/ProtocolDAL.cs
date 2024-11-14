@@ -24,14 +24,14 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (Name, Description, Admin_ID) VALUES (@Name, @Description, @Total, @Admin_ID); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description, User_ID) VALUES (@Name, @Description, @Total, @User_ID); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
-                        cmd.Parameters.AddWithValue("@Admin_ID", protocol.Admin_ID);
+                        cmd.Parameters.AddWithValue("@User_ID", protocol.User_ID);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -57,7 +57,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description, Total, Admin_ID FROM Protocol";
+                string select = "SELECT ID, Name, Description, Total, User_ID FROM Protocol";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -73,7 +73,7 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    Admin_ID = Convert.ToInt32(reader["Admin_ID"]),
+                                    User_ID = Convert.ToInt32(reader["User_ID"]),
                                     Steps = new List<StepDTO>()
                                 };
                                 list.Add(protocol);

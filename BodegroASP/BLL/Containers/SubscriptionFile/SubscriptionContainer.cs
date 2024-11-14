@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Interfaces;
-using Domain.ObjectConverter;
+using Domain.Converter;
 
 
 namespace Domain.Containers.SubscriptionFile
@@ -13,8 +13,8 @@ namespace Domain.Containers.SubscriptionFile
     public class SubscriptionContainer : ISubscriptionContainer
     {
         ISubscription SubDAL;
-        SubscriptionConverter subscriptionConverter;
-        public SubscriptionContainer(Doctor doctor, ISubscription Sub, IPatient Pat, IProtocol Prot, SubscriptionConverter subscriptionConverter)
+        SubscriptionConverter subscriptionConverter =new();
+        public SubscriptionContainer(User User, ISubscription Sub, IPatient Pat, IProtocol Prot)
         {
             SubDAL = Sub;
             this.subscriptionConverter = subscriptionConverter;

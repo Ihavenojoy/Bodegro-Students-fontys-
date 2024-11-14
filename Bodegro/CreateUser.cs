@@ -14,22 +14,22 @@ using System.Drawing.Text;
 using System.Text.RegularExpressions;
 using DAL;
 using Microsoft.Extensions.Configuration;
-using Domain.Containers.DoctorFile;
+using Domain.Containers.UserFile;
 namespace Bodegro
 {
     public partial class CreateUser : Form
     {
-        DoctorContainer doctorContainer;
+        UserContainer UserContainer;
         User user;
         private readonly IConfiguration iConfiguration;
         public CreateUser(int selectedtab,User user)
         {
             InitializeComponent();
-            DoctorDAL doctorDAL = new DoctorDAL(iConfiguration);
-            doctorContainer = new DoctorContainer(doctorDAL);
-            LoadDoctors();
+            UserDAL UserDAL = new UserDAL(iConfiguration);
+            UserContainer = new UserContainer(UserDAL);
+            LoadUsers();
             this.tabControl1.SelectTab(selectedtab);
-            if (user is Doctor doctor)
+            if (user is User User)
             {
                     tabControl1.TabPages.RemoveAt(0);
             }
@@ -43,12 +43,12 @@ namespace Bodegro
 
         private void btnCreateUser_Click(object sender, EventArgs e)
         {
-            if (rbDoctor.Checked)
+            if (rbUser.Checked)
             {
-                CreateDoctor();
+                CreateUserforms();
             }
         }
-        private void CreateDoctor()
+        private void CreateUserforms()
         {
             if (string.IsNullOrWhiteSpace(tbNameUser.Text) || string.IsNullOrWhiteSpace(tbEmailUser.Text) || string.IsNullOrWhiteSpace(tbPasswordUser.Text) || string.IsNullOrWhiteSpace(cbRegioUser.Text))
             {
@@ -61,37 +61,37 @@ namespace Bodegro
             else
             {
                 Regio regio = (Regio)Enum.Parse(typeof(Regio), cbRegioUser.Text);
-                Doctor doctor = new Doctor(tbNameUser.Text, tbEmailUser.Text, regio, 1, true);
-                doctorContainer.CreateDoctor(doctor, tbPasswordUser.Text);
+                User User = new User(tbNameUser.Text, tbEmailUser.Text, Role.Unkown);
+                UserContainer.CreateUser(User, tbPasswordUser.Text);
                 MessageBox.Show("Arts toegevoegd");
-                lbDoctors.Items.Add(doctor);
-                lbDoctors.Items.Clear();
-                LoadDoctors();
+                lbUsers.Items.Add(User);
+                lbUsers.Items.Clear();
+                LoadUsers();
             }
         }
-        private void LoadDoctors()
+        private void LoadUsers()
         {
-            lbDoctors.Items.Clear();
-            var doctors = doctorContainer.GetAllDoctors();
-            foreach (var doctor in doctors)
+            lbUsers.Items.Clear();
+            var Users = UserContainer.GetAllUsers();
+            foreach (var User in Users)
             {
-                lbDoctors.Items.Add(doctor);
+                lbUsers.Items.Add(User);
             }
         }
 
         private void btnDeleteUser_Click(object sender, EventArgs e)
         {
-            if (lbDoctors.SelectedItem == null)
+            if (lbUsers.SelectedItem == null)
             {
                 MessageBox.Show("Selecteer een arts om te verwijderen");
             }
             else
             {
-                Doctor doctor = (Doctor)lbDoctors.SelectedItem;
-                doctorContainer.DeleteDoctor(doctor.ID);
+                User User = (User)lbUsers.SelectedItem;
+                UserContainer.DeleteUser(User.ID);
                 MessageBox.Show("Product deleted");
-                lbDoctors.Items.Clear();
-                LoadDoctors();
+                lbUsers.Items.Clear();
+                LoadUsers();
             }
         }
     }

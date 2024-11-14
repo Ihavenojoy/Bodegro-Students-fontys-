@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MockDal
+namespace Domain.Enums
 {
-    internal class MockDoctorDal
+    public enum Role
     {
+        Unkown = 0,
+        User = 1,
+        Doctor = 2
     }
 }

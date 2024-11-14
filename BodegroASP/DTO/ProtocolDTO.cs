@@ -12,7 +12,7 @@ namespace DTO
         public string Name { get; set; }
         public string Description { get; set; }
         public List<StepDTO> Steps { get; set; }
-        public int Admin_ID { get; set; }
+        public int User_ID { get; set; }
 
     }
 }

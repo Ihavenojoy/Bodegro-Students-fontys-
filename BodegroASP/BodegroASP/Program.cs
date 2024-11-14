@@ -19,7 +19,7 @@ namespace BodegroASP
             services.AddSingleton<UserContainer>();
 
             // DI - Interface, implementation
-            services.AddSingleton<IUser, UserDal>();
+            services.AddSingleton<IUser, UserDAL>();
 
             var app = builder.Build();
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ObjectConverter
+namespace Domain.Converter
 {
     public class StepConverter
     {

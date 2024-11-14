@@ -20,12 +20,12 @@ namespace Bodegro
     {
         ProtocolContainer protocolContainer;
         StepContainer stepContainer;
-        Admin user;
+        User user;
         private readonly IConfiguration iConfiguration;
-        public AddProtocolForm(Admin User)
+        public AddProtocolForm(User User)
         {
             ProtocolDAL protocolDAL = new ProtocolDAL(iConfiguration);
-            protocolContainer = new ProtocolContainer(protocolDAL);
+            protocolContainer = new ProtocolContainer(new ProtocolDAL(iConfiguration),new StepDAL(iConfiguration));
             StepDAL stepDAL = new StepDAL(iConfiguration);
             stepContainer = new StepContainer(stepDAL);
             InitializeComponent();

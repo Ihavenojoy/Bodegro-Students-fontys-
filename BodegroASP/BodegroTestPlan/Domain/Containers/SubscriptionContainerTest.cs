@@ -18,11 +18,11 @@ namespace BodegroTestPlan.Domain.Containers
         public void Getpatients()
         {
             //Arrange
-            Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
+            User User = new User(6, "", "", Regio.Drente, 1, true);
             SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
             PatientDAL patientDAL = new PatientDAL();
             ProtocolDAL protocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(User, subscriptionDAL, patientDAL, protocolDAL);
 
             //Act
             List<Patient> patiens = container.GetPatients();
@@ -40,11 +40,11 @@ namespace BodegroTestPlan.Domain.Containers
             public void GetProtocols()
         {
             //Arrange
-            Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
+            User User = new User(6, "", "", Regio.Drente, 1, true);
             SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
             PatientDAL patientDAL = new PatientDAL();
             ProtocolDAL protocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(User, subscriptionDAL, patientDAL, protocolDAL);
 
             //Act
             List<Protocol> list = container.GetProtocols();
@@ -64,11 +64,11 @@ namespace BodegroTestPlan.Domain.Containers
             //Arrange
             DateTime currentime = DateTime.Now;
             DateTime Endtime = DateTime.Today;
-            Doctor doctor = new Doctor(6, "", "", Regio.Drente, 1, true);
+            User User = new User(6, "", "", Regio.Drente, 1, true);
             SubscriptionDAL subscriptionDAL = new SubscriptionDAL();
             PatientDAL patientDAL = new PatientDAL();
             ProtocolDAL protocolDAL = new ProtocolDAL();
-            SubscriptionContainer container = new SubscriptionContainer(doctor, subscriptionDAL, patientDAL,protocolDAL);
+            SubscriptionContainer container = new SubscriptionContainer(User, subscriptionDAL, patientDAL,protocolDAL);
 
             //Act
             bool check1 = container.Datumcheck(currentime, Endtime);

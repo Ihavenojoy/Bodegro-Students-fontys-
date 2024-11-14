@@ -1,7 +1,7 @@
 namespace BodegroTestPlan
 {
     [TestClass]
-    public class AdminTest
+    public class UserTest
     {
         [TestMethod]
         public void TestMethod1()

@@ -7,7 +7,7 @@ using DAL;
 using Domain.Modules;
 using DTO;
 using Interfaces;
-using Domain.ObjectConverter;
+using Domain.Converter;
 using System.Runtime.CompilerServices;
 
 namespace Domain.Containers.StepFile
@@ -15,11 +15,10 @@ namespace Domain.Containers.StepFile
     public class StepContainer : IStepContainer
     {
         IStep Dal;
-        StepConverter stepConverter;
-        public StepContainer(IStep dal, StepConverter stepConverter)
+        StepConverter stepConverter = new();
+        public StepContainer(IStep dal)
         {
             Dal = dal;
-            this.stepConverter = stepConverter;
         }
         public bool AddStep(Step step)
         {

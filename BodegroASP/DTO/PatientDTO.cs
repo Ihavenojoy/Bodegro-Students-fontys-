@@ -13,6 +13,6 @@ namespace DTO
         public string Email { get; set; }
         public int PhoneNumber { get; set; }
         public string MedicalHistory { get; set; }
-        public int Doctor_ID { get; set; }
+        public int User_ID { get; set; }
     }
 }

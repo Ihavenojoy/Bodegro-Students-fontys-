@@ -8,7 +8,7 @@ using Domain.Modules;
 using Interfaces;
 using DTO;
 using System.Numerics;
-using Domain.Converters;
+using Domain.Converter;
 
 namespace Domain.Containers.PatientFile
 {
@@ -20,13 +20,13 @@ namespace Domain.Containers.PatientFile
         {
             Dal = dal;
         }
-        public List<Patient> GetPatientsOfDoctor(Doctor doctor)
+        public List<Patient> GetPatientsOfUser(User User)
         {
             List<Patient> list = new List<Patient>();
-            List<int> PatientIDs = Dal.GetPatientIDOfDoctor(doctor.ID);
+            List<int> PatientIDs = Dal.GetPatientIDOfUser(User.ID);
             foreach (int i in PatientIDs)
             {
-                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i, doctor.ID));
+                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i, User.ID));
                 list.Add(patient);
             }
             return list;

@@ -18,9 +18,9 @@ namespace BodegroTestPlan.Domain.ObjectConverter
         {
             //Arrange
             SubscriptionConverter converter = new SubscriptionConverter();
-            PatientDTO patientDTO = new PatientDTO { Doctor_ID = 6, Email = "Test", ID = 6, MedicalHistory = "Test", Name = "Test", PhoneNumber = 64};
+            PatientDTO patientDTO = new PatientDTO { User_ID = 6, Email = "Test", ID = 6, MedicalHistory = "Test", Name = "Test", PhoneNumber = 64};
             List<StepDTO> steps = new List<StepDTO>();
-            ProtocolDTO protocolDTO = new ProtocolDTO {Admin_ID = 6, Name = "Test", ID = 6, Description = "Test", Steps = steps};
+            ProtocolDTO protocolDTO = new ProtocolDTO {User_ID = 6, Name = "Test", ID = 6, Description = "Test", Steps = steps};
             SubscriptionDTO testdto = new SubscriptionDTO { Patient = patientDTO , Protocol = protocolDTO, StartDate = DateTime.Now, StepsTaken = 0};
             List<SubscriptionDTO> testlist = new List<SubscriptionDTO>();
             testlist.Add(testdto);

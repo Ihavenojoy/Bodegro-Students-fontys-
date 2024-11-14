@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
-using Domain.Containers.AdminFile;
+using Domain.Containers.UserFile;
 
 namespace BodegroTestPlan.Domain.Containers
 {
     [TestClass]
-    public class AdminContainerTest
+    public class UserContainerTest
     {
     }
 }

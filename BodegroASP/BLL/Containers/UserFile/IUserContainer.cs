@@ -4,7 +4,6 @@ namespace Domain.Containers.UserFile
 {
     public interface IUserContainer
     {
-        Admin AdminLogin(string EmailInput, string PasswordInput);
-        Doctor DoctorLogin(string EmailInput, string PasswordInput);
+        User UserLogin(string EmailInput, string PasswordInput);
     }
 }

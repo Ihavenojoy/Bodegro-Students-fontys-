@@ -1,5 +1,5 @@
 ﻿using DAL;
-using Domain.Containers.DoctorFile;
+using Domain.Containers.UserFile;
 using Domain.Containers.PatientFile;
 using Domain.Modules;
 using Interfaces;
@@ -11,19 +11,19 @@ namespace Bodegro
     public partial class MainPage : Form
     {
         private PatientContainer _patientcontainer;
-        private DoctorContainer _doctorContainer;
+        private UserContainer _UserContainer;
         private User user;
-        private Doctor doctor;
+        private User User;
         private readonly IConfiguration iConfiguration;
 
         public MainPage(User person)
         {
             PatientDAL ipatient = new PatientDAL(iConfiguration);
-            DoctorDAL idoctor = new DoctorDAL(iConfiguration);
+            UserDAL iUser = new UserDAL(iConfiguration);
             _patientcontainer = new PatientContainer(ipatient);
-            _doctorContainer = new DoctorContainer(idoctor);
+            _UserContainer = new UserContainer(iUser);
             user = person;
-            Firstdoctor();
+            FirstUser();
             InitializeComponent();
             UpdateUI();
             
@@ -32,38 +32,38 @@ namespace Bodegro
         private void UpdateUI()
         {
             PatientListBox.Items.Clear();
-            ComboDoctorBox.Items.Clear();
+            ComboUserBox.Items.Clear();
             foreach (var sub in PatiëntFill())
             {
                 PatientListBox.Items.Add(sub);
             }
-            foreach (var sub in Doctorfill(user))
+            foreach (var sub in Userfill(user))
             {
-                ComboDoctorBox.Items.Add(sub);
-                ComboDoctorBox.Select(0, 0);
+                ComboUserBox.Items.Add(sub);
+                ComboUserBox.Select(0, 0);
             }
         }
-        private List<Doctor> Doctorfill(User user)
+        private List<User> Userfill(User user)
         {
-            List<Doctor> list = new List<Doctor>();
+            List<User> list = new List<User>();
 
-            if (user is Admin)
+            if (user is User)
             {
-                foreach (Doctor doctor in _doctorContainer.GetAllDoctors())
+                foreach (User User in _UserContainer.GetAllUsers())
                 {
-                    list.Add(doctor);
+                    list.Add(User);
                 }
             }
-            else if (user is Doctor)
+            else if (user is User)
             {
-                list.Add((Doctor)user);
+                list.Add((User)user);
             }
             return list;
         }
         private List<Patient> PatiëntFill()
         {
             List<Patient> list = new List<Patient>();
-            foreach (Patient patient in _patientcontainer.GetPatientsOfDoctor(doctor))
+            foreach (Patient patient in _patientcontainer.GetPatientsOfUser(User))
             {
                 list.Add(patient);
             }
@@ -77,7 +77,7 @@ namespace Bodegro
 
         private void AddProtocolToPatientButton_Click(object sender, EventArgs e)
         {
-            NewSubscription newSubscription = new(doctor);
+            NewSubscription newSubscription = new(User);
             this.Hide();
             if (newSubscription.ShowDialog() == DialogResult.OK)
             {
@@ -99,7 +99,7 @@ namespace Bodegro
 
         private void CreateArtsButton_Click(object sender, EventArgs e)
         {
-            if (user is Admin)
+            if (user is User)
             {
                 CreateUser createUser = new CreateUser(0, user);
                 this.Hide();
@@ -116,9 +116,9 @@ namespace Bodegro
 
         }
 
-        private void CreateAdminButton_Click(object sender, EventArgs e)
+        private void CreateUserButton_Click(object sender, EventArgs e)
         {
-            if (user is Admin)
+            if (user is User)
             {
                 CreateUser createUser = new CreateUser(0, user);
                 this.Hide();
@@ -135,20 +135,20 @@ namespace Bodegro
 
         }
 
-        private void ComboDoctorBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboUserBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            doctor = (Doctor)ComboDoctorBox.SelectedItem;
+            User = (User)ComboUserBox.SelectedItem;
             UpdateUI();
         }
-        public void Firstdoctor()
+        public void FirstUser()
         {
-            if (user is Doctor)
+            if (user is User)
             {
-                doctor = (Doctor)user;
+                User = (User)user;
             }
-            else if (user is Admin)
+            else if (user is User)
             {
-                doctor = _doctorContainer.GetAllDoctors()[0];
+                User = _UserContainer.GetAllUsers()[0];
             }
         }
     }
