@@ -1,86 +1,42 @@
-﻿using Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
-using System.Diagnostics;
-using Twofactor;
+using Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
-    public class UserDAL : IUser
+    public class DoctorDAL: IDoctor
     {
         private readonly string connectionString;
-        public UserDAL(IConfiguration configuration)
+
+        public DoctorDAL(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public UserDTO UserLogin(string Emailinput, string PassWordInput)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            UserDTO UserDTO = new UserDTO();
-            try
-            {
-                string insert = "Select ID, Name, Email, Regio, User_ID From User WHERE Email = @Email AND Password = @Password";
-
-                using (conn)
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(insert, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Email", Emailinput);
-                        cmd.Parameters.AddWithValue("@Password", PassWordInput);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                UserDTO = new UserDTO
-                                {
-                                    ID = (int)reader["ID"],
-                                    Name = (string)reader["Name"],
-                                    Email = (string)reader["Email"],
-                                    Role = (int)reader["Role"],
-                                };
-                            }
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Debug.WriteLine("An SQL error occurred while creating a User: " + ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return UserDTO;
-        }
-
-       
-        public void TwofactorActivation(string UserEmail)
-        {
-            int OTP = Convert.ToInt32(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30));
-        }
-        public bool TwofactorCheck(string Userinput)
-        {
-            return false;
-        }
-        public bool CreateUser(UserDTO User, string password)
+        public bool CreateDoctor(DoctorDTO doctor, string password)
         {
             bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [User] (User_ID, Name, Email, Regio, IsActive, Password) VALUES (@User_ID, @Name, @Email, @Regio,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Doctor] (Admin_ID, Name, Email, Regio, IsActive, Password) VALUES (@Admin_ID, @Name, @Email, @Regio,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@User_ID", User.ID);
-                        cmd.Parameters.AddWithValue("@Name", User.Name);
-                        cmd.Parameters.AddWithValue("@Email", User.Email);
+                        cmd.Parameters.AddWithValue("@Admin_ID", doctor.Admin_ID);
+                        cmd.Parameters.AddWithValue("@Name", doctor.Name);
+                        cmd.Parameters.AddWithValue("@Email", doctor.Email);
                         cmd.Parameters.AddWithValue("@Password", password);
+                        cmd.Parameters.AddWithValue("@Regio", doctor.Regio);
+                        cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -91,7 +47,7 @@ namespace DAL
             }
             catch (SqlException ex)
             {
-                Debug.WriteLine("An SQL error occurred while creating a User: " + ex.Message);
+                Debug.WriteLine("An SQL error occurred while creating a doctor: " + ex.Message);
             }
             finally
             {
@@ -99,13 +55,13 @@ namespace DAL
             }
             return isdone;
         }
-        public bool UserExists(string email)
+        public bool DoctorExists(string email)
         {
             int count = 0;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT COUNT(*) FROM [User] WHERE Email = @Email";
+                string select = "SELECT COUNT(*) FROM [Doctor] WHERE Email = @Email";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -118,7 +74,7 @@ namespace DAL
             }
             catch (SqlException ex)
             {
-                Debug.WriteLine("An SQL error occurred while checking if a User exists: " + ex.Message);
+                Debug.WriteLine("An SQL error occurred while checking if a doctor exists: " + ex.Message);
             }
             finally
             {
@@ -200,12 +156,12 @@ namespace DAL
         //        conn.Close();
         //    }
         //}
-        public bool SoftDeleteUser(int id)
+        public bool SoftDeleteDoctor(int id)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string delete = "UPDATE [User] SET IsActive = 0 WHERE ID = @ID";
+                string delete = "UPDATE [Doctor] SET IsActive = 0 WHERE ID = @ID";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(delete, conn))
@@ -220,7 +176,7 @@ namespace DAL
             }
             catch (SqlException ex)
             {
-                Debug.WriteLine("An SQL error occurred while deleting a User: " + ex.Message);
+                Debug.WriteLine("An SQL error occurred while deleting a doctor: " + ex.Message);
                 return false;
             }
             finally
@@ -228,13 +184,13 @@ namespace DAL
                 conn.Close();
             }
         }
-        public List<UserDTO> GetAllUsers()
+        public List<DoctorDTO> GetAllDoctors()
         {
-            List<UserDTO> Users = new List<UserDTO>();
+            List<DoctorDTO> doctors = new List<DoctorDTO>();
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, Regio, User_ID FROM [User] WHERE IsActive = 1";
+                string select = "SELECT ID, Name, Email, Regio, Admin_ID FROM [Doctor] WHERE IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -244,23 +200,27 @@ namespace DAL
                         {
                             while (reader.Read())
                             {
-                                Users.Add(new UserDTO
+                                doctors.Add(new DoctorDTO
                                 {
+
                                     ID = reader.GetInt32(reader.GetOrdinal("ID")),
                                     Name = reader.GetString(reader.GetOrdinal("Name")),
                                     Email = reader.GetString(reader.GetOrdinal("Email")),
-                                    Role = (int)reader["Role"]
+                                    Regio = reader.GetInt32(reader.GetOrdinal("Regio")),
+                                    Admin_ID = reader.GetInt32(reader.GetOrdinal("Admin_ID"))
+                                    
+
                                 });
                             }
                         }
                     }
                 }
-                return Users;
+                return doctors;
             }
             catch (SqlException ex)
             {
-                Debug.WriteLine("An SQL error occurred while retrieving Users: " + ex.Message);
-                return Users;
+                Debug.WriteLine("An SQL error occurred while retrieving doctors: " + ex.Message);
+                return doctors;
             }
             finally
             {
@@ -270,6 +230,3 @@ namespace DAL
 
     }
 }
-
-
-
