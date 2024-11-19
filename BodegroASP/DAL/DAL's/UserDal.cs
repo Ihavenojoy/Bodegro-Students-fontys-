@@ -25,7 +25,7 @@ namespace DAL
 
                 using (conn)
                 {
-                    conn.Open();
+                    //conn.Open();
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", Emailinput);
