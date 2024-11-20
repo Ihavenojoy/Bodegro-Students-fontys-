@@ -65,5 +65,11 @@ namespace Domain.Containers.UserFile
             }
             return Users;
         }
+        public User GetUserByID(int UserId)
+        {
+            UserDTO UserDTO = _UserService.GetUserByID(UserId);
+            User User = docconverter.DTOToObject(UserDTO);
+            return User;
+        }
     }
 }
