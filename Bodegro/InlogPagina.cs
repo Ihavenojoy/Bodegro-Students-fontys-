@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Domain.Containers;
 using Domain.Modules;
 using Interfaces;
 using DAL;
 using Domain.Enums;
+using Domain.Containers.UserFile;
 
 namespace Bodegro
 {
@@ -19,8 +19,8 @@ namespace Bodegro
     public partial class InlogPagina : Form
     {
         public object Inlogaccount;
-        //private readonly DoctorDAL doctorDAL = new DoctorDAL();
-       // private readonly AdminDAL adminDAL =  new AdminDAL();
+        //private readonly UserDAL UserDAL = new UserDAL();
+       // private readonly UserDAL UserDAL =  new UserDAL();
         private readonly UserContainer userContainer; 
 
         public InlogPagina(IUser context)
@@ -35,11 +35,11 @@ namespace Bodegro
         {
             string EmailInput = EmailInputUser.Text;
             string PasswordInput = PassWordInputUser.Text;
-            Inlogaccount = userContainer.DoctorLogin(EmailInput, PasswordInput);
+            Inlogaccount = userContainer.UserLogin(EmailInput, PasswordInput);
 
             if (HasValidID(Inlogaccount) == false)
             {
-                Inlogaccount = userContainer.AdminLogin(EmailInput, PasswordInput);
+                Inlogaccount = userContainer.UserLogin(EmailInput, PasswordInput);
             }
             if (HasValidID(Inlogaccount))
             {
@@ -52,21 +52,12 @@ namespace Bodegro
                 if (twoFactorPage.Confirmation)
                 {
                     this.Close();
-                    if (Inlogaccount is Doctor doctortest)
+                    if (Inlogaccount is User Usertest)
                     {
-                        Doctor doctor = (Doctor)Inlogaccount;
-                        MainPage mainPage = new MainPage((Doctor)Inlogaccount);
+                        User User = (User)Inlogaccount;
+                        MainPage mainPage = new MainPage((User)Inlogaccount);
                         mainPage.Show();
                     }
-                    else if (Inlogaccount is Admin admintest)
-                    {
-                        Admin admin = (Admin)Inlogaccount;
-                        MainPage mainPage = new MainPage((Admin)Inlogaccount);
-                        mainPage.Show();
-                    }
-
-
-
                 }
             }
             
@@ -74,11 +65,7 @@ namespace Bodegro
         }
         private bool HasValidID(object account)
         {
-            if (account is Doctor doctor && doctor.ID > 0)
-            {
-                return true;
-            }
-            else if (account is Admin admin && admin.ID > 0)
+            if (account is User User && User.ID > 0)
             {
                 return true;
             }

@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 namespace BodegroTestPlan.Domain.ObjectConverter
 {
     [TestClass]
-    public class AdminConverterTest
+    public class UserConverterTest
     {
         [TestMethod]
         public void ObjectToDTO()
         {
             //Arrange
-            AdminConverter converter = new AdminConverter();
-            AdminDTO testdto = new AdminDTO { ID = 0,Name = "Test",Email = "Test" };
+            UserConverter converter = new UserConverter();
+            UserDTO testdto = new UserDTO { ID = 0,Name = "Test",Email = "Test" };
 
             //Act
-            Admin test = converter.DTOToObject(testdto);
+            User test = converter.DTOToObject(testdto);
 
             //Assert
             Assert.AreEqual(test.ID, testdto.ID);

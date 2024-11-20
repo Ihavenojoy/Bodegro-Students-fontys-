@@ -1,5 +1,4 @@
 ﻿using Domain.Modules;
-using Domain.Containers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,63 +6,64 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Enums;
 using DAL;
+using Domain.Containers.UserFile;
 
 namespace BodegroTestPlan.Domain.Containers
 {
     [TestClass]
-    public class DoctorContainerTest
+    public class UserContainerTest
     {
         [TestMethod]
 
-        public void CreatDoctor()
+        public void CreatUser()
         {
             //Arrange
-            DoctorDAL doctordal = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctordal);
-            Doctor doctor = new Doctor(6,"","",Regio.Drente,0,false);
+            UserDAL Userdal = new UserDAL();
+            UserContainer container = new UserContainer(Userdal);
+            User User = new User(6,"","",Regio.Drente,0,false);
             string Password = "password";
             //Act
-            int check = container.CreateDoctor(doctor, Password);
+            int check = container.CreateUser(User, Password);
             //Assert
             Assert.AreEqual(-1, check);
         }
 
         [TestMethod]
 
-        public void DoctorExist()
+        public void UserExist()
         {
             //Arrange
-            DoctorDAL doctordal = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctordal);
-            string doctormail = "1";
+            UserDAL Userdal = new UserDAL();
+            UserContainer container = new UserContainer(Userdal);
+            string Usermail = "1";
             //Act
-            bool check = container.DoctorExists(doctormail);
+            bool check = container.UserExists(Usermail);
             //Assert
             Assert.IsFalse(check);
         }
 
         [TestMethod]
 
-        public void DeleteDoctor()
+        public void DeleteUser()
         {
             //Arrange
-            DoctorDAL doctordal = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctordal);
-            int doctorId = 4;
+            UserDAL Userdal = new UserDAL();
+            UserContainer container = new UserContainer(Userdal);
+            int UserId = 4;
             //Act
-            bool check = container.DeleteDoctor(doctorId);
+            bool check = container.DeleteUser(UserId);
             //Assert
             Assert.IsTrue(check);
         }
 
         [TestMethod]
-        public void GetAllDoctors()
+        public void GetAllUsers()
         {
             //Arrange
-            DoctorDAL doctordal = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctordal);
+            UserDAL Userdal = new UserDAL();
+            UserContainer container = new UserContainer(Userdal);
             //Act
-            List<Doctor> check = container.GetAllDoctors();
+            List<User> check = container.GetAllUsers();
             //Assert
             Assert.IsNotNull(check);
         }
@@ -72,21 +72,21 @@ namespace BodegroTestPlan.Domain.Containers
         public void Login()
         {
             //Arrange
-            DoctorDAL doctordal = new DoctorDAL();
-            DoctorContainer container = new DoctorContainer(doctordal);
+            UserDAL Userdal = new UserDAL();
+            UserContainer container = new UserContainer(Userdal);
             string Emailinput = "timoo";
             string PasswordInput = "Welkom01???";
             string WrongEmail = "432423";
             string WrongPassword = "52sdf-32";
 
             //Act
-            Doctor succesadmin = container.Login(Emailinput, PasswordInput);
-            Doctor failadmin = container.Login(WrongEmail, WrongPassword);
+            User succesUser = container.Login(Emailinput, PasswordInput);
+            User failUser = container.Login(WrongEmail, WrongPassword);
             //Assert
 
-            Assert.IsNotNull(succesadmin);
-            Assert.IsNull(failadmin.Name);
-            Assert.IsNull(failadmin.Email);
+            Assert.IsNotNull(succesUser);
+            Assert.IsNull(failUser.Name);
+            Assert.IsNull(failUser.Email);
         }
     }
 }

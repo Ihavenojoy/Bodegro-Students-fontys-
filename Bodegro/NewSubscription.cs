@@ -1,5 +1,4 @@
 ﻿using Domain.Modules;
-using Domain.Containers;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Configuration;
+using Domain.Containers.PatientFile;
+using Domain.Containers.ProtocolFile;
+using Domain.Containers.SubscriptionFile;
 
 namespace Bodegro
 {
@@ -19,18 +21,18 @@ namespace Bodegro
         SubscriptionContainer SubscriptionDomain;
         PatientContainer PatientDomain;
         ProtocolContainer ProtocolDomain;
-        Doctor doctor;
+        User User;
         private readonly IConfiguration iConfiguration;
-        public NewSubscription(Doctor doctor)
+        public NewSubscription(User User)
         {
             InitializeComponent(); 
             SubscriptionDAL subscriptionDAL = new(iConfiguration);
             PatientDAL patientDAL = new(iConfiguration);
             ProtocolDAL protocolDAL = new(iConfiguration);
-            SubscriptionDomain = new(doctor, subscriptionDAL, patientDAL, protocolDAL);
+            SubscriptionDomain = new(User, subscriptionDAL, patientDAL, protocolDAL);
             PatientDomain = new(patientDAL);
-            ProtocolDomain = new(protocolDAL);
-            this.doctor = doctor;
+            ProtocolDomain = new(protocolDAL, new StepDAL(iConfiguration));
+            this.User = User;
             UpdateUI();
         }
 
@@ -51,7 +53,7 @@ namespace Bodegro
             {
                 ProtocolBox.Items.Add(sub);
             }
-            foreach (var sub in PatientDomain.GetPatientsOfDoctor(doctor))
+            foreach (var sub in PatientDomain.GetPatientsOfUser(User))
             {
                 PatientBox.Items.Add(sub);
             }

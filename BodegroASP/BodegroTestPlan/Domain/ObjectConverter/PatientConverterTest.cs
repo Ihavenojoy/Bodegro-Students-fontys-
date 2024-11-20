@@ -17,7 +17,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
         {
             //Arrange
             PatientConverter converter = new PatientConverter();
-            PatientDTO testdto = new PatientDTO { ID = 0, Name = "Test", Email = "Test", PhoneNumber = 3, MedicalHistory = "Test", Doctor_ID = 8 };
+            PatientDTO testdto = new PatientDTO { ID = 0, Name = "Test", Email = "Test", PhoneNumber = 3, MedicalHistory = "Test", User_ID = 8 };
 
             //Act
             Patient test = converter.DTOToObject(testdto);
@@ -28,7 +28,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
             Assert.AreEqual(test.Email, testdto.Email);
             Assert.AreEqual(test.PhoneNumber, testdto.PhoneNumber);
             Assert.AreEqual(test.MedicalHistory, testdto.MedicalHistory);
-            Assert.AreEqual(test.Doctor_ID, testdto.Doctor_ID);
+            Assert.AreEqual(test.User_ID, testdto.User_ID);
         }
     }
 }

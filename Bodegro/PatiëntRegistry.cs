@@ -1,4 +1,4 @@
-﻿using Domain.Containers;
+﻿using Domain.Containers.PatientFile;
 using Domain.Modules;
 using System;
 using System.Collections.Generic;
@@ -33,9 +33,9 @@ namespace Bodegro
         private List<Patient> PatiëntFill()
         {
             List<Patient> list = new List<Patient>();
-            if (user is Doctor)
+            if (user is User)
             {
-                foreach (Patient patient in _container.GetPatientsOfDoctor((Doctor)user))
+                foreach (Patient patient in _container.GetPatientsOfUser((User)user))
                 {
                     list.Add(patient);
                 }

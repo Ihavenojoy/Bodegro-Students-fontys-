@@ -18,7 +18,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
             //Arrange
             ProtocolConverter converter = new ProtocolConverter();
             List<StepDTO> steps = new List<StepDTO>();
-            ProtocolDTO testdto = new ProtocolDTO { ID = 0, Name = "Test", Description = "Test", Steps = steps, Admin_ID = 8};
+            ProtocolDTO testdto = new ProtocolDTO { ID = 0, Name = "Test", Description = "Test", Steps = steps, User_ID = 8};
 
             //Act
             Protocol test = converter.DTOToObject(testdto);
@@ -28,7 +28,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
             Assert.AreEqual(test.Name, testdto.Name);
             Assert.AreEqual(test.Description, testdto.Description);
             Assert.AreEqual(test.Steps.Count, testdto.Steps.Count);
-            Assert.AreEqual(test.Admin_ID, testdto.Admin_ID);
+            Assert.AreEqual(test.User_ID, testdto.User_ID);
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
             //Arrange
             ProtocolConverter converter = new ProtocolConverter();
             List<StepDTO> steps = new List<StepDTO>();
-            ProtocolDTO testdto = new ProtocolDTO { ID = 0, Name = "Test", Description = "Test", Steps = steps, Admin_ID = 8 };
+            ProtocolDTO testdto = new ProtocolDTO { ID = 0, Name = "Test", Description = "Test", Steps = steps, User_ID = 8 };
             List<ProtocolDTO> testlist = new List<ProtocolDTO>();
             testlist.Add(testdto);
             testlist.Add(testdto);
@@ -54,7 +54,7 @@ namespace BodegroTestPlan.Domain.ObjectConverter
                 Assert.AreEqual(test[i].Name, testlist[i].Name);
                 Assert.AreEqual(test[i].Description, testlist[i].Description);
                 Assert.AreEqual(test[i].Steps.Count, testlist[i].Steps.Count);
-                Assert.AreEqual(test[i].Admin_ID, testlist[i].Admin_ID);
+                Assert.AreEqual(test[i].User_ID, testlist[i].User_ID);
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ObjectConverter
+namespace Domain.Converter
 {
     public class StepConverter
     {
@@ -25,6 +25,20 @@ namespace Domain.ObjectConverter
                 list.Add(step);
             }
             return list;
+        }
+        public StepDTO ObjectToDTO(Step step)
+        {
+            StepDTO stepDTO = new StepDTO
+            {
+                ID = step.ID,
+                ProtocolID = step.ProtocolID,
+                Name = step.Name,
+                Description = step.Description,
+                Order = step.Order,
+                Test = step.Test,
+                Interval = step.Interval
+            };
+            return stepDTO;
         }
     }
 }

@@ -32,13 +32,13 @@
             Gebruiker = new TabPage();
             btnDeleteUser = new Button();
             label6 = new Label();
-            lbAdmin = new ListBox();
+            lbUser = new ListBox();
             groupBox1 = new GroupBox();
-            rbDoctor = new RadioButton();
-            rbAdmin = new RadioButton();
+            rbUser = new RadioButton();
+            rbUser = new RadioButton();
             btnCreateUser = new Button();
             label5 = new Label();
-            lbDoctors = new ListBox();
+            lbUsers = new ListBox();
             cbRegioUser = new ComboBox();
             tbPasswordUser = new TextBox();
             tbEmailUser = new TextBox();
@@ -80,11 +80,11 @@
             // 
             Gebruiker.Controls.Add(btnDeleteUser);
             Gebruiker.Controls.Add(label6);
-            Gebruiker.Controls.Add(lbAdmin);
+            Gebruiker.Controls.Add(lbUser);
             Gebruiker.Controls.Add(groupBox1);
             Gebruiker.Controls.Add(btnCreateUser);
             Gebruiker.Controls.Add(label5);
-            Gebruiker.Controls.Add(lbDoctors);
+            Gebruiker.Controls.Add(lbUsers);
             Gebruiker.Controls.Add(cbRegioUser);
             Gebruiker.Controls.Add(tbPasswordUser);
             Gebruiker.Controls.Add(tbEmailUser);
@@ -118,20 +118,20 @@
             label6.Name = "label6";
             label6.Size = new Size(56, 20);
             label6.TabIndex = 30;
-            label6.Text = "Admin:";
+            label6.Text = "User:";
             // 
-            // lbAdmin
+            // lbUser
             // 
-            lbAdmin.FormattingEnabled = true;
-            lbAdmin.Location = new Point(401, 89);
-            lbAdmin.Name = "lbAdmin";
-            lbAdmin.Size = new Size(185, 384);
-            lbAdmin.TabIndex = 29;
+            lbUser.FormattingEnabled = true;
+            lbUser.Location = new Point(401, 89);
+            lbUser.Name = "lbUser";
+            lbUser.Size = new Size(185, 384);
+            lbUser.TabIndex = 29;
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(rbDoctor);
-            groupBox1.Controls.Add(rbAdmin);
+            groupBox1.Controls.Add(rbUser);
+            groupBox1.Controls.Add(rbUser);
             groupBox1.Location = new Point(114, 89);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(195, 128);
@@ -139,27 +139,27 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Gebruiker";
             // 
-            // rbDoctor
+            // rbUser
             // 
-            rbDoctor.AutoSize = true;
-            rbDoctor.Location = new Point(6, 84);
-            rbDoctor.Name = "rbDoctor";
-            rbDoctor.Size = new Size(56, 24);
-            rbDoctor.TabIndex = 13;
-            rbDoctor.TabStop = true;
-            rbDoctor.Text = "Arts";
-            rbDoctor.UseVisualStyleBackColor = true;
+            rbUser.AutoSize = true;
+            rbUser.Location = new Point(6, 84);
+            rbUser.Name = "rbUser";
+            rbUser.Size = new Size(56, 24);
+            rbUser.TabIndex = 13;
+            rbUser.TabStop = true;
+            rbUser.Text = "Arts";
+            rbUser.UseVisualStyleBackColor = true;
             // 
-            // rbAdmin
+            // rbUser
             // 
-            rbAdmin.AutoSize = true;
-            rbAdmin.Location = new Point(6, 50);
-            rbAdmin.Name = "rbAdmin";
-            rbAdmin.Size = new Size(74, 24);
-            rbAdmin.TabIndex = 12;
-            rbAdmin.TabStop = true;
-            rbAdmin.Text = "Admin";
-            rbAdmin.UseVisualStyleBackColor = true;
+            rbUser.AutoSize = true;
+            rbUser.Location = new Point(6, 50);
+            rbUser.Name = "rbUser";
+            rbUser.Size = new Size(74, 24);
+            rbUser.TabIndex = 12;
+            rbUser.TabStop = true;
+            rbUser.Text = "User";
+            rbUser.UseVisualStyleBackColor = true;
             // 
             // btnCreateUser
             // 
@@ -180,13 +180,13 @@
             label5.TabIndex = 26;
             label5.Text = "Arts:";
             // 
-            // lbDoctors
+            // lbUsers
             // 
-            lbDoctors.FormattingEnabled = true;
-            lbDoctors.Location = new Point(663, 89);
-            lbDoctors.Name = "lbDoctors";
-            lbDoctors.Size = new Size(185, 384);
-            lbDoctors.TabIndex = 25;
+            lbUsers.FormattingEnabled = true;
+            lbUsers.Location = new Point(663, 89);
+            lbUsers.Name = "lbUsers";
+            lbUsers.Size = new Size(185, 384);
+            lbUsers.TabIndex = 25;
             // 
             // cbRegioUser
             // 
@@ -401,13 +401,13 @@
         private TabPage Gebruiker;
         private Button btnDeleteUser;
         private Label label6;
-        private ListBox lbAdmin;
+        private ListBox lbUser;
         private GroupBox groupBox1;
-        private RadioButton rbDoctor;
-        private RadioButton rbAdmin;
+        private RadioButton rbUser;
+        private RadioButton rbUser2;
         private Button btnCreateUser;
         private Label label5;
-        private ListBox lbDoctors;
+        private ListBox lbUsers;
         private ComboBox cbRegioUser;
         private TextBox tbPasswordUser;
         private TextBox tbEmailUser;

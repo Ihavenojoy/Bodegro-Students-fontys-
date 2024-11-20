@@ -7,24 +7,22 @@ using DAL;
 using Domain.Modules;
 using DTO;
 using Interfaces;
-using Domain.DTOConverter;
-using Domain.ObjectConverter;
+using Domain.Converter;
 using System.Runtime.CompilerServices;
 
-namespace Domain.Containers
+namespace Domain.Containers.StepFile
 {
-    public class StepContainer
+    public class StepContainer : IStepContainer
     {
         IStep Dal;
-        StepDTOConverter stepDTOConverter = new StepDTOConverter();
-        StepConverter stepConverter = new StepConverter();
+        StepConverter stepConverter = new();
         public StepContainer(IStep dal)
         {
             Dal = dal;
         }
         public bool AddStep(Step step)
         {
-            StepDTO stepDTO = stepDTOConverter.ObjectToDTO(step);
+            StepDTO stepDTO = stepConverter.ObjectToDTO(step);
             return Dal.CreateStep(stepDTO);
         }
         public List<Step> GetStepsOfProtocol(Protocol protocol)

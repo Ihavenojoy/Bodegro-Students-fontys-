@@ -1,6 +1,6 @@
 using Interfaces;
 using DAL;
-using Domain.Containers;
+using Domain.Containers.UserFile;
 
 namespace BodegroASP
 {
@@ -19,7 +19,7 @@ namespace BodegroASP
             services.AddSingleton<UserContainer>();
 
             // DI - Interface, implementation
-            services.AddSingleton<IUser, UserDal>();
+            services.AddSingleton<IUser, UserDAL>();
 
             var app = builder.Build();
 
