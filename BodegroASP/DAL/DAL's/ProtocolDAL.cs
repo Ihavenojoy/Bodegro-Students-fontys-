@@ -64,7 +64,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description, Total, User_ID FROM Protocol";
+                string select = "SELECT ID, Name, Description FROM Protocol";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -80,7 +80,7 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    User_ID = Convert.ToInt32(reader["User_ID"]),
+                                    User_ID = 0,
                                     Steps = new List<StepDTO>()
                                 };
                                 list.Add(protocol);

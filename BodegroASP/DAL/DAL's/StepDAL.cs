@@ -16,7 +16,8 @@ namespace DAL
         private readonly string connectionString;
         public StepDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            //connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public bool CreateStep(StepDTO stepDTO)
         {
