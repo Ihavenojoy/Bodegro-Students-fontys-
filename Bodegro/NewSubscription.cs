@@ -29,7 +29,7 @@ namespace Bodegro
             SubscriptionDAL subscriptionDAL = new(iConfiguration);
             PatientDAL patientDAL = new(iConfiguration);
             ProtocolDAL protocolDAL = new(iConfiguration);
-            SubscriptionDomain = new(User, subscriptionDAL, patientDAL, protocolDAL);
+            SubscriptionDomain = new(subscriptionDAL);
             PatientDomain = new(patientDAL);
             ProtocolDomain = new(protocolDAL, new StepDAL(iConfiguration));
             this.User = User;

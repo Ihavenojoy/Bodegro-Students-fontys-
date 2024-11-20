@@ -16,7 +16,15 @@ namespace DAL
         private readonly string connectionString;
         public PatientDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            if (configuration is null)
+            {
+                connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            }
+            else
+            {
+                connectionString = configuration.GetConnectionString("DefaultConnection");
+            }
+            
         }
         public bool CreatePatient(PatientDTO patient)
         {
@@ -60,12 +68,12 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT User_ID, Patient_ID FROM User_Patient WHERE User_ID = @User_ID";
+                string select = "SELECT Doctor_ID, Patient_ID FROM Doctor_Patient WHERE Doctor_ID = @Doctor_ID";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
                     {
-                        cmd.Parameters.AddWithValue("@User_ID", id);
+                        cmd.Parameters.AddWithValue("@Doctor_ID", id);
 
                         conn.Open();
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -106,7 +114,7 @@ namespace DAL
                         {
                             if (reader.Read())
                             {
-                                patient = new PatientDTO 
+                                patient = new PatientDTO
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
@@ -211,4 +219,5 @@ namespace DAL
             //    }
             //}
         }
+    }
 }
