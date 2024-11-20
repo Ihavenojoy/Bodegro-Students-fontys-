@@ -32,5 +32,9 @@ namespace Domain.Containers.ProtocolFile
             bool isdone = Dal.CreateProtocol(protocolConverter.ObjectToDTO(protocol));
             return isdone;
         }
+        public Protocol GetProtocol(string name)
+        {
+            return protocolConverter.DTOToObject(Dal.GetProtocol(name));
+        }
     }
 }

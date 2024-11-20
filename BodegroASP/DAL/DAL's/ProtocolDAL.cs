@@ -16,14 +16,8 @@ namespace DAL
         private readonly string connectionString;
         public ProtocolDAL(IConfiguration configuration)
         {
-            if (configuration is null)
-            {
-                connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
-            }
-            else
-            {
-                connectionString = configuration.GetConnectionString("DefaultConnection");
-            }
+            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            //connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public bool CreateProtocol(ProtocolDTO protocol)
         {
@@ -31,14 +25,13 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (Name, Description, User_ID) VALUES (@Name, @Description, @Total, @User_ID); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description) VALUES (@Name, @Description); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
-                        cmd.Parameters.AddWithValue("@User_ID", protocol.User_ID);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -80,7 +73,7 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    User_ID = 0,
+                                    User_ID = Convert.ToInt32(reader["User_ID"]),
                                     Steps = new List<StepDTO>()
                                 };
                                 list.Add(protocol);
@@ -99,6 +92,48 @@ namespace DAL
                 conn.Close();
             }
             return list;
+        }
+        public ProtocolDTO GetProtocol(string name)
+        {
+            ProtocolDTO protocol;
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Description FROM Protocol WHERE Name = @Name";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", name);
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                protocol = new ProtocolDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Description = Convert.ToString(reader["Description"]),
+                                    Steps = new List<StepDTO>()
+                                };
+                                return protocol;
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            protocol = new();
+            return protocol;
         }
 
         //// Method to update a product record
