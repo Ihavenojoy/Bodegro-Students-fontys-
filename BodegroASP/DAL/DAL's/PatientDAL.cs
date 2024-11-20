@@ -106,7 +106,7 @@ namespace DAL
                         {
                             if (reader.Read())
                             {
-                                patient = new PatientDTO 
+                                patient = new PatientDTO
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
@@ -211,4 +211,5 @@ namespace DAL
             //    }
             //}
         }
+    }
 }
