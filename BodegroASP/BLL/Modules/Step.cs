@@ -16,15 +16,9 @@ namespace Domain.Modules
         public int Order {  get; set; }
         public string Test { get; set; }
         public int Interval { get; set; }
-        public Step(int ID,int ProtocolID, string Name, string Description, int Order, string Test, int Interval)
+        public Step(int ID,int ProtocolID, string Name, string Description, int Order, string Test, int Interval): this(ProtocolID, Name, Description, Order, Test, Interval)
         {
             this.ID = ID;
-            this.ProtocolID = ProtocolID;
-            this.Name = Name;
-            this.Description = Description;
-            this.Order = Order;
-            this.Test = Test;
-            this.Interval = Interval;
         }
         public Step(int ProtocolID, string Name, string Description, int Order, string Test, int Interval)
         {

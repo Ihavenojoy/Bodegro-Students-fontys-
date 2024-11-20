@@ -72,7 +72,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [User] (User_ID, Name, Email, Regio, IsActive, Password) VALUES (@User_ID, @Name, @Email, @Regio,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [User] (ID, Name, Email, Role, IsActive, Password) VALUES (@ID, @Name, @Email, @Role ,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -81,6 +81,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Name", User.Name);
                         cmd.Parameters.AddWithValue("@Email", User.Email);
                         cmd.Parameters.AddWithValue("@Password", password);
+                        cmd.Parameters.AddWithValue("@Role", User.Role);
+                        cmd.Parameters.AddWithValue("@IsActive", User.IsActive);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -127,79 +129,40 @@ namespace DAL
             return count > 0;
         }
 
-        // Method to read a product record by ID
-        //public ProductDTO GetProductById(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string select = "SELECT ID, Type, Standard_Value FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(select, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
 
-        //                conn.Open();
-        //                using (SqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    if (reader.Read())
-        //                    {
-        //                        return new ProductDTO
-        //                        {
-        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value"))
-        //                        };
-        //                    }
-        //                    return null;
-        //                }
-        //            }
-        //        }
-        //    }
+        // Method to update a user record
+        public bool UpdateUser(UserDTO user, string password)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE User SET Name = @Name, Email = @Email, Password = @Password, Role = @Role, IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Name", user.Name);
+                        cmd.Parameters.AddWithValue("@Email", user.Email);
+                        cmd.Parameters.AddWithValue("@Password", password);
+                        cmd.Parameters.AddWithValue("@Role", user.Role);
+                        cmd.Parameters.AddWithValue("@IsActive", user.IsActive);
 
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-        //        return null;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-
-        //// Method to update a product record
-        //public bool UpdateProduct(ProductDTO product)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string update = "UPDATE Product SET Type = @Type, Standard_Value = @Standard_Value WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(update, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@Type", product.Type);
-        //                cmd.Parameters.AddWithValue("@Standard_Value", product.Standard_Value);
-        //                cmd.Parameters.AddWithValue("@ID", product.ID);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while updating a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public bool SoftDeleteUser(int id)
         {
             SqlConnection conn = new SqlConnection(connectionString);

@@ -14,19 +14,18 @@ namespace Domain.Modules
         public string Name { get; set; }
         public string Email { get; set; }
         public Role Role { get; set; }
+        public bool IsActive { get; set; }
 
-        public User(string Name, string Email, Role Role)
+        public User(string name, string email, Role role, bool isActive)
         {
             this.Name = Name;
             this.Email = Email;
             this.Role = Role;
+            this.IsActive = isActive;
         }
-        public User(int ID, string Name, string Email, Role Role)
+        public User(int ID, string name, string email, Role role):this(name, email, role, true)
         {
             this.ID = ID;
-            this.Name = Name;
-            this.Email = Email;
-            this.Role = Role;
         }
         public override string ToString()
         {
