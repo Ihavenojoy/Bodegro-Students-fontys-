@@ -71,5 +71,9 @@ namespace Domain.Containers.UserFile
             User User = docconverter.DTOToObject(UserDTO);
             return User;
         }
+        public bool UpdateUser(User User, string password)
+        {
+            return _UserService.UpdateUser(Userconverter.ObjectToDTO(User), password);
+        }
     }
 }

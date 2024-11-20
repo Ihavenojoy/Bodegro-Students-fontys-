@@ -24,7 +24,7 @@ namespace BodegroASP.Controllers
         {
             _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
-            user = new User(1,"Tim","timHaiwan",Role.Doctor);
+            user = new User(1,"Tim","timHaiwan",Role.Doctor, true);
         }
         public IActionResult Index()
         {
