@@ -13,11 +13,9 @@ namespace BodegroASP.ViewConverter
                 StepViewModel temp = new StepViewModel()
                 {
                     Description = step.Description,
-                    ID = step.ID,
                     Interval = step.Interval,
                     Name = step.Name,
                     Order = step.Order,
-                    ProtocolID = step.ProtocolID, 
                     Test = step.Test
                 };
                 views.Add(temp);
