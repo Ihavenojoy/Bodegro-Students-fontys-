@@ -109,17 +109,17 @@
             <ul>
                 @foreach (var protocol in Model.Protocols)
                 {
-                        <li class="subscription-item">
-                            <p><strong>Protocol Name:</strong> @protocol.Name</p>
-                            <p><strong>Description:</strong> @protocol.Description</p>
-                            <button type="button" class="add-protocol" onclick="selectProtocol(@Html.Raw(Json.Serialize(protocol)))">
-                                Add
-                            </button>
-                            <!-- Button to show protocol steps -->
-                            <button type="button" class="view-steps" onclick="viewProtocolSteps(@Html.Raw(Json.Serialize(protocol)), this)">
-                                View Steps
-                            </button>
-                        </li>
+                            <li class="subscription-item">
+                                <p><strong>Protocol Name:</strong> @protocol.Name</p>
+                                <p><strong>Description:</strong> @protocol.Description</p>
+                                <button type="button" class="add-protocol" onclick="selectProtocol(@Html.Raw(Json.Serialize(protocol)))">
+                                    Add
+                                </button>
+                                <!-- Button to show protocol steps -->
+                                <button type="button" class="view-steps" onclick="viewProtocolSteps(@Html.Raw(Json.Serialize(protocol)), this)">
+                                    View Steps
+                                </button>
+                            </li>
                 }
             </ul>
         </div>

@@ -73,7 +73,6 @@ namespace DAL
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
                                     Description = Convert.ToString(reader["ID"]),
-                                    User_ID = Convert.ToInt32(reader["User_ID"]),
                                     Steps = new List<StepDTO>()
                                 };
                                 list.Add(protocol);
