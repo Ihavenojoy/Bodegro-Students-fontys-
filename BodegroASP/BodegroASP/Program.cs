@@ -21,6 +21,12 @@ namespace BodegroASP
             // DI - Interface, implementation
             services.AddSingleton<IUser, UserDAL>();
 
+            builder.Services.AddTransient<PatientDAL>();
+
+            // Add appsettings.json to the configuration
+            builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
