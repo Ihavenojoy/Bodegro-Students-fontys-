@@ -22,13 +22,9 @@ namespace Domain.Modules
             this.Steps = Steps;
             this.User_ID = User_ID;
         }
-        public Protocol(int ID, string Name, string Description, List<Step> Steps, int User_ID)
+        public Protocol(int ID, string Name, string Description, List<Step> Steps, int User_ID): this(Name, Description, Steps, User_ID)
         {
             this.ID = ID;
-            this.Name = Name;
-            this.Description = Description;
-            this.Steps = Steps;
-            this.User_ID = User_ID;
         }
         public override string ToString()
         {

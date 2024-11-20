@@ -132,153 +132,83 @@ namespace DAL
             return patient;
         }
 
-        public List<PatientDTO> GetAllPatients()
+        // Method to update a patient record
+        public bool UpdatePatient(PatientDTO patient)
         {
-            List<PatientDTO> list = new List<PatientDTO>();
-            string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient";
-
+            SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                using (SqlCommand cmd = new SqlCommand(select, conn))
+                string update = "UPDATE Patient SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber, MedicalHistory = @MedicalHistory WHERE ID = @ID";
+                using (conn)
                 {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
                     {
-                        while (reader.Read())
-                        {
-                            PatientDTO patient = new PatientDTO
-                            {
-                                ID = Convert.ToInt32(reader["ID"]),
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
-                                MedicalHistory = reader["MedicalHistory"].ToString()
-                            };
+                        cmd.Parameters.AddWithValue("@Name", patient.Name);
+                        cmd.Parameters.AddWithValue("@Email", patient.Email);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", patient.PhoneNumber);
+                        cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
 
-                            list.Add(patient);
-                        }
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
                     }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An SQL error occurred while retrieving patients: " + ex.Message);
+                Console.WriteLine("An SQL error occurred while updating a patient: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
             }
 
-            return list;
+            //// Method to get all products
+            //public List<ProductDTO> GetAllProducts()
+            //{
+            //    List<ProductDTO> products = new List<ProductDTO>();
+            //    SqlConnection conn = new SqlConnection(connectionString);
+            //    try
+            //    {
+            //        string select = @"
+            //                SELECT p.ID, p.Type, p.Standard_Value, IFNULL(r.Quantity, 0) AS Quantity, r.Expiredate 
+            //                FROM product p
+            //                LEFT JOIN receiver r ON p.ID = r.Product_ID";
+            //        using (conn)
+            //        {
+            //            using (SqlCommand cmd = new SqlCommand(select, conn))
+            //            {
+            //                conn.Open();
+            //                using (SqlDataReader reader = cmd.ExecuteReader())
+            //                {
+            //                    while (reader.Read())
+            //                    {
+            //                        products.Add(new ProductDTO
+            //                        {
+            //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
+            //                            Type = reader.GetString(reader.GetOrdinal("Type")),
+            //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value")),
+            //                            Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+            //                            ExpireDate = reader.IsDBNull(reader.GetOrdinal("Expiredate"))
+            //                                         ? DateTime.MinValue
+            //                                         : reader.GetDateTime(reader.GetOrdinal("Expiredate"))
+            //                        });
+            //                    }
+            //                }
+            //            }
+            //        }
+            //        return products;
+            //    }
+            //    catch (SqlException ex)
+            //    {
+            //        Console.WriteLine("An SQL error occurred while retrieving products: " + ex.Message);
+            //        return products;
+            //    }
+            //    finally
+            //    {
+            //        conn.Close();
+            //    }
+            //}
         }
-
-
-
-        //// Method to update a product record
-        //public bool UpdateProduct(ProductDTO product)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string update = "UPDATE Product SET Type = @Type, Standard_Value = @Standard_Value WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(update, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@Type", product.Type);
-        //                cmd.Parameters.AddWithValue("@Standard_Value", product.Standard_Value);
-        //                cmd.Parameters.AddWithValue("@ID", product.ID);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while updating a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-
-        //// Method to delete a product record by ID
-        //public bool DeleteProduct(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string delete = "DELETE FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(delete, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while deleting a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-
-        //// Method to get all products
-        //public List<ProductDTO> GetAllProducts()
-        //{
-        //    List<ProductDTO> products = new List<ProductDTO>();
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string select = @"
-        //                SELECT p.ID, p.Type, p.Standard_Value, IFNULL(r.Quantity, 0) AS Quantity, r.Expiredate 
-        //                FROM product p
-        //                LEFT JOIN receiver r ON p.ID = r.Product_ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(select, conn))
-        //            {
-        //                conn.Open();
-        //                using (SqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        products.Add(new ProductDTO
-        //                        {
-        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value")),
-        //                            Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
-        //                            ExpireDate = reader.IsDBNull(reader.GetOrdinal("Expiredate"))
-        //                                         ? DateTime.MinValue
-        //                                         : reader.GetDateTime(reader.GetOrdinal("Expiredate"))
-        //                        });
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        return products;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while retrieving products: " + ex.Message);
-        //        return products;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-    }
 }
