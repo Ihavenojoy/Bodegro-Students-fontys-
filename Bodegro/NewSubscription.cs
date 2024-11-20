@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.Configuration;
 
 namespace Bodegro
 {
@@ -19,12 +20,13 @@ namespace Bodegro
         PatientContainer PatientDomain;
         ProtocolContainer ProtocolDomain;
         Doctor doctor;
+        private readonly IConfiguration iConfiguration;
         public NewSubscription(Doctor doctor)
         {
             InitializeComponent(); 
-            SubscriptionDAL subscriptionDAL = new();
-            PatientDAL patientDAL = new();
-            ProtocolDAL protocolDAL = new();
+            SubscriptionDAL subscriptionDAL = new(iConfiguration);
+            PatientDAL patientDAL = new(iConfiguration);
+            ProtocolDAL protocolDAL = new(iConfiguration);
             SubscriptionDomain = new(doctor, subscriptionDAL, patientDAL, protocolDAL);
             PatientDomain = new(patientDAL);
             ProtocolDomain = new(protocolDAL);

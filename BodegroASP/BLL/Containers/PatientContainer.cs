@@ -20,12 +20,6 @@ namespace Domain.Containers
         {
             Dal = dal;
         }
-        public List<Patient> AskAllPatientsOfDoctor(User user)
-        {
-            List<Patient> patients = new List<Patient>();
-            //foreach loop met de database waar PatientDTO wordt opgehaald en wordt Convert waarna het in de list komt
-            return patients;
-        }
         public List<Patient> GetPatientsOfDoctor(Doctor doctor)
         {
             List<Patient> list = new List<Patient>();
@@ -37,27 +31,5 @@ namespace Domain.Containers
             }
             return list;
         }
-        
-
-        public List<Patient> GetAllPatients()
-        {
-            List<Patient> allPatients = new List<Patient>();
-            List<PatientDTO> dtos = Dal.GetAllPatients();
-
-            foreach (PatientDTO dto in dtos)
-            {
-                Patient p = new Patient(
-                    dto.ID,
-                    dto.Name,
-                    dto.Email,
-                    dto.PhoneNumber,
-                    dto.MedicalHistory,
-                    dto.Doctor_ID);
-                allPatients.Add(p);
-            }
-
-            return allPatients;
-        }
-
     }
 }

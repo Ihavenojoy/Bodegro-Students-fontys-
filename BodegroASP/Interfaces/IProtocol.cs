@@ -9,7 +9,7 @@ namespace Interfaces
 {
     public interface IProtocol
     {
-        public int CreateProtocol(ProtocolDTO protocol);
+        public bool CreateProtocol(ProtocolDTO protocol);
         public List<ProtocolDTO> GetAllProtocols();
     }
 }

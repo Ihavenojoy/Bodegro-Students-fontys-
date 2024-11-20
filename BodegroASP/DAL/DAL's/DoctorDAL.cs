@@ -7,20 +7,22 @@ using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class DoctorDAL: IDoctor
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+        private readonly string connectionString;
 
-        public int CreateDoctor(DoctorDTO doctor, string password)
+        public DoctorDAL(IConfiguration configuration)
         {
-            int insertedId = -1;
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        public bool CreateDoctor(DoctorDTO doctor, string password)
+        {
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -37,7 +39,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@IsActive", doctor.IsActive);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -50,7 +53,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
         public bool DoctorExists(string email)
         {

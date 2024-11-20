@@ -2,6 +2,7 @@
 using Domain.Containers;
 using Domain.Modules;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 using System.Runtime.ExceptionServices;
 
 namespace Bodegro
@@ -12,11 +13,12 @@ namespace Bodegro
         private DoctorContainer _doctorContainer;
         private User user;
         private Doctor doctor;
+        private readonly IConfiguration iConfiguration;
 
         public MainPage(User person)
         {
-            PatientDAL ipatient = new PatientDAL();
-            DoctorDAL idoctor = new DoctorDAL();
+            PatientDAL ipatient = new PatientDAL(iConfiguration);
+            DoctorDAL idoctor = new DoctorDAL(iConfiguration);
             _patientcontainer = new PatientContainer(ipatient);
             _doctorContainer = new DoctorContainer(idoctor);
             user = person;

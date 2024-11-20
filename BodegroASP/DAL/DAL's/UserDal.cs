@@ -3,16 +3,17 @@ using DTO;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using Twofactor;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class UserDal : IUser
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+        private readonly string connectionString;
+        public UserDal(IConfiguration configuration)
+        {
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
 
         public DoctorDTO DoctorLogin(string Emailinput, string PassWordInput)
         {

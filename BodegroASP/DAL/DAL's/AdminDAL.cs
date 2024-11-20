@@ -8,21 +8,25 @@ using System.Threading.Tasks;
 using Interfaces;
 using DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
 
 
 namespace DAL
 {
     public class AdminDAL : IAdmin
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+       
+        private readonly string connectionString;
 
-        public int CreateAdmin(AdminDTO admin,string Password)
+        public AdminDAL(IConfiguration configuration)
         {
-            int insertedId = -1;
+            connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        public bool CreateAdmin(AdminDTO admin,string Password)
+        {
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -36,7 +40,8 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Password", Password);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -49,7 +54,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         public AdminDTO AdminLogin(string Emailinput, string PassWordInput)

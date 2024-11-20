@@ -13,20 +13,20 @@ using System.Data;
 
 namespace Domain.Containers
 {
-    public class DoctorContainer
+    public class DoctorContainer : IDoctorContainer
     {
         DoctorDTOConverter docConverter = new DoctorDTOConverter();
         DoctorConverter objectConverter = new DoctorConverter();
         IDoctor doctorDAL;
-        public DoctorContainer(IDoctor DAL) 
+        public DoctorContainer(IDoctor DAL)
         {
             doctorDAL = DAL;
         }
-        public int CreateDoctor(Doctor doctor, string password)
+        public bool CreateDoctor(Doctor doctor, string password)
         {
             if (doctorDAL.DoctorExists(doctor.Email))
             {
-                return -1;
+                return false;
             }
             else
             {
@@ -61,6 +61,6 @@ namespace Domain.Containers
         }
 
 
-        
+
     }
 }
