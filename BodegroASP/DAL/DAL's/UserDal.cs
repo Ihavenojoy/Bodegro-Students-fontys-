@@ -21,7 +21,7 @@ namespace DAL
             UserDTO UserDTO = new UserDTO();
             try
             {
-                string insert = "Select ID, Name, Email, Regio, User_ID From User WHERE Email = @Email AND Password = @Password";
+                string insert = "Select ID, Name, Email, Role From User WHERE Email = @Email AND Password = @Password";
 
                 using (conn)
                 {
@@ -77,7 +77,7 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@User_ID", User.ID);
+                        cmd.Parameters.AddWithValue("@ID", User.ID);
                         cmd.Parameters.AddWithValue("@Name", User.Name);
                         cmd.Parameters.AddWithValue("@Email", User.Email);
                         cmd.Parameters.AddWithValue("@Password", password);
@@ -197,7 +197,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, Regio, User_ID FROM [User] WHERE IsActive = 1";
+                string select = "SELECT ID, Name, Email, Role, FROM [User] WHERE IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -229,6 +229,48 @@ namespace DAL
             {
                 conn.Close();
             }
+
+        }
+        public UserDTO GetUserByID(int id)
+        {
+            UserDTO user = new UserDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, Role, FROM [User] WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                user = new UserDTO
+                                {
+                                    ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    Role = (int)reader["Role"]
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a user: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return user;
         }
 
     }

@@ -1,8 +1,118 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model List<PatientViewModel>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="patient-list">
+    @foreach (var patient in Model)
+    {
+        <div class="patient-card">
+            <h3>@patient.Name</h3>
+            <p><strong>Email:</strong> @patient.Email</p>
+            <p><strong>Phone:</strong> @patient.PhoneNumber</p>
+
+            <p class="medical-history">
+                <strong>Medical History:</strong>
+                @if (patient.MedicalHistory.Length > 150)
+                {
+                    <span class="short-text">@patient.MedicalHistory.Substring(0, 150)...</span>
+                    <span class="full-text" style="display: none;">@patient.MedicalHistory</span>
+                    <button type="button" class="toggle-history">Show More</button>
+                }
+                else
+                {
+                    <span>@patient.MedicalHistory</span>
+                }
+            </p>
+
+            <!-- Add Protocol Form -->
+            <form asp-action="AddProtocolPatient" asp-controller="Patient">
+                <input type="hidden" name="ID" value="@patient.ID" />
+                <input type="hidden" name="Name" value="@patient.Name" />
+                <input type="hidden" name="Email" value="@patient.Email" />
+                <input type="hidden" name="PhoneNumber" value="@patient.PhoneNumber" />
+                <input type="hidden" name="MedicalHistory" value="@patient.MedicalHistory" />
+                <input type="hidden" name="User_ID" value="@patient.User_ID" />
+                <button type="submit" class="add-protocol">Add Protocol</button>
+            </form>
+        </div>
+    }
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Toggle Medical History Visibility
+        document.querySelectorAll('.toggle-history').forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.patient-card');
+                const shortText = card.querySelector('.short-text');
+                const fullText = card.querySelector('.full-text');
+
+                if (fullText.style.display === "none") {
+                    fullText.style.display = "inline";
+                    shortText.style.display = "none";
+                    button.textContent = "Show Less";
+                } else {
+                    fullText.style.display = "none";
+                    shortText.style.display = "inline";
+                    button.textContent = "Show More";
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .patient-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .patient-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .patient-card h3 {
+            margin: 0 0 0.5rem;
+        }
+
+        .patient-card p {
+            margin: 0.5rem 0;
+        }
+
+    .medical-history .short-text {
+        display: inline;
+    }
+
+    .medical-history .full-text {
+        display: none;
+    }
+
+    .add-protocol {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .add-protocol:hover {
+            background: #0056b3;
+        }
+
+    .toggle-history {
+        background: transparent;
+        color: #007bff;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+        .toggle-history:hover {
+            text-decoration: underline;
+        }
+</style>

@@ -14,7 +14,7 @@ namespace Domain.Containers.SubscriptionFile
     {
         ISubscription SubDAL;
         SubscriptionConverter subscriptionConverter =new();
-        public SubscriptionContainer(User User, ISubscription Sub, IPatient Pat, IProtocol Prot)
+        public SubscriptionContainer(ISubscription Sub)
         {
             SubDAL = Sub;
             this.subscriptionConverter = subscriptionConverter;

@@ -16,5 +16,6 @@ namespace Interfaces
         public bool UserExists(string email);
         public bool SoftDeleteUser(int id);
         public List<UserDTO> GetAllUsers();
+        public UserDTO GetUserByID(int id);
     }
 }
