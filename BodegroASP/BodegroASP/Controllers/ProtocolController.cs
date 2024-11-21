@@ -29,14 +29,28 @@ namespace BodegroASP.Controllers
         [HttpPost]
         public IActionResult Index(ProtocolViewModel model)
         {
+            if (model.Steps == null)
+            {
+                TempData["ErrorMessage"] = "Een protocol moet een step hebben";
+                return View(model);
+            }
             var bookingSuccess = false;
             var StepCheck = true;
+            int TotalInterval = 0;
             foreach (var modelstep in model.Steps)
             {
+                TotalInterval += modelstep.Interval;
                 if (modelstep.Name == null || modelstep.Test == null || modelstep.Interval == 0 || modelstep.Description == null)
                 {
                     StepCheck = false;
+                    TempData["ErrorMessage"] = $"Step {modelstep.Order} was niet volledig ingevult";
+                    return View(model);
                 }
+            }
+            if (TotalInterval > 365)
+            {
+                TempData["ErrorMessage"] = "De totale interval ging boven het jaar uit";
+                return View(model);
             }
             if (StepCheck)
             {
@@ -52,12 +66,12 @@ namespace BodegroASP.Controllers
                     Step step = new(protocol.ID, modelstep.Name, modelstep.Description, modelstep.Order, modelstep.Test, modelstep.Interval);
                     stepContainer.AddStep(step);
                 }
-                ViewData["SuccessMessage"] = "Protocol submitted successfully!";
+                TempData["SuccessMessage"] = "Protocol toegevoegd";
                 return RedirectToAction("Index");
 
             }
-            ViewData["ErrorMessage"] = "There was an issue with your submission."; 
-            return RedirectToAction("Index");
+            TempData["ErrorMessage"] = "Er is iets fout gegaan"; 
+            return View(model);
         }
     }
 }

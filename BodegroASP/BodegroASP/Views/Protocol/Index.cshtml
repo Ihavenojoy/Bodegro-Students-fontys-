@@ -1,19 +1,20 @@
 ﻿@model ProtocolViewModel
 
 @{
-    if (ViewData["SuccessMessage"] != null)
+    @if (TempData["SuccessMessage"] != null)
     {
         <script type="text/javascript">
-            alert('@ViewData["SuccessMessage"]');
+            alert('@TempData["SuccessMessage"]');
         </script>
     }
 
-    if (ViewData["ErrorMessage"] != null)
+    @if (TempData["ErrorMessage"] != null)
     {
         <script type="text/javascript">
-            alert('@ViewData["ErrorMessage"]');
+            alert('@TempData["ErrorMessage"]');
         </script>
     }
+
 }
 
 <head>
@@ -38,29 +39,66 @@
             margin-top: 20px;
         }
 
+        /* Styles for the steps container */
+        /* Styles for the steps container */
         .steps-container {
             margin-top: 30px;
         }
 
         .step-item {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            justify-content: space-between; /* Space between the content and controls */
+            align-items: center; /* Vertically center the items */
+            margin-bottom: 15px;
             padding: 10px;
-            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex-wrap: wrap; /* Allow wrapping when there's not enough space */
         }
 
-            .step-item input {
-                width: auto;
-                margin: 0 10px;
+        /* Step content (inputs) */
+        .step-content {
+            display: flex;
+            align-items: center; /* Align items horizontally */
+            gap: 10px; /* Space between inputs */
+            flex-grow: 1; /* Allow the content to grow and take up available space */
+        }
+
+            /* Ensure input fields take up equal space */
+            .step-content .form-control {
+                min-width: 150px; /* Minimum width to avoid inputs being too small */
+                flex: 1; /* Make inputs flexible to grow and fill the container */
             }
 
-        .step-controls button {
-            margin: 0 5px;
+        /* Step controls (buttons) */
+        .step-controls {
+            display: flex;
+            gap: 10px; /* Space between the buttons */
+            margin-top: 10px;
+            align-items: center; /* Align buttons vertically */
         }
+
+        /* Step number styling */
+        .step-number {
+            font-weight: bold;
+            margin-right: 10px; /* Space between number and inputs */
+        }
+
+    </style>
+    <style>
+        .interval-button {
+            margin-right: 10px; /* Adds space to the right of the button */
+        }
+
+            .interval-button.set-all {
+                background-color: #007bff; /* Blue color */
+                color: white;
+            }
+
+            .interval-button.make-total {
+                background-color: #28a745; /* Green color */
+                color: white;
+            }
     </style>
 </head>
 <body>
@@ -75,23 +113,44 @@
                 <label for="DescriptionBox" class="form-label">Description</label>
                 <textarea id="DescriptionBox" name="Description" class="form-control" rows="5">@Model.Description</textarea>
             </div>
+            <div class="form-buttons mt-4">
+                <button type="button" class="btn btn-primary" onclick="setAllIntervals()">Set All Intervals</button>
+                <button type="button" class="btn btn-success ms-3" onclick="makeTotalInterval365()">Make Total Interval 365</button>
+            </div>
             <div class="steps-container">
                 <h4>Steps</h4>
 
                 <div id="stepsList">
                     @for (int i = 0; i < Model.Steps.Count; i++)
                     {
-                        <div class="step-item">
-                            <span>@(i + 1).</span>
-                            <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Step Name" />
-                            <input type="number" name="Steps[@i].Interval" class="form-control" value="@Model.Steps[i].Interval" placeholder="Interval" />
-                            <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Test" />
-                            <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Description" />
+                        <div class="step-item" id="step-@i">
+                            <!-- Step number (order) based on model -->
+                            <span class="step-number">@Model.Steps[i].Order</span>
+
+                            <!-- Step input fields -->
+                            <div class="step-content">
+                                <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Step Name" />
+                                <input type="number" name="Steps[@i].Interval" class="form-control" value="@Model.Steps[i].Interval" placeholder="Interval" />
+                                <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Test" />
+                                <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Description" />
+                                <!-- Hidden Order Field to retain order on post-back -->
+                                <input type="hidden" name="Steps[@i].Order" value="@Model.Steps[i].Order" />
+                            </div>
+
+                            <!-- Controls to delete, move up, move down, duplicate -->
+                            <div class="step-controls">
+                                <button type="button" class="btn btn-danger" onclick="deleteStep(@i)">Delete</button>
+                                <button type="button" class="btn btn-secondary" onclick="moveStepUp(@i)">Move Up</button>
+                                <button type="button" class="btn btn-secondary" onclick="moveStepDown(@i)">Move Down</button>
+                                <button type="button" class="btn btn-warning" onclick="duplicateStep(@i)">Duplicate</button>
+                            </div>
                         </div>
                     }
                 </div>
+
                 <button type="button" class="btn btn-success" onclick="addStep()">Add Step</button>
             </div>
+
 
             <div class="form-buttons">
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -100,24 +159,124 @@
     </div>
 
     <script>
-        // Dynamically add steps (updates the DOM but submits with a form post)
-        let stepCount = @Model.Steps.Count;
-        function addStep() {
+let stepCount = @Model.Steps.Count;
+
+function addStep() {
+    const stepsList = document.getElementById('stepsList');
+    const newStep = document.createElement('div');
+    newStep.className = 'step-item';
+    newStep.id = `step-${stepCount}`;
+    newStep.innerHTML = `
+        <span class="step-number">${stepCount + 1}</span>
+        <div class="step-content">
+            <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Step Name" />
+            <input type="number" name="Steps[${stepCount}].Interval" class="form-control" placeholder="Interval" />
+            <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Test" />
+            <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Description" />
+            <input type="hidden" name="Steps[${stepCount}].Order" value="${stepCount + 1}" />
+        </div>
+        <div class="step-controls">
+            <button type="button" class="btn btn-danger" onclick="deleteStep(${stepCount})">Delete</button>
+            <button type="button" class="btn btn-secondary" onclick="moveStepUp(${stepCount})">Move Up</button>
+            <button type="button" class="btn btn-secondary" onclick="moveStepDown(${stepCount})">Move Down</button>
+            <button type="button" class="btn btn-warning" onclick="duplicateStep(${stepCount})">Duplicate</button>
+        </div>
+    `;
+    
+    stepsList.appendChild(newStep);
+    stepCount++;
+    renumberSteps();
+}
+
+function moveStepUp(index) {
+    const step = document.getElementById(`step-${index}`);
+    if (step && step.previousElementSibling) {
+        step.parentNode.insertBefore(step, step.previousElementSibling);
+        renumberSteps();
+    }
+}
+
+function moveStepDown(index) {
+    const step = document.getElementById(`step-${index}`);
+    if (step && step.nextElementSibling) {
+        step.parentNode.insertBefore(step.nextElementSibling, step);
+        renumberSteps();
+    }
+}
+
+function renumberSteps() {
+    const stepsList = document.getElementById('stepsList');
+    const steps = stepsList.querySelectorAll('.step-item');
+
+    steps.forEach((step, index) => {
+        const stepNumber = step.querySelector('.step-number');
+        stepNumber.textContent = index + 1;  // Update step number
+
+        const orderInput = step.querySelector('input[name$=".Order"]');
+        if (orderInput) {
+            orderInput.value = index + 1;  // Update order in hidden field
+        }
+    });
+        }
+    function duplicateStep(index) {
+        const step = document.getElementById(`step-${index}`);
+        if (step) {
+            const clone = step.cloneNode(true);
             const stepsList = document.getElementById('stepsList');
+            stepsList.appendChild(clone);
+            renumberSteps(); // Renumber after duplicating
+        }
+    }
 
-            const newStep = document.createElement('div');
-            newStep.className = 'step-item';
-            newStep.innerHTML = `
-                <span>${stepCount + 1}.</span>
-                <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Step Name" />
-                <input type="number" name="Steps[${stepCount}].Interval" class="form-control" placeholder="Interval" />
-                <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Test" />
-                <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Description" />
-            `;
+    function deleteStep(index) {
+        const step = document.getElementById(`step-${index}`);
+        if (step) {
+            step.parentNode.removeChild(step);
+            renumberSteps(); // Renumber after deleting
+        }
+    }
 
-            stepsList.appendChild(newStep);
-            stepCount++;
+
+        function setAllIntervals() {
+            const value = prompt("Enter the interval value for all steps:", "30"); // Prompt the user for a value
+            if (value === null || value.trim() === "") {
+                return; // User cancelled or input is empty
+            }
+
+            const parsedValue = parseInt(value);
+            if (isNaN(parsedValue) || parsedValue < 0) {
+                alert("Please enter a valid positive number.");
+                return;
+            }
+
+            const intervalInputs = document.querySelectorAll('.step-item input[name$=".Interval"]');
+            intervalInputs.forEach(input => {
+                input.value = parsedValue; // Set the interval value
+            });
+        }
+        function makeTotalInterval365() {
+            const intervalInputs = document.querySelectorAll('.step-item input[name$=".Interval"]');
+            const totalSteps = intervalInputs.length;
+
+            if (totalSteps === 0) {
+                alert('No steps to distribute intervals.');
+                return;
+            }
+
+            // Calculate the base interval and remainder
+            const baseInterval = Math.floor(365 / totalSteps); // Floor ensures we divide as evenly as possible
+            let remainder = 365 % totalSteps;
+
+            // Assign the interval values
+            intervalInputs.forEach((input, index) => {
+                let newInterval = baseInterval;
+                if (remainder > 0) {
+                    newInterval += 1; // Add 1 to some intervals to handle the remainder
+                    remainder -= 1;
+                }
+
+                input.value = newInterval; // Update the input value with the new interval
+            });
         }
     </script>
 </body>
-</html>
