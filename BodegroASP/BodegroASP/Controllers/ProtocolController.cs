@@ -29,11 +29,21 @@ namespace BodegroASP.Controllers
         [HttpPost]
         public IActionResult Index(ProtocolViewModel model)
         {
-
-            List<Step> steps = [];
-            Protocol TempProtocol = new(model.Name, model.Description, steps, model.User_ID);
-            var bookingSuccess = protocolContainer.AddProtocol(TempProtocol);
-
+            var bookingSuccess = false;
+            var StepCheck = true;
+            foreach (var modelstep in model.Steps)
+            {
+                if (modelstep.Name == null || modelstep.Test == null || modelstep.Interval == 0 || modelstep.Description == null)
+                {
+                    StepCheck = false;
+                }
+            }
+            if (StepCheck)
+            {
+                List<Step> steps = [];
+                Protocol TempProtocol = new(model.Name, model.Description, steps, model.User_ID);
+                bookingSuccess = protocolContainer.AddProtocol(TempProtocol);
+            }
             if (bookingSuccess)
             {
                 Protocol protocol = protocolContainer.GetProtocol(model.Name);
