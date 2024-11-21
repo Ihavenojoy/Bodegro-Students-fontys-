@@ -29,6 +29,7 @@ namespace BodegroASP.Controllers
         [HttpPost]
         public IActionResult Index(ProtocolViewModel model)
         {
+<<<<<<< Updated upstream
             var bookingSuccess = false;
             var StepCheck = true;
             foreach (var modelstep in model.Steps)
@@ -44,6 +45,13 @@ namespace BodegroASP.Controllers
                 Protocol TempProtocol = new(model.Name, model.Description, steps, model.User_ID);
                 bookingSuccess = protocolContainer.AddProtocol(TempProtocol);
             }
+=======
+
+            List<Step> steps = [];
+            Protocol TempProtocol = new(model.Name, model.Description, steps, 1);
+            var bookingSuccess = protocolContainer.AddProtocol(TempProtocol);
+
+>>>>>>> Stashed changes
             if (bookingSuccess)
             {
                 Protocol protocol = protocolContainer.GetProtocol(model.Name);
