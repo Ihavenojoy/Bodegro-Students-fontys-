@@ -21,7 +21,7 @@ namespace DAL
             UserDTO UserDTO = new UserDTO();
             try
             {
-                string insert = "Select ID, Name, Email, Role From User WHERE Email = @Email AND Password = @Password";
+                string insert = "Select ID, Name, Email, Role From [User] WHERE Email = @Email AND Password = @Password";
 
                 using (conn)
                 {
@@ -57,7 +57,7 @@ namespace DAL
             return UserDTO;
         }
 
-       
+
         public void TwofactorActivation(string UserEmail)
         {
             int OTP = Convert.ToInt32(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30));
@@ -72,12 +72,11 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [User] (ID, Name, Email, Role, IsActive, Password) VALUES (@ID, @Name, @Email, @Role ,@IsActive, @Password); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [User] (Name, Email, Role, IsActive, Password) VALUES (@Name, @Email, @Role ,@IsActive, @Password);";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@ID", User.ID);
                         cmd.Parameters.AddWithValue("@Name", User.Name);
                         cmd.Parameters.AddWithValue("@Email", User.Email);
                         cmd.Parameters.AddWithValue("@Password", password);
@@ -136,11 +135,12 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string update = "UPDATE User SET Name = @Name, Email = @Email, Password = @Password, Role = @Role, IsActive= @IsActive WHERE ID = @ID";
+                string update = "UPDATE [User] SET Name = @Name, Email = @Email, Password = @Password, Role = @Role, IsActive= @IsActive WHERE ID = @ID";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(update, conn))
                     {
+                        cmd.Parameters.AddWithValue("@ID", user.ID);
                         cmd.Parameters.AddWithValue("@Name", user.Name);
                         cmd.Parameters.AddWithValue("@Email", user.Email);
                         cmd.Parameters.AddWithValue("@Password", password);
@@ -197,7 +197,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, Role, FROM [User] WHERE IsActive = 1";
+                string select = "SELECT ID, Name, Email FROM [User] WHERE IsActive = 1 AND Role = 2";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -211,8 +211,7 @@ namespace DAL
                                 {
                                     ID = reader.GetInt32(reader.GetOrdinal("ID")),
                                     Name = reader.GetString(reader.GetOrdinal("Name")),
-                                    Email = reader.GetString(reader.GetOrdinal("Email")),
-                                    Role = (int)reader["Role"]
+                                    Email = reader.GetString(reader.GetOrdinal("Email"))
                                 });
                             }
                         }
@@ -237,7 +236,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, Role, FROM [User] WHERE ID = @ID";
+                string select = "SELECT ID, Name, Email, Role FROM [User] WHERE ID = @ID";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -272,6 +271,7 @@ namespace DAL
             }
             return user;
         }
+
 
     }
 }

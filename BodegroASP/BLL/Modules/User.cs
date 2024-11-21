@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,14 +19,18 @@ namespace Domain.Modules
 
         public User(string name, string email, Role role, bool isActive)
         {
-            this.Name = Name;
-            this.Email = Email;
-            this.Role = Role;
+            this.Name = name;
+            this.Email = email;
+            this.Role = role;
             this.IsActive = isActive;
         }
-        public User(int ID, string name, string email, Role role):this(name, email, role, true)
+        public User(int ID, string name, string email, Role role, bool isActive)
         {
             this.ID = ID;
+            this.Name = name;
+            this.Email = email;
+            this.Role = role;
+            this.IsActive = isActive;
         }
         public override string ToString()
         {

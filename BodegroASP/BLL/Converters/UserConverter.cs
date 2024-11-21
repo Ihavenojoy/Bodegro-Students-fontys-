@@ -18,7 +18,8 @@ namespace Domain.Converter
                 dto.ID,
                 dto.Name,
                 dto.Email,
-                (Role)dto.Role
+                (Role)dto.Role,
+                dto.IsActive
             );
             return User;
         }
@@ -29,7 +30,8 @@ namespace Domain.Converter
                 ID = User.ID,
                 Name = User.Name,
                 Email = User.Email,
-                Role = (int)User.Role
+                Role = (int)User.Role,
+                IsActive = User.IsActive
             };
         }
     }

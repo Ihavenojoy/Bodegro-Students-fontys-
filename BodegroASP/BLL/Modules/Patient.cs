@@ -22,12 +22,16 @@ namespace Domain.Modules
             this.Email = Email;
             this.PhoneNumber = PhoneNumber;
             this.MedicalHistory = MedicalHistory;
-            User_ID = User_ID;
+            this.User_ID = User_ID;
         }
-        public Patient(int ID, string Name, string Email, int PhoneNumber, string MedicalHistory, int User_ID):this(Name, Email, PhoneNumber, MedicalHistory, User_ID)
+        public Patient(int ID, string Name, string Email, int PhoneNumber, string MedicalHistory, int User_ID)
         {
             this.ID = ID;
-            ID = 1;
+            this.Name = Name;
+            this.Email = Email;
+            this.PhoneNumber = PhoneNumber;
+            this.MedicalHistory = MedicalHistory;
+            this.User_ID = User_ID;
         }
         public bool IDCheck(int checkID)
         {
