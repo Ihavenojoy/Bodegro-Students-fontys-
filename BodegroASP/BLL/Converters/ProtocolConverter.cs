@@ -23,7 +23,7 @@ namespace Domain.Converter
             List<Protocol> protocolList = new List<Protocol>();
             foreach (var sub in protocolDTOList)
             {
-                Protocol protocol = new Protocol(sub.Name, sub.Description, stepconverter.ListDTOToListObject(sub.Steps), sub.User_ID);
+                Protocol protocol = new Protocol(sub.ID, sub.Name, sub.Description, stepconverter.ListDTOToListObject(sub.Steps), sub.User_ID);
                 protocolList.Add(protocol);
             }
             return protocolList;
