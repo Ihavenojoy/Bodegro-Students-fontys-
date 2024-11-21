@@ -49,9 +49,9 @@
             margin-right: 10px;
         }
 
-        .add-protocol:hover, .view-steps:hover {
-            background-color: #0056b3;
-        }
+            .add-protocol:hover, .view-steps:hover {
+                background-color: #0056b3;
+            }
 
         #link-protocol-button {
             background-color: #28a745;
@@ -62,33 +62,16 @@
             cursor: pointer;
         }
 
-        #link-protocol-button:hover {
-            background-color: #218838;
-        }
+            #link-protocol-button:hover {
+                background-color: #218838;
+            }
 
-        /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .modal-overlay.hidden {
-            display: none;
+        #protocol-steps-content {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
         }
     </style>
 </head>
@@ -109,17 +92,16 @@
             <ul>
                 @foreach (var protocol in Model.Protocols)
                 {
-                            <li class="subscription-item">
-                                <p><strong>Protocol Name:</strong> @protocol.Name</p>
-                                <p><strong>Description:</strong> @protocol.Description</p>
-                                <button type="button" class="add-protocol" onclick="selectProtocol(@Html.Raw(Json.Serialize(protocol)))">
-                                    Add
-                                </button>
-                                <!-- Button to show protocol steps -->
-                                <button type="button" class="view-steps" onclick="viewProtocolSteps(@Html.Raw(Json.Serialize(protocol)), this)">
-                                    View Steps
-                                </button>
-                            </li>
+                    <li class="subscription-item">
+                        <p><strong>Protocol Name:</strong> @protocol.Name</p>
+                        <p><strong>Description:</strong> @protocol.Description</p>
+                        <button type="button" class="add-protocol" onclick="selectProtocol(@Html.Raw(Json.Serialize(protocol)))">
+                            Add
+                        </button>
+                        <button type="button" class="view-steps" onclick="viewProtocolSteps(@Html.Raw(Json.Serialize(protocol)), this)">
+                            View Steps
+                        </button>
+                    </li>
                 }
             </ul>
         </div>
@@ -128,44 +110,31 @@
         <div id="protocol-linking-section" class="hidden">
             <h2>Link Protocol to Patient</h2>
             <div class="selected-details">
-                <!-- Patient Info -->
                 <div class="selected-patient">
                     <h3>Patient</h3>
                     <p><strong>Name:</strong> <span id="selected-patient-name"></span></p>
                     <p><strong>Email:</strong> <span id="selected-patient-email"></span></p>
                 </div>
-
-                <!-- Protocol Info -->
                 <div class="selected-subscription">
                     <h3>Protocol</h3>
                     <p><strong>Protocol Name:</strong> <span id="selected-protocol-name"></span></p>
                     <p><strong>Description:</strong> <span id="selected-protocol-description"></span></p>
                 </div>
             </div>
-
-            <!-- Link Button -->
             <button type="button" id="link-protocol-button" onclick="linkProtocol()">Link Protocol to Patient <span id="patient-name-placeholder"></span></button>
         </div>
 
-        <!-- Modal for Viewing Protocol Steps -->
-        <div id="protocol-steps-modal" class="modal-overlay hidden">
-            <div class="modal">
-                <h3>Protocol Steps</h3>
-                <div id="protocol-steps-content"></div>
-                <button onclick="closeProtocolSteps()">Close</button>
-            </div>
-        </div>
+        <!-- Protocol Steps -->
+        <div id="protocol-steps-content" class="hidden"></div>
     </div>
 
     <script>
-        let selectedPatient = @Html.Raw(Json.Serialize(Model.Patient)); // Fixed the reference here
+        let selectedPatient = @Html.Raw(Json.Serialize(Model.Patient)); // Patient data
         let selectedProtocol = null;
 
-        // Function to populate the protocol linking section
         function selectProtocol(protocol) {
             selectedProtocol = protocol;
 
-            // Populate patient and protocol details
             document.getElementById('selected-patient-name').innerText = selectedPatient.Name;
             document.getElementById('selected-patient-email').innerText = selectedPatient.Email;
 
@@ -174,11 +143,9 @@
 
             document.getElementById('patient-name-placeholder').innerText = selectedPatient.Name;
 
-            // Show the protocol linking section
             document.getElementById('protocol-linking-section').classList.remove('hidden');
         }
 
-        // Function to handle linking protocol to patient
         function linkProtocol() {
             if (selectedPatient && selectedProtocol) {
                 fetch('/LinkProtocolToPatient', {
@@ -202,35 +169,34 @@
             }
         }
 
-        // Function to view the protocol steps in the display and change button text
         function viewProtocolSteps(protocol, button) {
-            // Simulate steps data for the protocol
-            let steps = protocol.Steps || ["Step 1: ...", "Step 2: ...", "Step 3: ..."]; // Replace with real steps if available
+            let stepsContainer = document.getElementById('protocol-steps-content');
 
-            // Create content for the protocol steps
+            // Toggle visibility of the steps container
+            const isVisible = !stepsContainer.classList.contains('hidden');
+            if (isVisible) {
+                stepsContainer.classList.add('hidden');
+                button.innerText = "View Steps";
+                return;
+            }
+
+            // Populate steps
+            let steps = protocol.Steps || [];
             let stepsContent = '<ul>';
             steps.forEach(step => {
-                stepsContent += `<li>${step}</li>`;
+                stepsContent += `
+                            <li>
+                                <strong>Step ${step.Order}:</strong> ${step.Name} <br>
+                                <em>${step.Description}</em> <br>
+                                <strong>Interval:</strong> ${step.Interval} days <br>
+                                <strong>Test:</strong> ${step.Test}
+                            </li>`;
             });
             stepsContent += '</ul>';
+            stepsContainer.innerHTML = stepsContent;
 
-            // Display the steps content in the modal or display section
-            document.getElementById('protocol-steps-content').innerHTML = stepsContent;
-
-            // Change the button text to 'Close Steps'
-            if (button.innerText === "View Steps") {
-                button.innerText = "Close Steps";
-            } else {
-                button.innerText = "View Steps";
-                // Optionally, clear steps content when closing
-                document.getElementById('protocol-steps-content').innerHTML = '';
-            }
-        }
-
-        // Function to close the protocol steps modal
-        function closeProtocolSteps() {
-            // Add the 'hidden' class back to the modal to hide it
-            document.getElementById('protocol-steps-modal').classList.add('hidden');
+            stepsContainer.classList.remove('hidden');
+            button.innerText = "Close Steps";
         }
     </script>
 </body>

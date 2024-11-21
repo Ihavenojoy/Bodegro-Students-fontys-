@@ -13,6 +13,7 @@ namespace BodegroASP.ViewConverter
             {
                 ProtocolViewModel viewModel = new ProtocolViewModel()
                 {
+                    ID = protocol.ID,
                     Description = protocol.Description,
                     Name = protocol.Name,
                     Steps = converter.ListObjectToView(protocol.Steps),
