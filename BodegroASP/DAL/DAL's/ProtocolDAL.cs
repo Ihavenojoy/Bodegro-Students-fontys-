@@ -134,6 +134,48 @@ namespace DAL
             protocol = new();
             return protocol;
         }
+        public ProtocolDTO GetProtocolbyid(int id)
+        {
+            ProtocolDTO protocol;
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Description FROM Protocol WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                protocol = new ProtocolDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Description = Convert.ToString(reader["Description"]),
+                                    Steps = new List<StepDTO>()
+                                };
+                                return protocol;
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            protocol = new();
+            return protocol;
+        }
 
         //// Method to update a product record
         //public bool UpdateProduct(ProductDTO product)

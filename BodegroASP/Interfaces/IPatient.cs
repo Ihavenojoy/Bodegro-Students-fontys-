@@ -11,6 +11,6 @@ namespace Interfaces
     {
         public bool CreatePatient(PatientDTO patient);
         public List<int> GetPatientIDOfUser(int id);
-        public PatientDTO GetPatient(int id, int UserID);
+        public PatientDTO GetPatient(int id);
     }
 }

@@ -23,5 +23,18 @@ namespace BodegroASP.ViewConverter
             }
             return vieuws;
         }
+        public ProtocolViewModel ObjectToView(Protocol protocol)
+        {
+
+                ProtocolViewModel viewModel = new ProtocolViewModel()
+                {
+                    ID = protocol.ID,
+                    Description = protocol.Description,
+                    Name = protocol.Name,
+                    Steps = converter.ListObjectToView(protocol.Steps),
+                    User_ID = protocol.User_ID
+                };
+            return viewModel;
+        }
     }
 }

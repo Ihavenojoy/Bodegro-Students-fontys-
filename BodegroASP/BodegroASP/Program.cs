@@ -4,6 +4,7 @@ using Domain.Containers.UserFile;
 using Azure.Core;
 using Domain.Modules;
 using Microsoft.AspNetCore.Identity;
+using Domain.Containers.PatientFile;
 
 namespace BodegroASP
 {
@@ -20,11 +21,10 @@ namespace BodegroASP
 
             // DI - Container
             services.AddSingleton<UserContainer>();
-
-            // DI - Interface, implementation
             services.AddSingleton<IUser, UserDAL>();
 
-            builder.Services.AddTransient<PatientDAL>();
+            services.AddSingleton<PatientContainer>();
+            services.AddSingleton<IPatient, PatientDAL>();
 
             // Add appsettings.json to the configuration
             builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);

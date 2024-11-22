@@ -9,12 +9,12 @@
     <title>Patient Protocols</title>
     <style>
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             font-family: Arial, sans-serif;
         }
 
-        .patient-card, .subscriptions, #protocol-linking-section {
+        .patient-card, .subscriptions, .calendar-container {
             margin-bottom: 2rem;
             padding: 1rem;
             border: 1px solid #ccc;
@@ -53,19 +53,6 @@
                 background-color: #0056b3;
             }
 
-        #link-protocol-button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-            #link-protocol-button:hover {
-                background-color: #218838;
-            }
-
         #protocol-steps-content {
             margin-top: 1rem;
             padding: 1rem;
@@ -86,6 +73,12 @@
             <p><strong>Medical History:</strong> @Model.Patient.MedicalHistory</p>
         </div>
 
+        <!-- Calendar Section -->
+        <div class="calendar-container">
+            <h2>Select Start Date</h2>
+            <input type="date" id="start-date-picker" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </div>
+
         <!-- Protocols List -->
         <div class="subscriptions">
             <h2>Available Protocols</h2>
@@ -95,10 +88,16 @@
                     <li class="subscription-item">
                         <p><strong>Protocol Name:</strong> @protocol.Name</p>
                         <p><strong>Description:</strong> @protocol.Description</p>
-                        <button type="button" class="add-protocol" onclick="selectProtocol(@Html.Raw(Json.Serialize(protocol)))">
-                            Add
+                        <button type="button"
+                                class="add-protocol"
+                                data-protocol='@Html.Raw(Json.Serialize(protocol))'
+                                onclick="subscribeToProtocol(this)">
+                            Subscribe
                         </button>
-                        <button type="button" class="view-steps" onclick="viewProtocolSteps(@Html.Raw(Json.Serialize(protocol)), this)">
+                        <button type="button"
+                                class="view-steps"
+                                data-protocol='@Html.Raw(Json.Serialize(protocol))'
+                                onclick="viewProtocolSteps(this)">
                             View Steps
                         </button>
                     </li>
@@ -106,70 +105,48 @@
             </ul>
         </div>
 
-        <!-- Protocol Linking Section -->
-        <div id="protocol-linking-section" class="hidden">
-            <h2>Link Protocol to Patient</h2>
-            <div class="selected-details">
-                <div class="selected-patient">
-                    <h3>Patient</h3>
-                    <p><strong>Name:</strong> <span id="selected-patient-name"></span></p>
-                    <p><strong>Email:</strong> <span id="selected-patient-email"></span></p>
-                </div>
-                <div class="selected-subscription">
-                    <h3>Protocol</h3>
-                    <p><strong>Protocol Name:</strong> <span id="selected-protocol-name"></span></p>
-                    <p><strong>Description:</strong> <span id="selected-protocol-description"></span></p>
-                </div>
-            </div>
-            <button type="button" id="link-protocol-button" onclick="linkProtocol()">Link Protocol to Patient <span id="patient-name-placeholder"></span></button>
-        </div>
-
         <!-- Protocol Steps -->
         <div id="protocol-steps-content" class="hidden"></div>
     </div>
 
+    <!-- Hidden Form for Submission -->
+
+    <form id="subscription-form" action="@Url.Action("ConfirmProtocolLinking", "Patient")" method="post" class="hidden">
+        <input type="hidden" name="Patient" id="patient-input" />
+        <input type="hidden" name="Protocol" id="protocol-input" />
+        <input type="hidden" name="StartDate" id="start-date-input" />
+    </form>
+
+
     <script>
-        let selectedPatient = @Html.Raw(Json.Serialize(Model.Patient)); // Patient data
-        let selectedProtocol = null;
+        // Patient Data
+        let selectedPatient = @Html.Raw(Json.Serialize(Model.Patient));
 
-        function selectProtocol(protocol) {
-            selectedProtocol = protocol;
+        // Function to handle subscription creation
+        function subscribeToProtocol(button) {
+            // Get protocol data from button's data attribute
+            let protocol = JSON.parse(button.getAttribute('data-protocol'));
+            let startDate = document.getElementById('start-date-picker').value;
 
-            document.getElementById('selected-patient-name').innerText = selectedPatient.Name;
-            document.getElementById('selected-patient-email').innerText = selectedPatient.Email;
-
-            document.getElementById('selected-protocol-name').innerText = protocol.Name;
-            document.getElementById('selected-protocol-description').innerText = protocol.Description;
-
-            document.getElementById('patient-name-placeholder').innerText = selectedPatient.Name;
-
-            document.getElementById('protocol-linking-section').classList.remove('hidden');
-        }
-
-        function linkProtocol() {
-            if (selectedPatient && selectedProtocol) {
-                fetch('/LinkProtocolToPatient', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        patient: selectedPatient,
-                        protocol: selectedProtocol
-                    })
-                }).then(response => {
-                    if (response.ok) {
-                        alert('Protocol linked successfully!');
-                        window.location.href = '/Index';
-                    } else {
-                        alert('Failed to link protocol');
-                    }
-                }).catch(error => {
-                    console.error('Error linking protocol:', error);
-                    alert('An error occurred.');
-                });
+            if (!startDate) {
+                alert("Please select a start date.");
+                return;
             }
+
+            // Populate form data
+            document.getElementById('patient-input').value = JSON.stringify(selectedPatient);
+            document.getElementById('protocol-input').value = JSON.stringify(protocol);
+            document.getElementById('start-date-input').value = startDate;
+
+            // Submit form
+            document.getElementById('subscription-form').submit();
         }
 
-        function viewProtocolSteps(protocol, button) {
+        // Function to view protocol steps
+        function viewProtocolSteps(button) {
+            // Parse the protocol JSON from the button's data attribute
+            let protocol = JSON.parse(button.getAttribute('data-protocol'));
+
             let stepsContainer = document.getElementById('protocol-steps-content');
 
             // Toggle visibility of the steps container
@@ -183,10 +160,10 @@
             // Populate steps
             let steps = protocol.Steps || [];
             let stepsContent = '<ul>';
-            steps.forEach(step => {
+            steps.forEach((step, index) => {
                 stepsContent += `
                             <li>
-                                <strong>Step ${step.Order}:</strong> ${step.Name} <br>
+                                <strong>Step ${index + 1}:</strong> ${step.Name} <br>
                                 <em>${step.Description}</em> <br>
                                 <strong>Interval:</strong> ${step.Interval} days <br>
                                 <strong>Test:</strong> ${step.Test}

@@ -96,7 +96,7 @@ namespace DAL
             }
             return list;
         }
-        public PatientDTO GetPatient(int id, int UserID)
+        public PatientDTO GetPatient(int id)
         {
             PatientDTO patient = new PatientDTO();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -121,7 +121,6 @@ namespace DAL
                                     Email = Convert.ToString(reader["Email"]),
                                     PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
                                     MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
-                                    User_ID = UserID
                                 };
                             }
                         }

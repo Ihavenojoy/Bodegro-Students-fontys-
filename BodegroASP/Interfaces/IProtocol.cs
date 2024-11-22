@@ -12,5 +12,6 @@ namespace Interfaces
         public bool CreateProtocol(ProtocolDTO protocol);
         public List<ProtocolDTO> GetAllProtocols();
         public ProtocolDTO GetProtocol(string name);
+        public ProtocolDTO GetProtocolbyid(int id);
     }
 }

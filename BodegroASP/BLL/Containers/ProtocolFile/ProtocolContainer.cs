@@ -36,5 +36,9 @@ namespace Domain.Containers.ProtocolFile
         {
             return protocolConverter.DTOToObject(Dal.GetProtocol(name));
         }
+        public Protocol GetProtocolbyid(int id)
+        {
+            return protocolConverter.DTOToObject(Dal.GetProtocolbyid(id));
+        }
     }
 }
