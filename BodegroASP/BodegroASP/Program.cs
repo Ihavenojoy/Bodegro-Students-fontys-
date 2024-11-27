@@ -28,7 +28,7 @@ namespace BodegroASP
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=LinkDoctorToPatient}/{action=LinkDoctorToPatient}/{id?}");
 
             app.Run();
         }
