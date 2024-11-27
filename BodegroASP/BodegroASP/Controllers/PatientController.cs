@@ -22,7 +22,7 @@ namespace BodegroASP.Controllers
         private readonly PatientConvertert patientConverter = new PatientConvertert();
         public PatientController()
         {
-            _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
+            _patientserver = new PatientContainer(new PatientDAL());
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             user = new User(1,"Tim","timHaiwan",Role.Doctor, true);
         }

@@ -12,23 +12,18 @@ namespace DAL
 {
     public class PatientDAL : IPatient
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
+        private readonly string connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_backup;User Id=dbi500009_backup;Password=backupWW;TrustServerCertificate=True;";
         public int CreatePatient(PatientDTO patient)
         {
             int insertedId = -1;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (Doctor_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (Name, Email, PhoneNumber, MedicalHistory) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Doctor_ID", patient.Doctor_ID);
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
                         cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
@@ -52,7 +47,7 @@ namespace DAL
         }
 
         // Method to read a product record by ID
-        public List<int> GetPatientIDOfDoctor(int id)
+        public List<int> GetPatientIDOfUser(int id)
         {
             List<int> list = new List<int>();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -87,7 +82,7 @@ namespace DAL
             }
             return list;
         }
-        public PatientDTO GetPatient(int id, int DoctorID)
+        public PatientDTO GetPatient(int id)
         {
             PatientDTO patient = new PatientDTO();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -112,7 +107,6 @@ namespace DAL
                                     Email = Convert.ToString(reader["Email"]),
                                     PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
                                     MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
-                                    Doctor_ID = DoctorID
                                 };
                             }
                         }

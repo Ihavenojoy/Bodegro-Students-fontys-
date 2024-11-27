@@ -1,6 +1,8 @@
 ﻿using BodegroASP.Models;
 using DAL;
 using Domain.Containers;
+using Domain.Containers.PatientFile;
+using Domain.Containers.UserFile;
 using Domain.Modules;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,19 +11,20 @@ namespace BodegroASP.Controllers
 {
     public class LinkDoctorToPatientController : Controller
     {
-        private readonly DoctorContainer dc;
+        private readonly UserContainer dc;
         private readonly PatientContainer pc;
+        private IConfiguration configuration;
         public LinkDoctorToPatientController()
         {
-            dc = new DoctorContainer(new DoctorDAL());
+            dc = new UserContainer(new UserDAL(configuration));
             pc = new PatientContainer(new PatientDAL());
         }
         public IActionResult LinkDoctorToPatient()
         {
             LinkDoctorToPatientViewModel model = new LinkDoctorToPatientViewModel();
 
-            List<Doctor> allDoctors = dc.GetAllDoctors();
-            List<Patient> allPatients = pc.GetAllPatients();
+            List<User> allDoctors = dc.GetAllUsers();
+            List<Patient> allPatients = pc.Getall();
 
             model.allDoctors = allDoctors.Select(d => new SelectListItem
             {

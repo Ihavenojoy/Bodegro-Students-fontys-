@@ -12,7 +12,14 @@ namespace DAL
         private readonly string connectionString;
         public UserDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            if (configuration is null)
+            {
+                connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_backup;User Id=dbi500009_backup;Password=backupWW;TrustServerCertificate=True;";
+            }
+            else
+            {
+                connectionString = configuration.GetConnectionString("DefaultConnection");
+            }
         }
 
         public UserDTO UserLogin(string Emailinput, string PassWordInput)

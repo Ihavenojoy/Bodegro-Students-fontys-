@@ -9,8 +9,9 @@ namespace Interfaces
 {
     public interface IPatient
     {
-        public bool CreatePatient(PatientDTO patient);
+        public int CreatePatient(PatientDTO patient);
         public List<int> GetPatientIDOfUser(int id);
-        public PatientDTO GetPatient(int id, int UserID);
+        public PatientDTO GetPatient(int id);
+        public List<PatientDTO> GetAllPatients();
     }
 }

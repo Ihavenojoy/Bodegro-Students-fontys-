@@ -34,5 +34,21 @@ namespace Domain.Converter
                 User_ID = patient.User_ID
             };
         }
+        public List<Patient> ListDTOToObject(List<PatientDTO> dto)
+        {
+            List<Patient> list = new List<Patient>();
+            foreach (PatientDTO patientDTO in dto)
+            {
+                Patient patient = new Patient(
+                    patientDTO.ID,
+                    patientDTO.Name,
+                    patientDTO.Email,
+                    patientDTO.PhoneNumber,
+                    patientDTO.MedicalHistory,
+                    patientDTO.User_ID);
+                list.Add(patient);
+            }
+            return list;
+        }
     }
 }
