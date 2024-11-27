@@ -1,17 +1,17 @@
 ﻿@model ProtocolViewModel
 
 @{
-    if (ViewData["SuccessMessage"] != null)
+    @if (TempData["SuccessMessage"] != null)
     {
         <script type="text/javascript">
-            alert('@ViewData["SuccessMessage"]');
+            alert('@TempData["SuccessMessage"]');
         </script>
     }
 
-    if (ViewData["ErrorMessage"] != null)
+    @if (TempData["ErrorMessage"] != null)
     {
         <script type="text/javascript">
-            alert('@ViewData["ErrorMessage"]');
+            alert('@TempData["ErrorMessage"]');
         </script>
     }
 }
@@ -32,34 +32,67 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .form-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
         .steps-container {
             margin-top: 30px;
         }
 
         .step-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            align-items: center;
+            margin-bottom: 15px;
             padding: 10px;
-            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            position: relative;
+            flex-wrap: wrap; /* Ensure proper layout for inputs and buttons */
         }
 
-            .step-item input {
-                width: auto;
-                margin: 0 10px;
+            .step-item.dragging {
+                opacity: 0.5;
             }
 
-        .step-controls button {
-            margin: 0 5px;
+            .step-item.dragover {
+                border: 2px dashed #007bff;
+                background-color: #f0f8ff;
+            }
+
+        .step-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            justify-content: flex-start; /* Align to the left */
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .step-content {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+            .step-content input {
+                width: auto;
+                flex: 1;
+            }
+
+        .interval-control {
+            margin-top: 15px;
+        }
+
+        .dragover-above {
+            border-top: 2px dashed #007bff;
+        }
+
+        .dragover-below {
+            border-bottom: 2px dashed #007bff;
+        }
+
+        /* New specific drag indicator */
+        .drag-over-last {
+            border-bottom: 3px solid #007bff;
         }
     </style>
 </head>
@@ -75,49 +108,194 @@
                 <label for="DescriptionBox" class="form-label">Description</label>
                 <textarea id="DescriptionBox" name="Description" class="form-control" rows="5">@Model.Description</textarea>
             </div>
+
+            <!-- Interval Control Buttons Below Description -->
+            <div class="interval-control">
+                <button type="button" id="setAllTo365Button" class="btn btn-info">Set Total Interval to 365</button>
+                <div class="mt-2">
+                    <label for="intervalXInput" class="form-label">Set All Intervals to:</label>
+                    <input type="number" id="intervalXInput" class="form-control" placeholder="Enter value for X">
+                    <button type="button" id="setAllToXButton" class="btn btn-warning mt-2">Set All Intervals to X</button>
+                </div>
+            </div>
+
             <div class="steps-container">
                 <h4>Steps</h4>
-
                 <div id="stepsList">
                     @for (int i = 0; i < Model.Steps.Count; i++)
                     {
-                        <div class="step-item">
-                            <span>@(i + 1).</span>
-                            <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Step Name" />
-                            <input type="number" name="Steps[@i].Interval" class="form-control" value="@Model.Steps[i].Interval" placeholder="Interval" />
-                            <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Test" />
-                            <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Description" />
+                        <div class="step-item" id="step-@i" draggable="true">
+                            <span class="step-number">@Model.Steps[i].Order</span>
+                            <div class="step-content">
+                                <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Step Name" />
+                                <input type="number" name="Steps[@i].Interval" class="form-control" value="@Model.Steps[i].Interval" placeholder="Interval" />
+                                <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Test" />
+                                <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Description" />
+                                <input type="hidden" name="Steps[@i].Order" value="@Model.Steps[i].Order" />
+                                <div class="step-controls">
+                                    <button type="button" class="btn btn-danger btn-sm remove-step">Remove</button>
+                                    <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="@i">Duplicate Step</button>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
-                <button type="button" class="btn btn-success" onclick="addStep()">Add Step</button>
+                <button type="button" id="addStepButton" class="btn btn-success mt-3">Add Step</button>
             </div>
 
-            <div class="form-buttons">
+            <div class="form-buttons mt-4">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
 
     <script>
-        // Dynamically add steps (updates the DOM but submits with a form post)
-        let stepCount = @Model.Steps.Count;
-        function addStep() {
+        document.addEventListener('DOMContentLoaded', () => {
             const stepsList = document.getElementById('stepsList');
+            const addStepButton = document.getElementById('addStepButton');
+            const setAllTo365Button = document.getElementById('setAllTo365Button');
+            const setAllToXButton = document.getElementById('setAllToXButton');
+            const intervalXInput = document.getElementById('intervalXInput');
+            let draggedItem = null;
 
-            const newStep = document.createElement('div');
-            newStep.className = 'step-item';
-            newStep.innerHTML = `
-                <span>${stepCount + 1}.</span>
-                <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Step Name" />
-                <input type="number" name="Steps[${stepCount}].Interval" class="form-control" placeholder="Interval" />
-                <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Test" />
-                <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Description" />
-            `;
+            // Attach initial event listeners
+            Array.from(stepsList.children).forEach(step => attachDragEvents(step));
 
-            stepsList.appendChild(newStep);
-            stepCount++;
-        }
+            addStepButton.addEventListener('click', () => {
+                const stepCount = stepsList.children.length;
+
+                const newStep = document.createElement('div');
+                newStep.classList.add('step-item');
+                newStep.setAttribute('draggable', 'true');
+                newStep.innerHTML = `
+                    <span class="step-number">${stepCount + 1}</span>
+                    <div class="step-content">
+                        <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Step Name" />
+                        <input type="number" name="Steps[${stepCount}].Interval" class="form-control" placeholder="Interval" />
+                        <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Test" />
+                        <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Description" />
+                        <input type="hidden" name="Steps[${stepCount}].Order" value="${stepCount + 1}" />
+                        <div class="step-controls">
+                            <button type="button" class="btn btn-danger btn-sm remove-step">Remove</button>
+                            <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="${stepCount}">Duplicate Step</button>
+                        </div>
+                    </div>
+                `;
+                stepsList.appendChild(newStep);
+                attachDragEvents(newStep);
+                attachRemoveStepEvent(newStep.querySelector('.remove-step'));
+                attachDuplicateStepEvent(newStep.querySelector('.duplicate-button'));
+            });
+
+            // Set Total Interval to 365
+            setAllTo365Button.addEventListener('click', () => {
+                const stepIntervalInputs = stepsList.querySelectorAll('input[name$=".Interval"]');
+                const totalSteps = stepIntervalInputs.length;
+
+                if (totalSteps > 0) {
+                    const intervalValue = Math.floor(365 / totalSteps);
+                    let remainder = 365 % totalSteps;
+
+                    // Set all intervals to the calculated base value
+                    stepIntervalInputs.forEach(input => {
+                        input.value = intervalValue;
+                    });
+
+                    // Distribute the remainder to the first few steps
+                    for (let i = 0; i < remainder; i++) {
+                        stepIntervalInputs[i].value = parseInt(stepIntervalInputs[i].value) + 1;
+                    }
+                }
+            });
+
+            // Set all intervals to X value
+            setAllToXButton.addEventListener('click', () => {
+                const intervalValue = parseInt(intervalXInput.value);
+                if (isNaN(intervalValue)) {
+                    alert('Please enter a valid number for the interval.');
+                    return;
+                }
+
+                const stepIntervalInputs = stepsList.querySelectorAll('input[name$=".Interval"]');
+                stepIntervalInputs.forEach(input => {
+                    input.value = intervalValue;
+                });
+            });
+
+            // Helper Functions
+            function attachDragEvents(stepItem) {
+                stepItem.addEventListener('dragstart', (e) => {
+                    draggedItem = stepItem;
+                    setTimeout(() => {
+                        stepItem.classList.add('dragging');
+                    }, 0);
+                });
+
+                stepItem.addEventListener('dragend', () => {
+                    draggedItem.classList.remove('dragging');
+                    draggedItem = null;
+                });
+
+                stepItem.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    const target = e.target.closest('.step-item');
+                    if (target && target !== draggedItem) {
+                        target.classList.add('dragover');
+                    }
+                });
+
+                stepItem.addEventListener('dragleave', () => {
+                    const target = e.target.closest('.step-item');
+                    if (target) {
+                        target.classList.remove('dragover');
+                    }
+                });
+
+                stepItem.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const target = e.target.closest('.step-item');
+                    if (target && target !== draggedItem) {
+                        stepsList.insertBefore(draggedItem, target);
+                        renumberSteps();
+                    }
+                    clearDragOverClasses();
+                });
+            }
+
+            function renumberSteps() {
+                const stepItems = stepsList.querySelectorAll('.step-item');
+                stepItems.forEach((step, index) => {
+                    step.querySelector('.step-number').textContent = index + 1;
+                    step.querySelector('input[name$=".Order"]').value = index + 1;
+                });
+            }
+
+            function clearDragOverClasses() {
+                stepsList.querySelectorAll('.dragover').forEach(item => item.classList.remove('dragover'));
+            }
+
+            function attachRemoveStepEvent(button) {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.target.closest('.step-item').remove();
+                    renumberSteps();
+                });
+            }
+
+            function attachDuplicateStepEvent(button) {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const index = e.target.dataset.stepIndex;
+                    const step = stepsList.children[index];
+                    const clonedStep = step.cloneNode(true);
+                    clonedStep.querySelector('.step-number').textContent = stepsList.children.length + 1;
+                    clonedStep.querySelector('input[name$=".Order"]').value = stepsList.children.length + 1;
+                    stepsList.appendChild(clonedStep);
+                    attachDragEvents(clonedStep);
+                    attachRemoveStepEvent(clonedStep.querySelector('.remove-step'));
+                    attachDuplicateStepEvent(clonedStep.querySelector('.duplicate-button'));
+                });
+            }
+        });
     </script>
 </body>
-</html>
