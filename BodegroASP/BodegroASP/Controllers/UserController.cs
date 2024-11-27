@@ -90,7 +90,7 @@ namespace BodegroASP.Controllers
             doctor.Email = model.Email;
             doctor.Role = (Role)2;
             doctor.IsActive = true;
-            string defaultPassword = "defaultPassword"; // Add a default password or retrieve it from the model
+            string defaultPassword = "defaultPassword"; // Add a default password or retrieve it from the model///
             userContainer.UpdateUser(doctor, defaultPassword);
             return RedirectToAction("Index");
         }
