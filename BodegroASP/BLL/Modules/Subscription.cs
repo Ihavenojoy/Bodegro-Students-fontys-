@@ -14,9 +14,9 @@ namespace Domain.Modules
         public Patient Patient { get; set; }
         public int StepsTaken { get; set; }
 
-        public Subscription(DateTime StarDate, Protocol Protocol, Patient patient)
+        public Subscription(DateTime StartDate, Protocol Protocol, Patient patient)
         {
-            StartDate = StarDate;
+            this.StartDate = StartDate;
             this.Protocol = Protocol;
             StepsTaken = 0;
             Patient = patient;
