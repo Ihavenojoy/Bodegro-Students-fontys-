@@ -20,16 +20,14 @@ namespace BodegroASP.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var model = new ProtocolViewModel
-            {
-                Steps = new List<StepViewModel>()
-            };
+            var model = new ProtocolViewModel { };
             return View(model);
         }
         [HttpPost]
         public IActionResult Index(ProtocolViewModel model)
         {
-            if (model.Steps == null)
+            model.User_ID = 1;//temp fix for user_ID
+            if (model.Steps.Count == 0)
             {
                 TempData["ErrorMessage"] = "Een protocol moet een step hebben";
                 return View(model);
