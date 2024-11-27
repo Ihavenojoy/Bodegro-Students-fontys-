@@ -19,11 +19,10 @@ namespace Domain.Containers.SubscriptionFile
             SubDAL = Sub;
             this.subscriptionConverter = subscriptionConverter;
         }
-        public string AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
+        public bool AddSubscription(Protocol protocol, Patient patient, DateTime SDate)
         {
             Subscription subscription = new(SDate, protocol, patient);
-            SubDAL.CreateSubscription(subscriptionConverter.ObjectToDTO(subscription));
-            return "Succesvol toegevoegt";
+            return SubDAL.CreateSubscription(subscriptionConverter.ObjectToDTO(subscription));
         }
     }
 }

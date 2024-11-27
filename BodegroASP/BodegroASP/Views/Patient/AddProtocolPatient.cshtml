@@ -1,5 +1,20 @@
 ﻿@using BodegroASP.Models
 @model BodegroASP.Models.AddProtocolPatientViewModel
+@{
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script type="text/javascript">
+            alert('@TempData["SuccessMessage"]');
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script type="text/javascript">
+            alert('@TempData["ErrorMessage"]');
+        </script>
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,18 +100,26 @@
             <ul>
                 @foreach (var protocol in Model.Protocols)
                 {
+                    var protocolData = new
+                    {
+                        patientId = Model.Patient.ID, // Adjust if property names differ
+                        protocolId = protocol.ID,
+                        name = protocol.Name, // Optional, for additional display in JavaScript
+                        description = protocol.Description // Optional
+                    };
+
                     <li class="subscription-item">
                         <p><strong>Protocol Name:</strong> @protocol.Name</p>
                         <p><strong>Description:</strong> @protocol.Description</p>
                         <button type="button"
                                 class="add-protocol"
-                                data-protocol='@Html.Raw(Json.Serialize(protocol))'
+                                data-protocol='@Html.Raw(Json.Serialize(protocolData))'
                                 onclick="subscribeToProtocol(this)">
                             Subscribe
                         </button>
                         <button type="button"
                                 class="view-steps"
-                                data-protocol='@Html.Raw(Json.Serialize(protocol))'
+                                data-protocol='@Html.Raw(Json.Serialize(protocolData))'
                                 onclick="viewProtocolSteps(this)">
                             View Steps
                         </button>
@@ -143,25 +166,33 @@
         document.getElementById('SubscriptionViewModel-form').submit();
     }
 
-        // Function to view protocol steps
         function subscribeToProtocol(button) {
-        // Get protocol data from button's data attribute
-        let protocol = JSON.parse(button.getAttribute('data-protocol'));
-        let startDate = document.getElementById('start-date-picker').value;
+            // Parse protocol data from button's data attribute
+            const protocol = JSON.parse(button.dataset.protocol);
 
-        if (!startDate) {
-            alert("Please select a start date.");
-            return;
+            // Get the selected start date from the input field
+            const startDateInput = document.getElementById('start-date-picker');
+            const startDate = startDateInput.value; // Ensure it's in 'yyyy-MM-dd' format
+
+            // Validate the selected date
+            if (!startDate) {
+                alert('Please select a start date.');
+                return;
+            }
+
+            // Send POST request to save subscription
+            fetch('@Url.Action("SaveSubscription", "Patient")', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    Patientid: protocol.patientId,  // Match ViewModel property names
+                    Protocolid: protocol.protocolId,
+                    StartDate: startDate           // Use selected date from input
+                })
+            })
         }
 
-        // Populate form fields with selected protocol and patient
-        document.getElementById('protocol-input').value = protocol.ID;
-        document.getElementById('patient-input').value = @Html.Raw(Model.Patient.ID);
-        document.getElementById('start-date-input').value = startDate;
 
-        // Submit the form
-        document.getElementById('SubscriptionViewModel-form').submit();
-    }
     </script>
 </body>
 </html>

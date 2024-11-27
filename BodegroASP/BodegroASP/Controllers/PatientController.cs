@@ -41,7 +41,7 @@ namespace BodegroASP.Controllers
             List<ProtocolViewModel> list = ProtocolConverter.ListObjectToView(_protocolserver.GetProtocols());
             var model = new AddProtocolPatientViewModel
             {
-                Patient = patient,
+                Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email)),
                 Protocols = list
             };
 
@@ -67,19 +67,26 @@ namespace BodegroASP.Controllers
             return View(model);  // You can pass the model to a confirmation view
         }
         [HttpPost]
-        public IActionResult SaveSubscription(int patientId, int protocolId, DateTime startDate, int stepsTaken)
+        public IActionResult SaveSubscription([FromBody] ConfirmProtocolLinkingViewModel subscription)
         {
-            if (patientId == 0 || protocolId == 0)
+            if (subscription == null)
             {
+                TempData["ErrorMessage"] = "Subscription was null";
+                return BadRequest("Invalid data.");
+            }
+
+            if (subscription.Patientid == 0 || subscription.Protocolid == 0)
+            {
+                TempData["ErrorMessage"] = "Missing patient or protocol data";
                 return BadRequest("Missing patient or protocol data.");
             }
 
             // Retrieve the necessary entities from the database
-            var patient = _patientserver.GetPatient(patientId);
-            var protocol = _protocolserver.GetProtocolbyid(protocolId);
+            var patient = _patientserver.GetPatient(subscription.Patientid);
+            var protocol = _protocolserver.GetProtocolbyid(subscription.Protocolid);
 
             // Save the subscription in the database
-            _subscriptionserver.AddSubscription(protocol, patient, startDate);
+            _subscriptionserver.AddSubscription(protocol, patient, subscription.StartDate);
 
             // Redirect or render a confirmation view
             TempData["SuccessMessage"] = "Subscription confirmed and saved successfully!";

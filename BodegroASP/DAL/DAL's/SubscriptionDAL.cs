@@ -16,11 +16,12 @@ namespace DAL
         private readonly string connectionString;
         public SubscriptionDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            //connectionString = configuration.GetConnectionString("DefaultConnection");
         }
-        public int CreateSubscription(SubscriptionDTO subscriptionDTO)
+        public bool CreateSubscription(SubscriptionDTO subscriptionDTO)
         {
-            int insertedId = -1;
+            bool result = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
@@ -30,13 +31,13 @@ namespace DAL
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Protocol_ID", subscriptionDTO.Protocol.ID);
-                        cmd.Parameters.AddWithValue("@Patient_ID", subscriptionDTO.Patient);
+                        cmd.Parameters.AddWithValue("@Patient_ID", subscriptionDTO.Patient.ID);
                         cmd.Parameters.AddWithValue("@Start_Date", subscriptionDTO.StartDate);
                         cmd.Parameters.AddWithValue("@Current_Step", 0);
                         cmd.Parameters.AddWithValue("@Status", 1);
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
-
+                        Convert.ToInt32(cmd.ExecuteScalar());
+                        result = true;
                     }
                 }
             }
@@ -48,7 +49,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return result;
         }
     }
 }

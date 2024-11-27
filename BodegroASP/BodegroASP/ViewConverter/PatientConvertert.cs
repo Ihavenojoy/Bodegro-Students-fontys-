@@ -26,6 +26,7 @@ namespace BodegroASP.Converters
 
             PatientViewModel temp = new PatientViewModel()
             {
+                ID = patient.ID,
                 Email = patient.Email,
                 MedicalHistory = patient.MedicalHistory,
                 Name = patient.Name,

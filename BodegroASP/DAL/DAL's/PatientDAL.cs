@@ -138,7 +138,48 @@ namespace DAL
             }
             return patient;
         }
+        public PatientDTO GetPatientID(string email)
+        {
+            PatientDTO patient = new PatientDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient WHERE Email = @Email";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
 
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return patient;
+        }
         // Method to update a patient record
         public bool UpdatePatient(PatientDTO patient)
         {
