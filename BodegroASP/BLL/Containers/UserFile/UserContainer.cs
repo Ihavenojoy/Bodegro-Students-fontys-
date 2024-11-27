@@ -21,12 +21,22 @@ namespace Domain.Containers.UserFile
             _UserService = context;
         }
 
-        public User UserLogin(string EmailInput, string PasswordInput)
+        public User UserLogin(string emailInput, string passwordInput)
         {
-            UserDTO UserDTO = _UserService.UserLogin(EmailInput, PasswordInput);
-            User Useracc = docconverter.DTOToObject(UserDTO);
-            return Useracc;
+            UserDTO userDTO = _UserService.UserLogin(emailInput, passwordInput);
+            if (userDTO != null)
+            {
+                User userAccount = docconverter.DTOToObject(userDTO);
+                return userAccount;
+            }
+            else
+            {
+                // Handle the case where login is unsuccessful
+                // Log the error or handle it according to your application's requirements
+                return null;
+            }
         }
+
 
         public bool CreateUser(User User, string password)
         {

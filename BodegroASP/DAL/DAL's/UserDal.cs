@@ -21,11 +21,11 @@ namespace DAL
             UserDTO UserDTO = new UserDTO();
             try
             {
-                string insert = "Select ID, Name, Email, Role From [User] WHERE Email = @Email AND Password = @Password";
+                string insert = "Select ID, Name, Email, Role From [User] WHERE Email = @Email AND Password = @Password AND IsActive = 1";
 
                 using (conn)
                 {
-                    //conn.Open();
+                    conn.Open();
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", Emailinput);
@@ -40,6 +40,7 @@ namespace DAL
                                     Name = (string)reader["Name"],
                                     Email = (string)reader["Email"],
                                     Role = (int)reader["Role"],
+                                    IsActive = true
                                 };
                             }
                         }
