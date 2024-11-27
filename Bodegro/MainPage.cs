@@ -26,7 +26,7 @@ namespace Bodegro
             FirstUser();
             InitializeComponent();
             UpdateUI();
-            
+
 
         }
         private void UpdateUI()
@@ -150,6 +150,22 @@ namespace Bodegro
             {
                 User = _UserContainer.GetAllUsers()[0];
             }
+        }
+
+        private void MainPage_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LinkArtsAanDoktor_Click(object sender, EventArgs e)
+        {
+            LinkArtsAanPatient link  = new LinkArtsAanPatient();
+            this.Hide();
+            if (link.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+            this.Show();
         }
     }
 }

@@ -33,25 +33,27 @@
             AddProtocolToPatientButton = new Button();
             CreatePatientButton = new Button();
             CreateArtsButton = new Button();
-            CreateUserButton = new Button();
-            ComboUserBox = new ComboBox();
-            UserTextLable = new Label();
+            CreateAdminButton = new Button();
+            ComboDoctorBox = new ComboBox();
+            DoctorTextLable = new Label();
+            LinkArtsAanDoktor = new Button();
             SuspendLayout();
             // 
             // PatientListBox
             // 
             PatientListBox.FormattingEnabled = true;
-            PatientListBox.ItemHeight = 15;
-            PatientListBox.Location = new Point(463, 77);
+            PatientListBox.Location = new Point(529, 103);
+            PatientListBox.Margin = new Padding(3, 4, 3, 4);
             PatientListBox.Name = "PatientListBox";
-            PatientListBox.Size = new Size(507, 439);
+            PatientListBox.Size = new Size(579, 584);
             PatientListBox.TabIndex = 0;
             // 
             // AddPatientButton
             // 
-            AddPatientButton.Location = new Point(291, 77);
+            AddPatientButton.Location = new Point(333, 103);
+            AddPatientButton.Margin = new Padding(3, 4, 3, 4);
             AddPatientButton.Name = "AddPatientButton";
-            AddPatientButton.Size = new Size(135, 23);
+            AddPatientButton.Size = new Size(154, 31);
             AddPatientButton.TabIndex = 1;
             AddPatientButton.Text = "Toevoegen patiënt";
             AddPatientButton.UseVisualStyleBackColor = true;
@@ -59,9 +61,10 @@
             // 
             // AddProtocolToPatientButton
             // 
-            AddProtocolToPatientButton.Location = new Point(291, 120);
+            AddProtocolToPatientButton.Location = new Point(333, 160);
+            AddProtocolToPatientButton.Margin = new Padding(3, 4, 3, 4);
             AddProtocolToPatientButton.Name = "AddProtocolToPatientButton";
-            AddProtocolToPatientButton.Size = new Size(135, 23);
+            AddProtocolToPatientButton.Size = new Size(154, 31);
             AddProtocolToPatientButton.TabIndex = 2;
             AddProtocolToPatientButton.Text = "Toevoegen protocol";
             AddProtocolToPatientButton.UseVisualStyleBackColor = true;
@@ -69,9 +72,10 @@
             // 
             // CreatePatientButton
             // 
-            CreatePatientButton.Location = new Point(803, 48);
+            CreatePatientButton.Location = new Point(918, 64);
+            CreatePatientButton.Margin = new Padding(3, 4, 3, 4);
             CreatePatientButton.Name = "CreatePatientButton";
-            CreatePatientButton.Size = new Size(128, 23);
+            CreatePatientButton.Size = new Size(146, 31);
             CreatePatientButton.TabIndex = 3;
             CreatePatientButton.Text = "Nieuwe Patiënt";
             CreatePatientButton.UseVisualStyleBackColor = true;
@@ -79,57 +83,74 @@
             // 
             // CreateArtsButton
             // 
-            CreateArtsButton.Location = new Point(669, 48);
+            CreateArtsButton.Location = new Point(765, 64);
+            CreateArtsButton.Margin = new Padding(3, 4, 3, 4);
             CreateArtsButton.Name = "CreateArtsButton";
-            CreateArtsButton.Size = new Size(128, 23);
+            CreateArtsButton.Size = new Size(146, 31);
             CreateArtsButton.TabIndex = 4;
             CreateArtsButton.Text = "Nieuwe Arts";
             CreateArtsButton.UseVisualStyleBackColor = true;
             CreateArtsButton.Click += CreateArtsButton_Click;
             // 
-            // CreateUserButton
+            // CreateAdminButton
             // 
-            CreateUserButton.Location = new Point(535, 48);
-            CreateUserButton.Name = "CreateUserButton";
-            CreateUserButton.Size = new Size(128, 23);
-            CreateUserButton.TabIndex = 5;
-            CreateUserButton.Text = "Nieuwe beheerders";
-            CreateUserButton.UseVisualStyleBackColor = true;
-            CreateUserButton.Click += CreateUserButton_Click;
+            CreateAdminButton.Location = new Point(611, 64);
+            CreateAdminButton.Margin = new Padding(3, 4, 3, 4);
+            CreateAdminButton.Name = "CreateAdminButton";
+            CreateAdminButton.Size = new Size(146, 31);
+            CreateAdminButton.TabIndex = 5;
+            CreateAdminButton.Text = "Nieuwe beheerders";
+            CreateAdminButton.UseVisualStyleBackColor = true;
+            CreateAdminButton.Click += CreateAdminButton_Click;
             // 
-            // ComboUserBox
+            // ComboDoctorBox
             // 
-            ComboUserBox.FormattingEnabled = true;
-            ComboUserBox.Location = new Point(56, 12);
-            ComboUserBox.Name = "ComboUserBox";
-            ComboUserBox.Size = new Size(200, 23);
-            ComboUserBox.TabIndex = 6;
-            ComboUserBox.SelectedIndexChanged += ComboUserBox_SelectedIndexChanged;
+            ComboDoctorBox.FormattingEnabled = true;
+            ComboDoctorBox.Location = new Point(64, 16);
+            ComboDoctorBox.Margin = new Padding(3, 4, 3, 4);
+            ComboDoctorBox.Name = "ComboDoctorBox";
+            ComboDoctorBox.Size = new Size(228, 28);
+            ComboDoctorBox.TabIndex = 6;
+            ComboDoctorBox.SelectedIndexChanged += ComboDoctorBox_SelectedIndexChanged;
             // 
-            // UserTextLable
+            // DoctorTextLable
             // 
-            UserTextLable.AutoSize = true;
-            UserTextLable.Location = new Point(12, 15);
-            UserTextLable.Name = "UserTextLable";
-            UserTextLable.Size = new Size(43, 15);
-            UserTextLable.TabIndex = 7;
-            UserTextLable.Text = "User";
+            DoctorTextLable.AutoSize = true;
+            DoctorTextLable.Location = new Point(14, 20);
+            DoctorTextLable.Name = "DoctorTextLable";
+            DoctorTextLable.Size = new Size(55, 20);
+            DoctorTextLable.TabIndex = 7;
+            DoctorTextLable.Text = "Doctor";
+            // 
+            // LinkArtsAanDoktor
+            // 
+            LinkArtsAanDoktor.Location = new Point(333, 529);
+            LinkArtsAanDoktor.Margin = new Padding(3, 4, 3, 4);
+            LinkArtsAanDoktor.Name = "LinkArtsAanDoktor";
+            LinkArtsAanDoktor.Size = new Size(154, 31);
+            LinkArtsAanDoktor.TabIndex = 8;
+            LinkArtsAanDoktor.Text = "Link arts aan Doctor";
+            LinkArtsAanDoktor.UseVisualStyleBackColor = true;
+            LinkArtsAanDoktor.Click += LinkArtsAanDoktor_Click;
             // 
             // MainPage
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1056, 655);
-            Controls.Add(UserTextLable);
-            Controls.Add(ComboUserBox);
-            Controls.Add(CreateUserButton);
+            ClientSize = new Size(1207, 873);
+            Controls.Add(LinkArtsAanDoktor);
+            Controls.Add(DoctorTextLable);
+            Controls.Add(ComboDoctorBox);
+            Controls.Add(CreateAdminButton);
             Controls.Add(CreateArtsButton);
             Controls.Add(CreatePatientButton);
             Controls.Add(AddProtocolToPatientButton);
             Controls.Add(AddPatientButton);
             Controls.Add(PatientListBox);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "MainPage";
             Text = "MainPage";
+            Load += MainPage_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -141,8 +162,9 @@
         private Button AddProtocolToPatientButton;
         private Button CreatePatientButton;
         private Button CreateArtsButton;
-        private Button CreateUserButton;
-        private ComboBox ComboUserBox;
-        private Label UserTextLable;
+        private Button CreateAdminButton;
+        private ComboBox ComboDoctorBox;
+        private Label DoctorTextLable;
+        private Button LinkArtsAanDoktor;
     }
 }
