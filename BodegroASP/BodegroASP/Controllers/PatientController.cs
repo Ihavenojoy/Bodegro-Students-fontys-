@@ -47,15 +47,15 @@ namespace BodegroASP.Controllers
 
             return View(model);
         }
-        public IActionResult ConfirmProtocolLinking(ConfirmProtocolLinkingViewModel temp)
+        public IActionResult ConfirmProtocolLinking(ConfirmProtocolLinkingViewModel temp) // subscription
         {
-            if (temp.Patient == 0 || temp.Protocol == 0)
+            if (temp.Patientid == 0 || temp.Protocolid == 0)
             {
-                return NotFound("Patient or protocol ID is missing.");
+                return NotFound("Patient or protocol ID is missing."); 
             }
 
-            Patient patient = _patientserver.GetPatient(temp.Patient);
-            var protocol = _protocolserver.GetProtocolbyid(temp.Protocol);
+            Patient patient = _patientserver.GetPatient(temp.Patientid);
+            var protocol = _protocolserver.GetProtocolbyid(temp.Protocolid);
 
             var model = new SubscriptionViewModel
             {

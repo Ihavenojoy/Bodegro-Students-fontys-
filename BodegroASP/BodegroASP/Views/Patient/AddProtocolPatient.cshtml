@@ -111,11 +111,12 @@
 
     <!-- Hidden Form for Submission -->
 
-    <form id="subscription-form" action="@Url.Action("ConfirmProtocolLinking", "Patient")" method="post" class="hidden">
-        <input type="hidden" name="Patient" id="patient-input" />
-        <input type="hidden" name="Protocol" id="protocol-input" />
-        <input type="hidden" name="StartDate" id="start-date-input" />
-    </form>
+    <form id="ConfirmProtocolLinkingViewModel-form" action="@Url.Action("ConfirmProtocolLinking", "Patient")" method="post">
+    <input type="hidden" name="Patient.ID" id="patient-input" value="@Model.Patient.ID" />
+    <input type="hidden" name="Protocol.ID" id="protocol-input" />
+    <input type="hidden" name="StartDate" id="start-date-input" />
+</form>
+
 
 
     <script>
@@ -124,57 +125,43 @@
 
         // Function to handle subscription creation
         function subscribeToProtocol(button) {
-            // Get protocol data from button's data attribute
-            let protocol = JSON.parse(button.getAttribute('data-protocol'));
-            let startDate = document.getElementById('start-date-picker').value;
+        // Get protocol data from button's data attribute
+        let protocol = JSON.parse(button.getAttribute('data-protocol'));
+        let startDate = document.getElementById('start-date-picker').value;
 
-            if (!startDate) {
-                alert("Please select a start date.");
-                return;
-            }
-
-            // Populate form data
-            document.getElementById('patient-input').value = JSON.stringify(selectedPatient);
-            document.getElementById('protocol-input').value = JSON.stringify(protocol);
-            document.getElementById('start-date-input').value = startDate;
-
-            // Submit form
-            document.getElementById('subscription-form').submit();
+        if (!startDate) {
+            alert("Please select a start date.");
+            return;
         }
+
+        // Populate form fields with selected protocol and patient
+        document.getElementById('protocol-input').value = protocol.ID;
+        document.getElementById('patient-input').value = @Html.Raw(Model.Patient.ID);
+        document.getElementById('start-date-input').value = startDate;
+
+        // Submit the form
+        document.getElementById('SubscriptionViewModel-form').submit();
+    }
 
         // Function to view protocol steps
-        function viewProtocolSteps(button) {
-            // Parse the protocol JSON from the button's data attribute
-            let protocol = JSON.parse(button.getAttribute('data-protocol'));
+        function subscribeToProtocol(button) {
+        // Get protocol data from button's data attribute
+        let protocol = JSON.parse(button.getAttribute('data-protocol'));
+        let startDate = document.getElementById('start-date-picker').value;
 
-            let stepsContainer = document.getElementById('protocol-steps-content');
-
-            // Toggle visibility of the steps container
-            const isVisible = !stepsContainer.classList.contains('hidden');
-            if (isVisible) {
-                stepsContainer.classList.add('hidden');
-                button.innerText = "View Steps";
-                return;
-            }
-
-            // Populate steps
-            let steps = protocol.Steps || [];
-            let stepsContent = '<ul>';
-            steps.forEach((step, index) => {
-                stepsContent += `
-                            <li>
-                                <strong>Step ${index + 1}:</strong> ${step.Name} <br>
-                                <em>${step.Description}</em> <br>
-                                <strong>Interval:</strong> ${step.Interval} days <br>
-                                <strong>Test:</strong> ${step.Test}
-                            </li>`;
-            });
-            stepsContent += '</ul>';
-            stepsContainer.innerHTML = stepsContent;
-
-            stepsContainer.classList.remove('hidden');
-            button.innerText = "Close Steps";
+        if (!startDate) {
+            alert("Please select a start date.");
+            return;
         }
+
+        // Populate form fields with selected protocol and patient
+        document.getElementById('protocol-input').value = protocol.ID;
+        document.getElementById('patient-input').value = @Html.Raw(Model.Patient.ID);
+        document.getElementById('start-date-input').value = startDate;
+
+        // Submit the form
+        document.getElementById('SubscriptionViewModel-form').submit();
+    }
     </script>
 </body>
 </html>

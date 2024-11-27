@@ -4,8 +4,8 @@ namespace BodegroASP.Models
 {
     public class ConfirmProtocolLinkingViewModel
     {
-        public int Patient { get; set; }
-        public int Protocol { get; set; }
+        public int Patientid { get; set; }
+        public int Protocolid { get; set; }
         public DateTime StartDate { get; set; }
     }
 }

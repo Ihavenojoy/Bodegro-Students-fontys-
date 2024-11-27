@@ -1,27 +1,13 @@
 ﻿@model SubscriptionViewModel
 
-<div>
-    <h2>Confirm Subscription</h2>
-    <h3>Patient Details:</h3>
-    <p><strong>Name:</strong> @Model.Patient.Name</p>
-    <p><strong>Email:</strong> @Model.Patient.Email</p>
+<h1>Confirm Subscription</h1>
+<p>Patient: @Model.Patient.Name (@Model.Patient.ID)</p>
+<p>Protocol: @Model.Protocol.Name (@Model.Protocol.ID)</p>
+<p>Start Date: @Model.StartDate.ToString("dd-MM-yyyy")</p>
 
-    <h3>Protocol Details:</h3>
-    <p><strong>Name:</strong> @Model.Protocol.Name</p>
-    <p><strong>Description:</strong> @Model.Protocol.Description</p>
-
-    <h3>Start Date:</h3>
-    <p>@Model.StartDate.ToString("yyyy-MM-dd")</p>
-
-    <!-- Hidden field for StepsTaken -->
-    <input type="hidden" name="StepsTaken" value="@Model.StepsTaken" />
-
-    <form method="post" action="@Url.Action("SaveSubscription", "Patient")">
-        <!-- Add hidden fields to submit data -->
-        <input type="hidden" name="patientId" value="@Model.Patient.ID" />
-        <input type="hidden" name="protocolId" value="@Model.Protocol.ID" />
-        <input type="hidden" name="startDate" value="@Model.StartDate" />
-
-        <button type="submit">Confirm Subscription</button>
-    </form>
-</div>
+<form method="post" action="@Url.Action("CompleteSubscription", "Patient")">
+    <input type="hidden" name="Patient.ID" value="@Model.Patient.ID" />
+    <input type="hidden" name="Protocol.ID" value="@Model.Protocol.ID" />
+    <input type="hidden" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+    <button type="submit">Confirm and Save</button>
+</form>
