@@ -27,7 +27,7 @@ namespace BodegroASP.Controllers
             _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
-            user = new User(1,"Tim","timHaiwan",Role.Doctor, true);
+            user = new User(1, "Tim", "timHaiwan", Role.Doctor, true);
         }
         public IActionResult Index()
         {
@@ -35,7 +35,7 @@ namespace BodegroASP.Controllers
             List<PatientViewModel> list = patientConverter.ListObjectToVieuw(templist);
             return View(list);
         }
-        
+
         public IActionResult AddProtocolPatient(PatientViewModel patient)
         {
             List<ProtocolViewModel> list = ProtocolConverter.ListObjectToView(_protocolserver.GetProtocols());
@@ -78,25 +78,12 @@ namespace BodegroASP.Controllers
             var patient = _patientserver.GetPatient(patientId);
             var protocol = _protocolserver.GetProtocolbyid(protocolId);
 
-            // Create the subscription
-            var subscription = new Subscription
-            {
-                Patient = _patientserver.GetPatient(patientId),
-                Protocol = _protocolserver.GetProtocolbyid(protocolId),
-                StartDate = startDate,
-            };
-
             // Save the subscription in the database
-            _subscriptionserver.AddSubscription(subscription);
+            _subscriptionserver.AddSubscription(protocol, patient, startDate);
 
             // Redirect or render a confirmation view
             TempData["SuccessMessage"] = "Subscription confirmed and saved successfully!";
             return RedirectToAction("Index");  // Or redirect to a confirmation page
         }
     }
-
-
-
-
-}
 }
