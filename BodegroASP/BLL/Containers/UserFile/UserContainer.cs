@@ -28,7 +28,13 @@ namespace Domain.Containers.UserFile
                 Console.WriteLine("Email and password must not be empty.");
                 return null;
             }
-            UserDTO userDTO = _UserService.UserLogin(emailInput, passwordInput);
+            UserDTO userDTO = _UserService.UserLogin(emailInput);
+            var passwordCheck = _UserService.GetHashByEmail(emailInput);
+            if (!PasswordHelper.ValidatePassword(passwordInput, passwordCheck))
+            {
+                Console.WriteLine("Password is incorrect.");
+                return null;
+            }
             if (userDTO == null || userDTO.ID <= 0)
             {
                 Console.WriteLine("No user found with the provided credentials.");
@@ -52,7 +58,10 @@ namespace Domain.Containers.UserFile
             }
             else
             {
-                return _UserService.CreateUser(Userconverter.ObjectToDTO(User), password);
+                // Hash the password before sending it to the user service
+                string hashedPassword = PasswordHelper.HashPassword(password);
+                // Assuming CreateUser in UserService takes the password as a parameter
+                return _UserService.CreateUser(Userconverter.ObjectToDTO(User), hashedPassword);
             }
         }
         public bool UserExists(string email)

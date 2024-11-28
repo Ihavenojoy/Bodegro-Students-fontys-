@@ -10,18 +10,20 @@ namespace DAL
     public class UserDAL : IUser
     {
         private readonly string connectionString;
+
         public UserDAL(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public UserDTO UserLogin(string Emailinput, string PassWordInput)
+        public UserDTO UserLogin(string Emailinput)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             UserDTO UserDTO = new UserDTO();
             try
             {
-                string insert = "Select ID, Name, Email, Role From [User] WHERE Email = @Email AND Password = @Password AND IsActive = 1";
+                string insert = "SELECT ID, Name, Email, Role, IsActive FROM [User] " +
+                       "WHERE Email = @Email AND IsActive = 1";
 
                 using (conn)
                 {
@@ -29,10 +31,11 @@ namespace DAL
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", Emailinput);
-                        cmd.Parameters.AddWithValue("@Password", PassWordInput);
+                        //cmd.Parameters.AddWithValue("@Password", BCrypt.Net.BCrypt.HashPassword(PassWordInput));
+                        //cmd.Parameters.AddWithValue("@Password", PassWordInput);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read())
+                            if (reader.Read()) 
                             {
                                 UserDTO = new UserDTO
                                 {
@@ -76,6 +79,7 @@ namespace DAL
                 string insert = "INSERT INTO [User] (Name, Email, Role, IsActive, Password) VALUES (@Name, @Email, @Role ,@IsActive, @Password);";
                 using (conn)
                 {
+
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", User.Name);
@@ -272,6 +276,40 @@ namespace DAL
             }
             return user;
         }
+
+        public string GetHashByEmail(string email)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT Password FROM [User] WHERE Email = @Email";
+                using (conn)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return reader.GetString(reader.GetOrdinal("Password"));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a user: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return null; // Return null if no password hash was found or an error occurred
+        }
+
 
 
     }

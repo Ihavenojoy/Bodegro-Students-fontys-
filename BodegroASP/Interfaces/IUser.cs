@@ -9,7 +9,7 @@ namespace Interfaces
 {
     public interface IUser
     {
-        public UserDTO UserLogin(string Emailinput, string PassWordInput);
+        public UserDTO UserLogin(string Emailinput);
         public void TwofactorActivation(string UserEmail);
         public bool TwofactorCheck(string Userinput);
         public bool CreateUser(UserDTO User, string password);
@@ -18,5 +18,6 @@ namespace Interfaces
         public List<UserDTO> GetAllUsers();
         public UserDTO GetUserByID(int id);
         public bool UpdateUser(UserDTO user, string password);
+        string GetHashByEmail(string email);
     }
 }
