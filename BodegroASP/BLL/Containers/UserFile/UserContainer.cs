@@ -23,18 +23,24 @@ namespace Domain.Containers.UserFile
 
         public User UserLogin(string emailInput, string passwordInput)
         {
-            UserDTO userDTO = _UserService.UserLogin(emailInput, passwordInput);
-            if (userDTO != null)
+            if (string.IsNullOrWhiteSpace(emailInput) || string.IsNullOrWhiteSpace(passwordInput))
             {
-                User userAccount = docconverter.DTOToObject(userDTO);
-                return userAccount;
-            }
-            else
-            {
-                // Handle the case where login is unsuccessful
-                // Log the error or handle it according to your application's requirements
+                Console.WriteLine("Email and password must not be empty.");
                 return null;
             }
+            UserDTO userDTO = _UserService.UserLogin(emailInput, passwordInput);
+            if (userDTO == null || userDTO.ID <= 0)
+            {
+                Console.WriteLine("No user found with the provided credentials.");
+                return null;
+            }
+            User user = docconverter.DTOToObject(userDTO);
+            if (user == null)
+            {
+                Console.WriteLine("Failed to convert user data.");
+                return null;
+            }
+            return user;
         }
 
 

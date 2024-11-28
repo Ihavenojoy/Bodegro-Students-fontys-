@@ -28,18 +28,35 @@ namespace BodegroASP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogIn(LoginViewModel vm)
         {
-            if (!ModelState.IsValid)
-                return View(vm);
-
-            var user = _userContainer.UserLogin(vm.Email, vm.Password); // Assuming you have this method to validate users
-            if (user == null)
+            try
             {
-                ModelState.AddModelError("", "Invalid login attempt.");
+                if (!ModelState.IsValid)
+                    return View(vm);
+
+                var user = _userContainer.UserLogin(vm.Email, vm.Password); // Assuming you have this method to validate users
+                if (user == null)
+                {
+                    ModelState.AddModelError("LoginFailed", "Invalid username or password.");
+                    return View(vm);
+                }
+
+                await SignInUser(user);
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details here before returning the view
+                ModelState.AddModelError("", "An unexpected error occurred. Please try again.");
                 return View(vm);
             }
 
-            await SignInUser(user);
-            return RedirectToAction("Index", "Home");
+
+
+        }
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync("CookieAuth");
+            return RedirectToAction("LogIn");
         }
 
         private async Task SignInUser(User user)
@@ -57,11 +74,7 @@ namespace BodegroASP.Controllers
             await HttpContext.SignInAsync("CookieAuth", principal);
         }
 
-        public async Task<IActionResult> LogOut()
-        {
-            await HttpContext.SignOutAsync("CookieAuth");
-            return RedirectToAction("LogIn");
-        }
+
 
 
 
