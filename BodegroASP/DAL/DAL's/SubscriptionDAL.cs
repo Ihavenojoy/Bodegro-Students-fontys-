@@ -58,7 +58,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Protocol_ID, Patient_ID, Start_Date, Current_Step, Status FROM Subscription WHERE Patient_ID = @Patient_ID";
+                string select = "SELECT ID, Protocol_ID, Patient_ID, Start_Date, Current_Step, Status FROM Subscription WHERE Patient_ID = @Patient_ID AND Status = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -71,6 +71,7 @@ namespace DAL
                             {
                                 SubscriptionDTO subscription = new SubscriptionDTO
                                 {
+                                    ID = Convert.ToInt32(reader["ID"]),
                                     StartDate = Convert.ToDateTime(reader["Start_Date"]),
                                     ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
                                     PatientID = Convert.ToInt32(reader["Patient_ID"]),
@@ -92,6 +93,34 @@ namespace DAL
                 conn.Close();
             }
             return list;
+        }
+        public bool SoftDeleteSubscription(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string delete = "UPDATE [Subscription] SET Status = 0 WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(delete, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while deleting a User: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

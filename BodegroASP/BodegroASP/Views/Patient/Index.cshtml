@@ -6,10 +6,10 @@
         <div class="patient-card">
             <h3>@patient.Name</h3>
             <p><strong>Email:</strong> @patient.Email</p>
-            <p><strong>Phone:</strong> @patient.PhoneNumber</p>
+            <p><strong>Telefoon nummer:</strong> @patient.PhoneNumber</p>
 
             <p class="medical-history">
-                <strong>Medical History:</strong>
+                <strong>Medice Historie:</strong>
                 @if (patient.MedicalHistory.Length > 150)
                 {
                     <span class="short-text">@patient.MedicalHistory.Substring(0, 150)...</span>
@@ -29,9 +29,9 @@
                 <input type="hidden" name="Email" value="@patient.Email" />
                 <input type="hidden" name="PhoneNumber" value="@patient.PhoneNumber" />
                 <input type="hidden" name="MedicalHistory" value="@patient.MedicalHistory" />
-                <button type="submit" class="add-protocol">Add Protocol</button>
+                <button type="submit" class="add-protocol">Voeg Protocol toe</button>
                 <a asp-action="ViewSubscriptionsPatient" asp-controller="Patient" asp-route-Email="@patient.Email" class="redirect-button">
-                    View Subscriptions
+                    Bekijk Subsctipties
                 </a>
             </form>
         </div>

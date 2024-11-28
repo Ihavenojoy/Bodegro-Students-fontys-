@@ -9,6 +9,7 @@ namespace Domain.Modules
 {
     public class Subscription
     {
+        public int ID { get; }
         public DateTime StartDate { get; set; }
         public Protocol Protocol { get; set; }
         public Patient Patient { get; set; }
@@ -16,6 +17,14 @@ namespace Domain.Modules
 
         public Subscription(DateTime StartDate, Protocol Protocol, Patient patient)
         {
+            this.StartDate = StartDate;
+            this.Protocol = Protocol;
+            StepsTaken = 0;
+            Patient = patient;
+        }
+        public Subscription(int id, DateTime StartDate, Protocol Protocol, Patient patient)
+        {
+            ID = id;
             this.StartDate = StartDate;
             this.Protocol = Protocol;
             StepsTaken = 0;

@@ -28,5 +28,9 @@ namespace Domain.Containers.SubscriptionFile
         {
             return subscriptionConverter.ListDTOToListObject(SubDAL.GetSubscriptionsOfPatiënt(patientID));
         }
+        public bool DeleteSubscription(int id)
+        {
+            return SubDAL.SoftDeleteSubscription(id);
+        }
     }
 }

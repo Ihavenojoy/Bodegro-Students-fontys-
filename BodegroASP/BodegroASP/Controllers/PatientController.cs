@@ -106,5 +106,18 @@ namespace BodegroASP.Controllers
             TempData["SuccessMessage"] = "Subscription confirmed and saved successfully!";
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public IActionResult DeleteProtocol([FromBody] SubscriptionViewModel model)
+        {
+            if (_subscriptionserver.DeleteSubscription(model.ID))
+            {
+                return Ok();
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Subscriptie verwijderen mislukt";
+            }
+            return View(model);
+        }
     }
 }

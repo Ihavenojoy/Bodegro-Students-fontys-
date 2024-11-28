@@ -8,6 +8,7 @@ namespace DTO
 {
     public record SubscriptionDTO
     {
+        public int ID { get; set; }
         public DateTime StartDate { get; set; }
         public int ProtocolID { get; set; }
         public int PatientID { get; set; }

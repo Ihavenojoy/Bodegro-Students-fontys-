@@ -64,7 +64,11 @@
             margin-right: 10px;
         }
 
-            .add-protocol:hover, .view-steps:hover {
+            .add-protocol:hover {
+                background-color: #0CAD00;
+            }
+
+            .view-steps:hover {
                 background-color: #0056b3;
             }
 
@@ -81,22 +85,22 @@
     <div class="container">
         <!-- Patient Information Card -->
         <div class="patient-card">
-            <h2>Patient Information</h2>
-            <p><strong>Name:</strong> @Model.Patient.Name</p>
+            <h2>Patiënt Informatie</h2>
+            <p><strong>Naam:</strong> @Model.Patient.Name</p>
             <p><strong>Email:</strong> @Model.Patient.Email</p>
-            <p><strong>Phone:</strong> @Model.Patient.PhoneNumber</p>
-            <p><strong>Medical History:</strong> @Model.Patient.MedicalHistory</p>
+            <p><strong>Telefoon nr.:</strong> @Model.Patient.PhoneNumber</p>
+            <p><strong>Medice Historie:</strong> @Model.Patient.MedicalHistory</p>
         </div>
 
         <!-- Calendar Section -->
         <div class="calendar-container">
-            <h2>Select Start Date</h2>
+            <h2>Selecteer een Start Datum</h2>
             <input type="date" id="start-date-picker" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
         </div>
 
         <!-- Protocols List -->
         <div class="subscriptions">
-            <h2>Available Protocols</h2>
+            <h2>Toegankelijke Protocolen</h2>
             <ul>
                 @foreach (var protocol in Model.Protocols)
                 {
@@ -109,19 +113,19 @@
                     };
 
                     <li class="subscription-item">
-                        <p><strong>Protocol Name:</strong> @protocol.Name</p>
-                        <p><strong>Description:</strong> @protocol.Description</p>
+                        <p><strong>Protocol naam:</strong> @protocol.Name</p>
+                        <p><strong>Descriptie:</strong> @protocol.Description</p>
                         <button type="button"
                                 class="add-protocol"
                                 data-protocol='@Html.Raw(Json.Serialize(protocolData))'
                                 onclick="subscribeToProtocol(this)">
-                            Subscribe
+                            Voeg toe
                         </button>
                         <button type="button"
                                 class="view-steps"
                                 data-protocol='@Html.Raw(Json.Serialize(protocolData))'
                                 onclick="viewProtocolSteps(this)">
-                            View Steps
+                            Bekijk Stappen
                         </button>
                     </li>
                 }

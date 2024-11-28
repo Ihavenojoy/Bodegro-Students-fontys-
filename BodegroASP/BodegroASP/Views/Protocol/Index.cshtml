@@ -98,53 +98,53 @@
 </head>
 <body>
     <div class="form-container">
-        <h1 class="mb-4">Add Protocol Form</h1>
+        <h1 class="mb-4">Voeg Protocol toe</h1>
         <form method="post" action="/Protocol/Index">
             <div class="mb-3">
-                <label for="Name" class="form-label">Name</label>
+                <label for="Name" class="form-label">Naam</label>
                 <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" />
             </div>
             <div class="mb-3">
-                <label for="DescriptionBox" class="form-label">Description</label>
+                <label for="DescriptionBox" class="form-label">Descriptie</label>
                 <textarea id="DescriptionBox" name="Description" class="form-control" rows="5">@Model.Description</textarea>
             </div>
 
             <!-- Interval Control Buttons Below Description -->
             <div class="interval-control">
-                <button type="button" id="setAllTo365Button" class="btn btn-info">Set Total Interval to 365</button>
+                <button type="button" id="setAllTo365Button" class="btn btn-info">Zet de Totale interval naar 365 dagen</button>
                 <div class="mt-2">
-                    <label for="intervalXInput" class="form-label">Set All Intervals to:</label>
-                    <input type="number" id="intervalXInput" class="form-control" placeholder="Enter value for X">
-                    <button type="button" id="setAllToXButton" class="btn btn-warning mt-2">Set All Intervals to X</button>
+                    <label for="intervalXInput" class="form-label">Zet alle intervallen naar:</label>
+                    <input type="number" id="intervalXInput" class="form-control" placeholder="Zet interval waarde">
+                    <button type="button" id="setAllToXButton" class="btn btn-warning mt-2">Zet alle intervallen</button>
                 </div>
             </div>
 
             <div class="steps-container">
-                <h4>Steps</h4>
+                <h4>Stappen</h4>
                 <div id="stepsList">
                     @for (int i = 0; i < Model.Steps.Count; i++)
                     {
                         <div class="step-item" id="step-@i" draggable="true">
                             <span class="step-number">@Model.Steps[i].Order</span>
                             <div class="step-content">
-                                <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Step Name" />
+                                <input type="text" name="Steps[@i].Name" class="form-control" value="@Model.Steps[i].Name" placeholder="Stap naam" />
                                 <input type="number" name="Steps[@i].Interval" class="form-control" value="@Model.Steps[i].Interval" placeholder="Interval" />
-                                <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Test" />
-                                <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Description" />
+                                <input type="text" name="Steps[@i].Test" class="form-control" value="@Model.Steps[i].Test" placeholder="Testen" />
+                                <input type="text" name="Steps[@i].Description" class="form-control" value="@Model.Steps[i].Description" placeholder="Descriptie" />
                                 <input type="hidden" name="Steps[@i].Order" value="@Model.Steps[i].Order" />
                                 <div class="step-controls">
-                                    <button type="button" class="btn btn-danger btn-sm remove-step">Remove</button>
-                                    <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="@i">Duplicate Step</button>
+                                    <button type="button" class="btn btn-danger btn-sm remove-step">Verwijder</button>
+                                    <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="@i">Kopiëren</button>
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
-                <button type="button" id="addStepButton" class="btn btn-success mt-3">Add Step</button>
+                <button type="button" id="addStepButton" class="btn btn-success mt-3">Voeg stap toe</button>
             </div>
 
             <div class="form-buttons mt-4">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Klaar</button>
             </div>
         </form>
     </div>
@@ -170,14 +170,14 @@
                 newStep.innerHTML = `
                     <span class="step-number">${stepCount + 1}</span>
                     <div class="step-content">
-                        <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Step Name" />
+                        <input type="text" name="Steps[${stepCount}].Name" class="form-control" placeholder="Stap naam" />
                         <input type="number" name="Steps[${stepCount}].Interval" class="form-control" placeholder="Interval" />
-                        <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Test" />
-                        <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Description" />
+                        <input type="text" name="Steps[${stepCount}].Test" class="form-control" placeholder="Testen" />
+                        <input type="text" name="Steps[${stepCount}].Description" class="form-control" placeholder="Descriptie" />
                         <input type="hidden" name="Steps[${stepCount}].Order" value="${stepCount + 1}" />
                         <div class="step-controls">
-                            <button type="button" class="btn btn-danger btn-sm remove-step">Remove</button>
-                            <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="${stepCount}">Duplicate Step</button>
+                            <button type="button" class="btn btn-danger btn-sm remove-step">Verwijder</button>
+                            <button type="button" class="btn btn-secondary btn-sm duplicate-button" data-step-index="${stepCount}">Kopiëren</button>
                         </div>
                     </div>
                 `;

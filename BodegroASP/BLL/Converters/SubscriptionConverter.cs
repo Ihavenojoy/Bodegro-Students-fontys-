@@ -28,7 +28,7 @@ namespace Domain.Converter
             List<Subscription> list = new List<Subscription>();
             foreach (SubscriptionDTO subscriptionDTO in subscriptionsDTO)
             {
-                Subscription subscription = new Subscription(subscriptionDTO.StartDate, protocolContainer.GetProtocolbyid(subscriptionDTO.ProtocolID), patientContainer.GetPatient(subscriptionDTO.PatientID));
+                Subscription subscription = new Subscription(subscriptionDTO.ID, subscriptionDTO.StartDate, protocolContainer.GetProtocolbyid(subscriptionDTO.ProtocolID), patientContainer.GetPatient(subscriptionDTO.PatientID));
                 list.Add(subscription);
             }
             return list;

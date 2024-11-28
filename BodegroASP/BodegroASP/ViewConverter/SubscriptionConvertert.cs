@@ -15,6 +15,7 @@ namespace BodegroASP.ViewConverter
             {
                 SubscriptionViewModel viewModel = new SubscriptionViewModel()
                 {
+                    ID = subscription.ID,
                     StartDate = subscription.StartDate,
                     Protocol = protocolConverter.ObjectToView(subscription.Protocol),
                     Patient = PatientConvertert.ObjectToVieuw(subscription.Patient),
