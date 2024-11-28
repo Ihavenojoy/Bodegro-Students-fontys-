@@ -30,6 +30,9 @@
                 <input type="hidden" name="PhoneNumber" value="@patient.PhoneNumber" />
                 <input type="hidden" name="MedicalHistory" value="@patient.MedicalHistory" />
                 <button type="submit" class="add-protocol">Add Protocol</button>
+                <a asp-action="ViewSubscriptionsPatient" asp-controller="Patient" asp-route-Email="@patient.Email" class="redirect-button">
+                    View Subscriptions
+                </a>
             </form>
         </div>
     }
@@ -113,5 +116,20 @@
 
         .toggle-history:hover {
             text-decoration: underline;
+        }
+
+    .redirect-button {
+        display: inline-block;
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .redirect-button:hover {
+            background-color: #218838;
         }
 </style>

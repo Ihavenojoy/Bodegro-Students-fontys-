@@ -1,0 +1,136 @@
+﻿@model PatientSubscriptionsViewModel
+@{
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script type="text/javascript">
+            alert('@TempData["SuccessMessage"]');
+        </script>
+    }
+
+    if (TempData["ErrorMessage"] != null)
+    {
+        <script type="text/javascript">
+            alert('@TempData["ErrorMessage"]');
+        </script>
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Protocols</title>
+    <style>
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .patient-card, .subscriptions, .calendar-container {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .subscription-item {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        .add-protocol, .view-steps {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+            .add-protocol:hover, .view-steps:hover {
+                background-color: #0056b3;
+            }
+
+        #protocol-steps-content {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Patient Information Card -->
+        <div class="patient-card">
+            <h2>Patient Information</h2>
+            <p><strong>Name:</strong> @Model.Patient.Name</p>
+            <p><strong>Email:</strong> @Model.Patient.Email</p>
+            <p><strong>Phone:</strong> @Model.Patient.PhoneNumber</p>
+            <p><strong>Medical History:</strong> @Model.Patient.MedicalHistory</p>
+        </div>
+
+        <!-- Protocols List -->
+        <div class="subscriptions">
+            <h2>Available Protocols</h2>
+            <ul>
+                @foreach (var subscription in Model.Subccriptions)
+                {
+                    var protocolData = new
+                    {
+                        patientId = Model.Patient.ID, // Adjust if property names differ
+                        protocolId = subscription.Protocol.ID,
+                        name = subscription.Protocol.Name, // Optional, for additional display in JavaScript
+                        description = subscription.Protocol.Description // Optional
+                    };
+
+                    <li class="subscription-item">
+                        <p><strong>Protocol Name:</strong> @subscription.Protocol.Name</p>
+                        <p><strong>Description:</strong> @subscription.Protocol.Description</p>
+                        <button type="button"
+                                class="add-protocol"
+                                data-protocol='@Html.Raw(Json.Serialize(protocolData))'
+                                onclick="subscribeToProtocol(this)">
+                            Subscribe
+                        </button>
+                        <button type="button"
+                                class="view-steps"
+                                data-protocol='@Html.Raw(Json.Serialize(protocolData))'
+                                onclick="viewProtocolSteps(this)">
+                            View Steps
+                        </button>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Protocol Steps -->
+        <div id="protocol-steps-content" class="hidden"></div>
+    </div>
+
+    <!-- Hidden Form for Submission -->
+
+    <form id="ConfirmProtocolLinkingViewModel-form" action="@Url.Action("ConfirmProtocolLinking", "Patient")" method="post">
+        <input type="hidden" name="Patient.ID" id="patient-input" value="@Model.Patient.ID" />
+        <input type="hidden" name="Protocol.ID" id="protocol-input" />
+        <input type="hidden" name="StartDate" id="start-date-input" />
+    </form>
+    </body>
+    </html>

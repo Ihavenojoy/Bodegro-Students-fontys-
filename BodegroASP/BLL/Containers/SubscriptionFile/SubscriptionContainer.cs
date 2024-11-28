@@ -24,5 +24,9 @@ namespace Domain.Containers.SubscriptionFile
             Subscription subscription = new(SDate, protocol, patient);
             return SubDAL.CreateSubscription(subscriptionConverter.ObjectToDTO(subscription));
         }
+        public List<Subscription> GetSubscriptionsOfPatiënt(int patientID)
+        {
+            return subscriptionConverter.ListDTOToListObject(SubDAL.GetSubscriptionsOfPatiënt(patientID));
+        }
     }
 }

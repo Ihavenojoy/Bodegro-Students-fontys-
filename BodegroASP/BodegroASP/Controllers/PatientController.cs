@@ -20,9 +20,10 @@ namespace BodegroASP.Controllers
         public ProtocolContainer _protocolserver;
         public SubscriptionContainer _subscriptionserver;
         private readonly IConfiguration iConfiguration;
-        private ProtocolConverter ProtocolConverter = new ProtocolConverter();
+        private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
         private User user;
         private readonly PatientConvertert patientConverter = new PatientConvertert();
+        private readonly SubscriptionConvertert subscriptionConverter = new SubscriptionConvertert();
         public PatientController()
         {
             _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
@@ -44,6 +45,18 @@ namespace BodegroASP.Controllers
             {
                 Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email)),
                 Protocols = list
+            };
+
+            return View(model);
+        }
+        public IActionResult ViewSubscriptionsPatient(PatientViewModel patient)
+        {
+            patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email));
+            List<SubscriptionViewModel> list = subscriptionConverter.ListObjectToView(_subscriptionserver.GetSubscriptionsOfPatiënt(patient.ID));
+            var model = new PatientSubscriptionsViewModel
+            {
+                Patient = patient,
+                Subccriptions = list
             };
 
             return View(model);

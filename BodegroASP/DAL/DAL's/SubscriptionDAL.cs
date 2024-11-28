@@ -30,8 +30,8 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Protocol_ID", subscriptionDTO.Protocol.ID);
-                        cmd.Parameters.AddWithValue("@Patient_ID", subscriptionDTO.Patient.ID);
+                        cmd.Parameters.AddWithValue("@Protocol_ID", subscriptionDTO.ProtocolID);
+                        cmd.Parameters.AddWithValue("@Patient_ID", subscriptionDTO.PatientID);
                         cmd.Parameters.AddWithValue("@Start_Date", subscriptionDTO.StartDate);
                         cmd.Parameters.AddWithValue("@Current_Step", 0);
                         cmd.Parameters.AddWithValue("@Status", 1);
@@ -50,6 +50,48 @@ namespace DAL
                 conn.Close();
             }
             return result;
+        }
+
+        public List<SubscriptionDTO> GetSubscriptionsOfPatiënt(int PatiëntID)
+        {
+            List<SubscriptionDTO> list = [];
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Protocol_ID, Patient_ID, Start_Date, Current_Step, Status FROM Subscription WHERE Patient_ID = @Patient_ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Patient_ID", PatiëntID);
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                SubscriptionDTO subscription = new SubscriptionDTO
+                                {
+                                    StartDate = Convert.ToDateTime(reader["Start_Date"]),
+                                    ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
+                                    PatientID = Convert.ToInt32(reader["Patient_ID"]),
+                                    StepsTaken = Convert.ToInt32(reader["Current_Step"])
+                                };
+                                list.Add(subscription);
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
         }
     }
 }

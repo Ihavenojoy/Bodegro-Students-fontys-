@@ -3,7 +3,7 @@ using Domain.Modules;
 
 namespace BodegroASP.ViewConverter
 {
-    public class ProtocolConverter
+    public class ProtocolConvertert
     {
         public Stepconvertert converter = new Stepconvertert();
         public List<ProtocolViewModel> ListObjectToView(List<Protocol> protocols)

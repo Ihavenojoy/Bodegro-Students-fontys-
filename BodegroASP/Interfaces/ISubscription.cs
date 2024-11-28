@@ -10,5 +10,6 @@ namespace Interfaces
     public interface ISubscription
     {
         public bool CreateSubscription(SubscriptionDTO subscriptionDTO);
+        public List<SubscriptionDTO> GetSubscriptionsOfPatiënt(int PatiëntID);
     }
 }
