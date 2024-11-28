@@ -12,6 +12,7 @@ namespace BodegroASP
     {
         public static void Main(string[] args)
         {
+            _ = StartCheckingAsync();
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
 
@@ -72,6 +73,19 @@ namespace BodegroASP
             app.UseSession();
 
             // Other middlewares like UseRouting, UseAuthentication, etc.
+        }
+        static async Task StartCheckingAsync()
+        {
+            while (true)
+            {
+                CheckCondition();
+                await Task.Delay(1000); // Check every 1 second
+            }
+        }
+
+        static void CheckCondition()
+        {
+            //Deze method is voor het periodice verzenden van een mail naar een patiënt naar mate van de datum
         }
     }
 }

@@ -8,7 +8,7 @@
         </script>
     }
 
-    @if (TempData["ErrorMessage"] != null)
+    if (TempData["ErrorMessage"] != null)
     {
         <script type="text/javascript">
             alert('@TempData["ErrorMessage"]');
@@ -183,13 +183,28 @@
             // Send POST request to save subscription
             fetch('@Url.Action("SaveSubscription", "Patient")', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     Patientid: protocol.patientId,  // Match ViewModel property names
                     Protocolid: protocol.protocolId,
                     StartDate: startDate           // Use selected date from input
                 })
             })
+            .then(response => {
+                if (response.redirected) {
+                    // Redirect to the returned URL
+                    window.location.href = response.url;
+                } else if (!response.ok) {
+                    // Handle errors (e.g., 400 or 500 status codes)
+                    return response.text().then(text => { throw new Error(text); });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while saving the subscription: " + error.message);
+            });
         }
 
 

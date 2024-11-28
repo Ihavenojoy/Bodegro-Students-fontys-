@@ -10,6 +10,7 @@ using Domain.Modules;
 using DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace BodegroASP.Controllers
 {
@@ -72,13 +73,13 @@ namespace BodegroASP.Controllers
             if (subscription == null)
             {
                 TempData["ErrorMessage"] = "Subscription was null";
-                return BadRequest("Invalid data.");
+                return RedirectToAction("Index");
             }
 
             if (subscription.Patientid == 0 || subscription.Protocolid == 0)
             {
                 TempData["ErrorMessage"] = "Missing patient or protocol data";
-                return BadRequest("Missing patient or protocol data.");
+                return RedirectToAction("Index");
             }
 
             // Retrieve the necessary entities from the database
@@ -90,7 +91,7 @@ namespace BodegroASP.Controllers
 
             // Redirect or render a confirmation view
             TempData["SuccessMessage"] = "Subscription confirmed and saved successfully!";
-            return RedirectToAction("Index");  // Or redirect to a confirmation page
+            return RedirectToAction("Index");
         }
     }
 }
