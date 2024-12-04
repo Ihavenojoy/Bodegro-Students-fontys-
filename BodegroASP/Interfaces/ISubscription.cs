@@ -12,6 +12,6 @@ namespace Interfaces
         public bool CreateSubscription(SubscriptionDTO subscriptionDTO);
         public List<SubscriptionDTO> GetSubscriptionsOfPatiënt(int PatiëntID);
         public bool SoftDeleteSubscription(int id);
-        public List<SubscriptionDTO> GetAll();
+        public Task<List<SubscriptionDTO>> GetAll();
     }
 }

@@ -6,14 +6,18 @@ using Domain.Modules;
 using Microsoft.AspNetCore.Identity;
 using Domain.Containers.PatientFile;
 using Domain.Containers.SubscriptionFile;
+using BodegroASP.BackGroundServices;
 
 namespace BodegroASP
 {
     public class Program
     {
+        static IServiceProvider _serviceProvider;
+        static ILogger<BodegroASP.BackGroundServices.MailBackGroundService> _logger;
         public static void Main(string[] args)
         {
-            _ = StartCheckingAsync();
+            MailBackGroundService mailBackGroundService = new(_serviceProvider, _logger);
+            Task.Run(() => mailBackGroundService.StartAsync(CancellationToken.None));
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
 
@@ -86,29 +90,6 @@ namespace BodegroASP
             app.UseSession();
 
             // Other middlewares like UseRouting, UseAuthentication, etc.
-        }
-        static async Task StartCheckingAsync()
-        {
-            while (true)
-            {
-                CheckCondition();
-                await Task.Delay(TimeSpan.FromDays(1));//Check every day
-                //await Task.Delay(1000); //For if you want seconds
-            }
-        }
-        static readonly IConfiguration iConfiguration;
-        static void CheckCondition()
-        {
-            SubscriptionContainer subContainer = new(new SubscriptionDAL(iConfiguration));
-            foreach (MailInfo mailinfo in subContainer.GetNextStepDates())
-            {
-                if (mailinfo.NextStepDay.Day == DateTime.Now.Day)
-                {
-                    mailinfo.Subscription.StepsTaken++;
-                    //Send an Email (Please help with this Luuk)
-                }
-            }
-
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Interfaces;
 using Domain.Converter;
+using DTO;
 
 
 namespace Domain.Containers.SubscriptionFile
@@ -13,7 +14,7 @@ namespace Domain.Containers.SubscriptionFile
     public class SubscriptionContainer : ISubscriptionContainer
     {
         ISubscription SubDAL;
-        SubscriptionConverter subscriptionConverter =new();
+        SubscriptionConverter subscriptionConverter = new();
         public SubscriptionContainer(ISubscription Sub)
         {
             SubDAL = Sub;
@@ -32,19 +33,25 @@ namespace Domain.Containers.SubscriptionFile
         {
             return SubDAL.SoftDeleteSubscription(id);
         }
-        public List<MailInfo> GetNextStepDates()
+        public async Task<List<MailInfo>> GetNextStepDates()
         {
-            List<MailInfo> InfoForMails = new List<MailInfo>();
-            foreach (Subscription subscription in subscriptionConverter.ListDTOToListObject(SubDAL.GetAll()))
+            List<MailInfo> infoForMails = new();
+            List<SubscriptionDTO> subscriptions = await SubDAL.GetAll(); // Call the async database method
+
+            foreach (var subscription in subscriptionConverter.ListDTOToListObject(subscriptions))
             {
-                int TotalInterval = 0;
-                for (int i = 0; i < subscription.StepsTaken; i ++)
+                int totalInterval = 0;
+
+                for (int i = 0; i < subscription.StepsTaken; i++)
                 {
-                    TotalInterval += subscription.Protocol.Steps[i].Interval;
+                    totalInterval += subscription.Protocol.Steps[i].Interval;
                 }
-                MailInfo mailInfo = new(subscription, subscription.StartDate.AddDays(TotalInterval));
+
+                MailInfo mailInfo = new(subscription, subscription.StartDate.AddDays(totalInterval));
+                infoForMails.Add(mailInfo);
             }
-            return InfoForMails;
+
+            return infoForMails; 
         }
     }
 }

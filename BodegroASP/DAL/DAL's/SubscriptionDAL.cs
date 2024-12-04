@@ -122,45 +122,39 @@ namespace DAL
                 conn.Close();
             }
         }
-        public List<SubscriptionDTO> GetAll()
+        public async Task<List<SubscriptionDTO>> GetAll()
         {
-            List<SubscriptionDTO> list = [];
-            SqlConnection conn = new SqlConnection(connectionString);
+            List<SubscriptionDTO> list = new();
+            using SqlConnection conn = new(connectionString);
+
             try
             {
                 string select = "SELECT ID, Protocol_ID, Patient_ID, Start_Date, Current_Step, Status FROM Subscription WHERE Status = 1";
-                using (conn)
+
+                using SqlCommand cmd = new(select, conn);
+                await conn.OpenAsync();
+
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
                 {
-                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    SubscriptionDTO subscription = new()
                     {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                SubscriptionDTO subscription = new SubscriptionDTO
-                                {
-                                    ID = Convert.ToInt32(reader["ID"]),
-                                    StartDate = Convert.ToDateTime(reader["Start_Date"]),
-                                    ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
-                                    PatientID = Convert.ToInt32(reader["Patient_ID"]),
-                                    StepsTaken = Convert.ToInt32(reader["Current_Step"])
-                                };
-                                list.Add(subscription);
-                            }
-                        }
-                    }
+                        ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                        StartDate = reader.GetDateTime(reader.GetOrdinal("Start_Date")),
+                        ProtocolID = reader.GetInt32(reader.GetOrdinal("Protocol_ID")),
+                        PatientID = reader.GetInt32(reader.GetOrdinal("Patient_ID")),
+                        StepsTaken = reader.GetInt32(reader.GetOrdinal("Current_Step"))
+                    };
+                    list.Add(subscription);
                 }
             }
-
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+                // Consider logging this error instead of writing to the console in production
             }
-            finally
-            {
-                conn.Close();
-            }
+
             return list;
         }
     }
