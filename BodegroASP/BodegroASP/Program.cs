@@ -5,6 +5,7 @@ using Azure.Core;
 using Domain.Modules;
 using Microsoft.AspNetCore.Identity;
 using Domain.Containers.PatientFile;
+using Domain.Containers.SubscriptionFile;
 
 namespace BodegroASP
 {
@@ -91,13 +92,23 @@ namespace BodegroASP
             while (true)
             {
                 CheckCondition();
-                await Task.Delay(1000); // Check every 1 second
+                await Task.Delay(TimeSpan.FromDays(1));//Check every day
+                //await Task.Delay(1000); //For if you want seconds
             }
         }
-
+        static readonly IConfiguration iConfiguration;
         static void CheckCondition()
         {
-            //Deze method is voor het periodice verzenden van een mail naar een patiënt naar mate van de datum
+            SubscriptionContainer subContainer = new(new SubscriptionDAL(iConfiguration));
+            foreach (MailInfo mailinfo in subContainer.GetNextStepDates())
+            {
+                if (mailinfo.NextStepDay.Day == DateTime.Now.Day)
+                {
+                    mailinfo.Subscription.StepsTaken++;
+                    //Send an Email (Please help with this Luuk)
+                }
+            }
+
         }
     }
 }

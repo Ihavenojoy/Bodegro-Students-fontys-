@@ -32,5 +32,19 @@ namespace Domain.Containers.SubscriptionFile
         {
             return SubDAL.SoftDeleteSubscription(id);
         }
+        public List<MailInfo> GetNextStepDates()
+        {
+            List<MailInfo> InfoForMails = new List<MailInfo>();
+            foreach (Subscription subscription in subscriptionConverter.ListDTOToListObject(SubDAL.GetAll()))
+            {
+                int TotalInterval = 0;
+                for (int i = 0; i < subscription.StepsTaken; i ++)
+                {
+                    TotalInterval += subscription.Protocol.Steps[i].Interval;
+                }
+                MailInfo mailInfo = new(subscription, subscription.StartDate.AddDays(TotalInterval));
+            }
+            return InfoForMails;
+        }
     }
 }
