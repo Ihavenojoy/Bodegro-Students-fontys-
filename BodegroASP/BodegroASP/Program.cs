@@ -19,6 +19,8 @@ namespace BodegroASP
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IUser, UserDAL>();
+            builder.Services.AddScoped<UserContainer>();
 
             // DI - Container
             services.AddSingleton<UserContainer>();
@@ -26,6 +28,16 @@ namespace BodegroASP
 
             services.AddSingleton<PatientContainer>();
             services.AddSingleton<IPatient, PatientDAL>();
+
+            // Setting up the authentication scheme
+            builder.Services.AddAuthentication("CookieAuth")
+                .AddCookie("CookieAuth", options =>
+                {
+                    options.LoginPath = "/Account/LogIn";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                    options.Cookie.Name = "YourAppName.AuthCookie";
+                });
+
 
             // Add appsettings.json to the configuration
             builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);

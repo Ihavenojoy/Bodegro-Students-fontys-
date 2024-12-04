@@ -21,12 +21,34 @@ namespace Domain.Containers.UserFile
             _UserService = context;
         }
 
-        public User UserLogin(string EmailInput, string PasswordInput)
+        public User UserLogin(string emailInput, string passwordInput)
         {
-            UserDTO UserDTO = _UserService.UserLogin(EmailInput, PasswordInput);
-            User Useracc = docconverter.DTOToObject(UserDTO);
-            return Useracc;
+            if (string.IsNullOrWhiteSpace(emailInput) || string.IsNullOrWhiteSpace(passwordInput))
+            {
+                Console.WriteLine("Email and password must not be empty.");
+                return null;
+            }
+            UserDTO userDTO = _UserService.UserLogin(emailInput);
+            var passwordCheck = _UserService.GetHashByEmail(emailInput);
+            if (!PasswordHelper.ValidatePassword(passwordInput, passwordCheck))
+            {
+                Console.WriteLine("Password is incorrect.");
+                return null;
+            }
+            if (userDTO == null || userDTO.ID <= 0)
+            {
+                Console.WriteLine("No user found with the provided credentials.");
+                return null;
+            }
+            User user = docconverter.DTOToObject(userDTO);
+            if (user == null)
+            {
+                Console.WriteLine("Failed to convert user data.");
+                return null;
+            }
+            return user;
         }
+
 
         public bool CreateUser(User User, string password)
         {
@@ -36,7 +58,10 @@ namespace Domain.Containers.UserFile
             }
             else
             {
-                return _UserService.CreateUser(Userconverter.ObjectToDTO(User), password);
+                // Hash the password before sending it to the user service
+                string hashedPassword = PasswordHelper.HashPassword(password);
+                // Assuming CreateUser in UserService takes the password as a parameter
+                return _UserService.CreateUser(Userconverter.ObjectToDTO(User), hashedPassword);
             }
         }
         public bool UserExists(string email)
