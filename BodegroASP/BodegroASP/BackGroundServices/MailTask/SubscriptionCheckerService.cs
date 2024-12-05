@@ -22,7 +22,6 @@ namespace BodegroASP.BackGroundServices.MailTask
                 if (mailinfo.NextStepDay.Day == DateTime.Now.Day)
                 {
                     mailinfo.Subscription.StepsTaken++;
-                    //Send mail
                     MailMessage mailMessage = EmailContainer.MailMessage(mailinfo.Subscription.Patient.Email, Domain.Enums.EmailBody.APPOINTMENT);
                     EmailContainer.SendEmail(mailMessage);
                 }

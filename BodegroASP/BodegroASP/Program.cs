@@ -1,22 +1,22 @@
-using Interfaces;
+using BodegroASP.BackGroundServices;
+using BodegroASP.BackGroundServices.MailTask;
 using DAL;
-using Domain.Containers.UserFile;
-using Azure.Core;
-using Domain.Modules;
-using Microsoft.AspNetCore.Identity;
 using Domain.Containers.PatientFile;
 using Domain.Containers.SubscriptionFile;
-using BodegroASP.BackGroundServices;
+using Domain.Containers.UserFile;
+using Interfaces;
 
 namespace BodegroASP
 {
     public class Program
     {
         static IServiceProvider _serviceProvider;
-        static ILogger<BodegroASP.BackGroundServices.MailBackGroundService> _logger;
-        public static void Main(string[] args)
+
+        static void Main(string[] args)
         {
-            MailBackGroundService mailBackGroundService = new(_serviceProvider, _logger);
+            ConfigureServices();
+            var logger = _serviceProvider.GetService<ILogger<MailBackGroundService>>();
+            var mailBackGroundService = new MailBackGroundService(_serviceProvider, logger);
             Task.Run(() => mailBackGroundService.StartAsync(CancellationToken.None));
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
@@ -70,6 +70,23 @@ namespace BodegroASP
                 pattern: "{controller=LinkDoctorToPatient}/{action=LinkDoctorToPatient}/{id?}");
 
             app.Run();
+        }
+        static void ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
+            services.AddSingleton<IConfiguration>(configuration);
+            services.AddLogging(config => config.AddConsole());
+            services.AddScoped<ISubscriptionCheckerService, SubscriptionCheckerService>();
+            services.AddScoped<ISubscriptionContainer, SubscriptionContainer>();
+            services.AddScoped<ISubscription, SubscriptionDAL>();
+            services.AddScoped<SubscriptionDAL>();
+            services.AddHostedService<MailBackGroundService>();
+            _serviceProvider = services.BuildServiceProvider();
         }
         public void ConfigureServices(IServiceCollection services)
         {
