@@ -1,4 +1,6 @@
-﻿using Domain.Containers.SubscriptionFile;
+﻿using Domain.Containers.EmailFile;
+using Domain.Containers.SubscriptionFile;
+using System.Net.Mail;
 
 namespace BodegroASP.BackGroundServices.MailTask
 {
@@ -10,7 +12,7 @@ namespace BodegroASP.BackGroundServices.MailTask
         {
             _subscriptionContainer = subscriptionContainer;
         }
-
+        EmailContainer EmailContainer = new EmailContainer();
         public async Task CheckConditionAsync()
         {
             var subscriptions = await _subscriptionContainer.GetNextStepDates();
@@ -21,6 +23,8 @@ namespace BodegroASP.BackGroundServices.MailTask
                 {
                     mailinfo.Subscription.StepsTaken++;
                     //Send mail
+                    MailMessage mailMessage = EmailContainer.MailMessage(mailinfo.Subscription.Patient.Email, Domain.Enums.EmailBody.APPOINTMENT);
+                    EmailContainer.SendEmail(mailMessage);
                 }
             }
         }
