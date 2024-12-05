@@ -22,7 +22,7 @@ namespace BodegroASP.BackGroundServices.MailTask
                 if (mailinfo.NextStepDay.Day == DateTime.Now.Day)
                 {
                     mailinfo.Subscription.StepsTaken++;
-                    MailMessage mailMessage = EmailContainer.MailMessage(mailinfo.Subscription.Patient.Email, Domain.Enums.EmailBody.APPOINTMENT);
+                    MailMessage mailMessage = EmailContainer.MailMessage(mailinfo.Subscription.Patient.Email, Domain.Enums.EmailBody.APPOINTMENT, Convert.ToString(DateTime.Now.AddDays(7)));
                     EmailContainer.SendEmail(mailMessage);
                 }
             }
