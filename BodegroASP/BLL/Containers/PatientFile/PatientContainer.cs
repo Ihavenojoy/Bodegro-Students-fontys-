@@ -36,5 +36,10 @@ namespace Domain.Containers.PatientFile
             Patient patient = objectconverter.DTOToObject(Dal.GetPatient(id));
             return patient;
         }
+        public Patient GetPatientID(string email)
+        {
+            Patient patient = objectconverter.DTOToObject(Dal.GetPatientID(email));
+            return patient;
+        }
     }
 }

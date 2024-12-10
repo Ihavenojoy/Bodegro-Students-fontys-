@@ -9,6 +9,6 @@ namespace Interfaces
 {
     public interface ISubscription
     {
-        public int CreateSubscription(SubscriptionDTO subscriptionDTO);
+        public bool CreateSubscription(SubscriptionDTO subscriptionDTO);
     }
 }
