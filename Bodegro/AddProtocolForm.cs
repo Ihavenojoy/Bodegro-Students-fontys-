@@ -25,8 +25,9 @@ namespace Bodegro
         public AddProtocolForm(User User)
         {
             ProtocolDAL protocolDAL = new ProtocolDAL(iConfiguration);
-            protocolContainer = new ProtocolContainer(new ProtocolDAL(iConfiguration),new StepDAL(iConfiguration));
+            SubscriptionDAL subscriptionDAL = new SubscriptionDAL(iConfiguration);
             StepDAL stepDAL = new StepDAL(iConfiguration);
+            protocolContainer = new(protocolDAL, stepDAL);
             stepContainer = new StepContainer(stepDAL);
             InitializeComponent();
             user = User;

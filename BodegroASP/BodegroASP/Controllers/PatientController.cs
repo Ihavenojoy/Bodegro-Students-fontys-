@@ -7,6 +7,7 @@ using Domain.Containers.ProtocolFile;
 using Domain.Containers.SubscriptionFile;
 using Domain.Enums;
 using Domain.Modules;
+using Domain.Services;
 using DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,7 @@ namespace BodegroASP.Controllers
         public PatientContainer _patientserver;
         public ProtocolContainer _protocolserver;
         public SubscriptionContainer _subscriptionserver;
+        public GetProtocolForPatient GetProtocolForPatient;
         private readonly IConfiguration iConfiguration;
         private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
         private User user;
@@ -29,6 +31,7 @@ namespace BodegroASP.Controllers
             _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
+            GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             user = new User(1, "Tim", "timHaiwan", Role.Doctor, true);
         }
         public IActionResult Index()
@@ -40,10 +43,11 @@ namespace BodegroASP.Controllers
 
         public IActionResult AddProtocolPatient(PatientViewModel patient)
         {
-            List<ProtocolViewModel> list = ProtocolConverter.ListObjectToView(_protocolserver.GetProtocols());
+            PatientViewModel Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email));
+            List<ProtocolViewModel> list = ProtocolConverter.ListObjectToView(GetProtocolForPatient.GetProtocolForSubscriptions(_subscriptionserver.GetSubscriptionsOfPatiënt(Patient.ID)));
             var model = new AddProtocolPatientViewModel
             {
-                Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email)),
+                Patient = Patient,
                 Protocols = list
             };
 
@@ -102,7 +106,6 @@ namespace BodegroASP.Controllers
             // Save the subscription in the database
             _subscriptionserver.AddSubscription(protocol, patient, subscription.StartDate);
 
-            // Redirect or render a confirmation view
             TempData["SuccessMessage"] = "Subscription confirmed and saved successfully!";
             return RedirectToAction("Index");
         }

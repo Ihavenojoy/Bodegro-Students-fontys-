@@ -19,6 +19,7 @@ namespace Domain.Converter
         {
             ProtocolDAL protocolDal = new(_configuration);
             StepDAL stepDal = new(_configuration);
+            SubscriptionDAL subscriptionDAL = new(_configuration);
             protocolContainer = new(protocolDal, stepDal);
             PatientDAL patientDal = new(_configuration);
             patientContainer = new(patientDal);

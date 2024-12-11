@@ -9,13 +9,14 @@ using Interfaces;
 using DTO;
 using Domain.Converter;
 using Domain.Services;
+using System.Security.Authentication;
 
 namespace Domain.Containers.ProtocolFile
 {
     public class ProtocolContainer : IProtocolContainer
     {
         IProtocol Dal;
-        GetFromContainer GetSteps;
+        GetFromStepContainer GetSteps;
         ProtocolConverter protocolConverter = new();
         public ProtocolContainer(IProtocol pdal,IStep Sdal)
         {

@@ -12,12 +12,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Domain.Services
 {
-    internal class GetFromContainer
+    internal class GetFromStepContainer
     {
         StepContainer? StepContainer;
         //StepDAL? SDal;
         private readonly IStep SDal;
-        public GetFromContainer(IStep sDal)
+        public GetFromStepContainer(IStep sDal)
         {
             SDal = sDal;
             StepContainer = new(SDal);
