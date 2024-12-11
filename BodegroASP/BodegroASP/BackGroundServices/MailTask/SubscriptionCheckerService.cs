@@ -14,7 +14,8 @@ namespace BodegroASP.BackGroundServices.MailTask
         public SubscriptionCheckerService(ISubscriptionContainer subscriptionContainer)
         {
             SubscriptionDAL subscriptionDAL = new(_configuration);
-            mailService = new(subscriptionDAL);
+            PatientDAL patientDAL = new(_configuration);
+            mailService = new(subscriptionDAL, patientDAL);
         }
         EmailContainer EmailContainer = new EmailContainer();
         public async Task CheckConditionAsync()
