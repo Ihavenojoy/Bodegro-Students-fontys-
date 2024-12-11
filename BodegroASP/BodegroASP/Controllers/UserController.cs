@@ -39,13 +39,14 @@ namespace BodegroASP.Controllers
         [HttpPost]
         public IActionResult CreateDoctor(UserViewModel model)
         {
-            if (ModelState.IsValid)
+            string password = Request.Form["password"];
+            if (ModelState.IsValid && !string.IsNullOrWhiteSpace(password))
             {
                 var user = new User(model.Name, model.Email, (Role)2 , true);
-                string defaultPassword = "defaultPassword";
-                userContainer.CreateUser(user, defaultPassword);
+                userContainer.CreateUser(user, password);
                 return RedirectToAction("Index");
             }
+            ModelState.AddModelError("", "Password is required.");
             return View(model);
         }
         [HttpGet]
@@ -85,13 +86,17 @@ namespace BodegroASP.Controllers
         [HttpPost]
         public IActionResult UpdateDoctor(UserViewModel model)
         {
+            string password = Request.Form["password"];
             var doctor = userContainer.GetUserByID(model.ID);
-            doctor.Name = model.Name;
-            doctor.Email = model.Email;
-            doctor.Role = (Role)2;
-            doctor.IsActive = true;
-            string defaultPassword = "defaultPassword"; // Add a default password or retrieve it from the model///
-            userContainer.UpdateUser(doctor, defaultPassword);
+            if (doctor != null && ModelState.IsValid && !string.IsNullOrWhiteSpace(password))
+            {
+                doctor.Name = model.Name;
+                doctor.Email = model.Email;
+                doctor.Role = (Role)2;
+                doctor.IsActive = true; 
+                userContainer.UpdateUser(doctor, password);
+            }
+            ModelState.AddModelError("", "An error occurred. Please check all fields.");
             return RedirectToAction("Index");
         }
 
