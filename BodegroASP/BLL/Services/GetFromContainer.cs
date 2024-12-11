@@ -22,13 +22,18 @@ namespace Domain.Services
             SDal = sDal;
             StepContainer = new(SDal);
         }
-        public List<Protocol> AskStepsFormProtocol(List<Protocol> protocols)
+        public List<Protocol> AskStepsFormProtocols(List<Protocol> protocols)
         {
             foreach (Protocol protocol in protocols)
             {
                 protocol.Steps = StepContainer!.GetStepsOfProtocol(protocol);
             }
             return protocols;
+        }
+        public Protocol AskStepsFormProtocol(Protocol protocol)
+        {
+            protocol.Steps = StepContainer!.GetStepsOfProtocol(protocol);
+            return protocol;
         }
     }
 }

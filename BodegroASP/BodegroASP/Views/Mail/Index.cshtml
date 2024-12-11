@@ -1,7 +1,41 @@
-﻿
+﻿@model List<EmailViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Test</h1>
+<div class="Mail-list">
+    @foreach (var email in Model)
+    {
+        <div class="Mail-card">
+            <h3>@email.Subscription.Patient.Name</h3>
+            <p><strong>Email: </strong>@email.Subscription.Patient.Email</p>
+            <p><strong>Wordt verstuurd op: </strong>@email.SendTime.ToString("dd/MM/yyyy")</p>
+            <p><strong>Voor: </strong>@email.Subscription.Protocol.Name</p>
+        </div>
+    }
+</div>
+<style>
+    .Mail-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .Mail-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .Mail-card h3 {
+            margin: 0 0 0.5rem;
+        }
+
+        .Mail-card p {
+            margin: 0.5rem 0;
+        }
+</style>
 

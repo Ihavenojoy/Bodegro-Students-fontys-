@@ -25,5 +25,17 @@ namespace BodegroASP.ViewConverter
             }
             return vieuws;
         }
+        public SubscriptionViewModel ObjectToViewModel(Subscription subscription)
+        {
+            SubscriptionViewModel viewModel = new SubscriptionViewModel()
+            {
+                ID = subscription.ID,
+                StartDate = subscription.StartDate,
+                Protocol = protocolConverter.ObjectToView(subscription.Protocol),
+                Patient = PatientConvertert.ObjectToVieuw(subscription.Patient),
+                StepsTaken = subscription.StepsTaken
+            };
+            return viewModel;
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace Domain.Containers.ProtocolFile
         }
         public List<Protocol> GetProtocols()
         {
-            List<Protocol> Protocols = GetSteps.AskStepsFormProtocol(protocolConverter.ListDTOToListObject(Dal.GetAllProtocols()));
+            List<Protocol> Protocols = GetSteps.AskStepsFormProtocols(protocolConverter.ListDTOToListObject(Dal.GetAllProtocols()));
             return Protocols;
         }
         public bool AddProtocol(Protocol protocol)
@@ -34,11 +34,11 @@ namespace Domain.Containers.ProtocolFile
         }
         public Protocol GetProtocol(string name)
         {
-            return protocolConverter.DTOToObject(Dal.GetProtocol(name));
+            return GetSteps.AskStepsFormProtocol(protocolConverter.DTOToObject(Dal.GetProtocol(name)));
         }
         public Protocol GetProtocolbyid(int id)
         {
-            return protocolConverter.DTOToObject(Dal.GetProtocolbyid(id));
+            return GetSteps.AskStepsFormProtocol(protocolConverter.DTOToObject(Dal.GetProtocolbyid(id)));
         }
     }
 }

@@ -1,21 +1,25 @@
-﻿using Domain.Containers.EmailFile;
+﻿using DAL;
+using Domain.Containers.EmailFile;
 using Domain.Containers.SubscriptionFile;
+using Domain.Services;
 using System.Net.Mail;
 
 namespace BodegroASP.BackGroundServices.MailTask
 {
     public class SubscriptionCheckerService : ISubscriptionCheckerService
     {
-        private readonly ISubscriptionContainer _subscriptionContainer;
+        private readonly MailServices mailService;
+        IConfiguration _configuration;
 
         public SubscriptionCheckerService(ISubscriptionContainer subscriptionContainer)
         {
-            _subscriptionContainer = subscriptionContainer;
+            SubscriptionDAL subscriptionDAL = new(_configuration);
+            mailService = new(subscriptionDAL);
         }
         EmailContainer EmailContainer = new EmailContainer();
         public async Task CheckConditionAsync()
         {
-            var subscriptions = await _subscriptionContainer.GetNextStepDates();
+            var subscriptions = await mailService.GetNextStepDates();
 
             foreach (var mailinfo in subscriptions)
             {
