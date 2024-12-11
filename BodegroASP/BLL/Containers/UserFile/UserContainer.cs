@@ -98,7 +98,10 @@ namespace Domain.Containers.UserFile
         }
         public bool UpdateUser(User User, string password)
         {
-            return _UserService.UpdateUser(Userconverter.ObjectToDTO(User), password);
+            // Hash the password before sending it to the user service
+            string hashedPassword = PasswordHelper.HashPassword(password);
+            // Assuming CreateUser in UserService takes the password as a parameter
+            return _UserService.UpdateUser(Userconverter.ObjectToDTO(User), hashedPassword);
         }
     }
 }

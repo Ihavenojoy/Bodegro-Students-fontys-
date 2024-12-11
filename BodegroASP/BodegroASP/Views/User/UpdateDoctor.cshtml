@@ -10,21 +10,27 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateDoctor">
+        <form asp-action="UpdateDoctor" id="updateForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           
+
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Name</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Email</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            
-          
+
+            <div class="form-group">
+                <label for="password">New Password (optional)</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter new password if changing"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}"
+                       title="Password must be at least 10 characters long, include 1 uppercase letter, 1 number, and 1 special character.">
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -37,5 +43,16 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            var passwordInput = document.getElementById('password');
+            if (passwordInput.value.length > 0 && !passwordInput.checkValidity()) {
+                event.preventDefault(); // Prevent form submission
+                alert(passwordInput.title); // Alert the validation rule
+            }
+        });
+    </script>
 }
