@@ -21,12 +21,12 @@ namespace BodegroASP.Controllers
             SubscriptionDAL subscriptionDAL = new(configuration);
             PatientDAL patientDAL = new(configuration);
             MailContainer = new(subscriptionDAL, patientDAL);
-            User = new("Henk", "HenkvdPost@gmail.com", Role.User, true);
+            User = new("Henk", "HenkvdPost@gmail.com", Role.Admin, true);
         }
         public IActionResult Index()
         {
             List<MailInfo> mailInfos;
-            if (User.Role == Role.User)
+            if (User.Role == Role.Admin)
             {
                 mailInfos = MailContainer.GetNextMailDates();
             }
