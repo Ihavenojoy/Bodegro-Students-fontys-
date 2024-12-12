@@ -13,7 +13,8 @@ namespace DAL
 
         public UserDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            //connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public UserDTO UserLogin(string Emailinput)
@@ -309,9 +310,74 @@ namespace DAL
             }
             return null; // Return null if no password hash was found or an error occurred
         }
+        public List<UserDTO> GetAllInactive()
+        {
+            List<UserDTO> Users = new List<UserDTO>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email FROM [User] WHERE IsActive = 0";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Users.Add(new UserDTO
+                                {
+                                    ID = reader.GetInt32(reader.GetOrdinal("ID")),
+                                    Name = reader.GetString(reader.GetOrdinal("Name")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email"))
+                                });
+                            }
+                        }
+                    }
+                }
+                return Users;
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while retrieving Users: " + ex.Message);
+                return Users;
+            }
+            finally
+            {
+                conn.Close();
+            }
 
+        }
+        public bool SetActive(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE [User] SET IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
 
-
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
 

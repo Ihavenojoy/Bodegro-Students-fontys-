@@ -41,5 +41,14 @@ namespace Domain.Containers.PatientFile
             Patient patient = objectconverter.DTOToObject(Dal.GetPatientID(email));
             return patient;
         }
+        public List<Patient> GetInactivePatients()
+        {
+            List<Patient> list = objectconverter.DTOListToObjectList(Dal.GetInactivePatients());
+            return list;
+        }
+        public bool SetActive(int id)
+        {
+            return Dal.SetActive(id);
+        }
     }
 }

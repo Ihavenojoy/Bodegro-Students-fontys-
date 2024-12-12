@@ -14,7 +14,6 @@ namespace Domain.Containers.UserFile
     public class UserContainer : IUserContainer
     {
         private readonly IUser _UserService;
-        UserConverter docconverter = new UserConverter();
         UserConverter Userconverter = new UserConverter();
         public UserContainer(IUser context)
         {
@@ -40,7 +39,7 @@ namespace Domain.Containers.UserFile
                 Console.WriteLine("No user found with the provided credentials.");
                 return null;
             }
-            User user = docconverter.DTOToObject(userDTO);
+            User user = Userconverter.DTOToObject(userDTO);
             if (user == null)
             {
                 Console.WriteLine("Failed to convert user data.");
@@ -86,14 +85,14 @@ namespace Domain.Containers.UserFile
 
             foreach (UserDTO User in UserDTOS)
             {
-                Users.Add(docconverter.DTOToObject(User));
+                Users.Add(Userconverter.DTOToObject(User));
             }
             return Users;
         }
         public User GetUserByID(int UserId)
         {
             UserDTO UserDTO = _UserService.GetUserByID(UserId);
-            User User = docconverter.DTOToObject(UserDTO);
+            User User = Userconverter.DTOToObject(UserDTO);
             return User;
         }
         public bool UpdateUser(User User, string password)
@@ -102,6 +101,21 @@ namespace Domain.Containers.UserFile
             string hashedPassword = PasswordHelper.HashPassword(password);
             // Assuming CreateUser in UserService takes the password as a parameter
             return _UserService.UpdateUser(Userconverter.ObjectToDTO(User), hashedPassword);
+        }
+        public List<User> GetInactiveUsers()
+        {
+            List<User> Users = new();
+            List<UserDTO> UserDTOS = _UserService.GetAllInactive();
+
+            foreach (UserDTO User in UserDTOS)
+            {
+                Users.Add(Userconverter.DTOToObject(User));
+            }
+            return Users; ;
+        }
+        public bool SetActive(int id)
+        {
+            return _UserService.SetActive(id);
         }
     }
 }

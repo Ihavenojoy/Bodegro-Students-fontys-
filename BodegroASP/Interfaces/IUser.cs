@@ -16,8 +16,10 @@ namespace Interfaces
         public bool UserExists(string email);
         public bool SoftDeleteUser(int id);
         public List<UserDTO> GetAllUsers();
+        public bool SetActive(int id);
         public UserDTO GetUserByID(int id);
         public bool UpdateUser(UserDTO user, string password);
         string GetHashByEmail(string email);
+        public List<UserDTO> GetAllInactive();
     }
 }

@@ -198,5 +198,75 @@ namespace DAL
             }
             return list;
         }
+        public List<SubscriptionDTO> GetInactive()
+        {
+            List<SubscriptionDTO> list = [];
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Protocol_ID, Patient_ID, Start_Date, Current_Step, Status FROM Subscription WHERE Status = 0";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                SubscriptionDTO subscription = new SubscriptionDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    StartDate = Convert.ToDateTime(reader["Start_Date"]),
+                                    ProtocolID = Convert.ToInt32(reader["Protocol_ID"]),
+                                    PatientID = Convert.ToInt32(reader["Patient_ID"]),
+                                    StepsTaken = Convert.ToInt32(reader["Current_Step"])
+                                };
+                                list.Add(subscription);
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+        public bool SetActive(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE [Subscription] SET IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

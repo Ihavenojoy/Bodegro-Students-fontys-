@@ -14,5 +14,7 @@ namespace Interfaces
         public bool SoftDeleteSubscription(int id);
         public Task<List<SubscriptionDTO>> AsyncGetAll();
         public List<SubscriptionDTO> GetAll();
+        public List<SubscriptionDTO> GetInactive();
+        public bool SetActive(int id);
     }
 }

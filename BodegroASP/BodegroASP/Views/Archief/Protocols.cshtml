@@ -1,0 +1,59 @@
+﻿@model List<ProtocolViewModel>
+@{
+    ViewData["Title"] = "Protocolen";
+}
+
+<div class="protocol-list">
+    @foreach (var protocol in Model)
+    {
+        <div class="protocol-card">
+            <h3>@protocol.Name</h3>
+            <p><strong>Hoeveelheid Stappen: </strong> @protocol.Steps.Count</p>
+            <p><strong>Omschrijving: </strong> @protocol.Description</p>
+
+            <form method="post" asp-action="ArchiveProtocol" asp-controller="Archief">
+                <input type="hidden" name="id" value="@protocol.ID" />
+                <button type="submit" class="btn btn-danger">Activeer</button>
+            </form>
+        </div>
+    }
+</div>
+<style>
+    .protocol-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .protocol-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .protocol-card h3 {
+            margin: 0 0 0.5rem;
+        }
+
+        .protocol-card p {
+            margin: 0.5rem 0;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: green;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: lightgreen;
+        }
+</style>
+

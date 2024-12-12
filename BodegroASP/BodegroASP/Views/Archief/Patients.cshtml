@@ -1,0 +1,72 @@
+﻿@model List<PatientViewModel>
+@{
+    ViewData["Title"] = "Patiënten";
+}
+
+<div class="patient-list">
+    @foreach (var patient in Model)
+    {
+        <div class="patient-card">
+            <h3>@patient.Name</h3>
+            <p><strong>Email:</strong> @patient.Email</p>
+            <p><strong>Telefoon nummer:</strong> @patient.PhoneNumber</p>
+
+            <p class="medical-history">
+                <strong>Medice Historie:</strong>
+                @if (patient.MedicalHistory.Length > 150)
+                {
+                    <span class="short-text">@patient.MedicalHistory.Substring(0, 150)...</span>
+                    <span class="full-text" style="display: none;">@patient.MedicalHistory</span>
+                    <button type="button" class="toggle-history">Show More</button>
+                }
+                else
+                {
+                    <span>@patient.MedicalHistory</span>
+                }
+            </p>
+            <form method="post" asp-action="ArchivePatient" asp-controller="Archief">
+                <input type="hidden" name="id" value="@patient.ID" />
+                <button type="submit" class="btn btn-danger">Activeer</button>
+            </form>
+        </div>
+    }
+</div>
+<style>
+    .patient-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .patient-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .patient-card h3 {
+            margin: 0 0 0.5rem;
+        }
+
+        .patient-card p {
+            margin: 0.5rem 0;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: green;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: lightgreen;
+        }
+</style>
+

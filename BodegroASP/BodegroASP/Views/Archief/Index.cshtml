@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Archief Opties";
+}
+
+<div style="text-align: center; margin-top: 50px;">
+    <div style="display: flex; justify-content: center; gap: 20px;">
+        <div style="border: 1px solid #ccc; background-color: #e0e0e0; padding: 20px; border-radius: 5px; width: 200px; text-align: center;">
+            <h3 style="margin: 0;">Patiënten</h3>
+            <p>Voor het archiveren van inactieve patiënten.</p>
+            <a asp-controller="Archief" asp-action="ArchiveerPatients">
+                <button style="background-color: #4D90FE; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                    Klik Hier
+                </button>
+            </a>
+        </div>
+
+        <div style="border: 1px solid #ccc; background-color: #e0e0e0; padding: 19px; border-radius: 5px; width: 200px; text-align: center;">
+            <h3 style="margin: 0;">Protocolen</h3>
+            <p>Voor het archiveren van inactieve protocollen.</p>
+            <a asp-controller="Archief" asp-action="ArchiveerProtocols">
+                <button style="background-color: #4D90FE; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                    Klik Hier
+                </button>
+            </a>
+        </div>
+
+        <div style="border: 1px solid #ccc; background-color: #e0e0e0; padding: 19px; border-radius: 5px; width: 200px; text-align: center;">
+            <h3 style="margin: 0;">Subscripties</h3>
+            <p>Voor het archiveren van inactieve subscripties.</p>
+            <a asp-controller="Archief" asp-action="ArchiveerSubscriptions">
+                <button style="background-color: #4D90FE; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                    Klik Hier
+                </button>
+            </a>
+        </div>
+
+        <div style="border: 1px solid #ccc; background-color: #e0e0e0; padding: 20px; border-radius: 5px; width: 200px; text-align: center;">
+            <h3 style="margin: 0;">Gebruikers</h3>
+            <p>Voor het archiveren van inactieve gebruikers.</p>
+            <a asp-controller="Archief" asp-action="ArchiveerUsers">
+                <button style="background-color: #4D90FE; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+                    Klik Hier
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -28,5 +28,14 @@ namespace Domain.Containers.SubscriptionFile
         {
             return SubDAL.SoftDeleteSubscription(id);
         }
+        public List<Subscription> GetInactiveSubscriptions()
+        {
+            List<Subscription> list = subscriptionConverter.ListDTOToListObject(SubDAL.GetInactive());
+            return list;
+        }
+        public bool SetActive(int id)
+        {
+            return SubDAL.SetActive(id);
+        }
     }
 }

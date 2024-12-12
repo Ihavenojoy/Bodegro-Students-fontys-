@@ -25,13 +25,14 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (Name, Description) VALUES (@Name, @Description); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description, IsActive) VALUES (@Name, @Description, @IsActive); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", protocol.Name);
                         cmd.Parameters.AddWithValue("@Description", protocol.Description);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -57,7 +58,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description FROM Protocol";
+                string select = "SELECT ID, Name, Description, IsActive FROM Protocol WHERE IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -98,7 +99,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description FROM Protocol WHERE Name = @Name";
+                string select = "SELECT ID, Name, Description, IsActive FROM Protocol WHERE Name = @Name AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -140,7 +141,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Description FROM Protocol WHERE ID = @ID";
+                string select = "SELECT ID, Name, Description, IsActive FROM Protocol WHERE ID = @ID AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -175,6 +176,76 @@ namespace DAL
             }
             protocol = new();
             return protocol;
+        }
+        public List<ProtocolDTO> GetInactive()
+        {
+            List<ProtocolDTO> list = new List<ProtocolDTO>();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Description, IsActive FROM Protocol WHERE IsActive = 0";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProtocolDTO protocol = new ProtocolDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Description = Convert.ToString(reader["Description"]),
+                                    Steps = new List<StepDTO>()
+                                };
+                                list.Add(protocol);
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a Protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+        public bool SetActive(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE [Protocol] SET IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
         //// Method to update a product record

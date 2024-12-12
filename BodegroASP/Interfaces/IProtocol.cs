@@ -13,5 +13,7 @@ namespace Interfaces
         public List<ProtocolDTO> GetAllProtocols();
         public ProtocolDTO GetProtocol(string name);
         public ProtocolDTO GetProtocolbyid(int id);
+        public List<ProtocolDTO> GetInactive();
+        public bool SetActive(int id);
     }
 }

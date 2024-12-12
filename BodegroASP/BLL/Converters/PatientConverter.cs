@@ -22,6 +22,22 @@ namespace Domain.Converter
                 patientDTO.User_ID);
             return patient;
         }
+        public List<Patient> DTOListToObjectList(List<PatientDTO> patientDTOs)
+        {
+            List<Patient> list = [];
+            foreach (var patientdto in patientDTOs)
+            {
+                Patient patient = new Patient(
+                    patientdto.ID,
+                    patientdto.Name,
+                    patientdto.Email,
+                    patientdto.PhoneNumber,
+                    patientdto.MedicalHistory,
+                    patientdto.User_ID);
+                list.Add(patient);
+            }
+            return list;
+        }
         public PatientDTO ObjectToDTO(Patient patient)
         {
             return new PatientDTO

@@ -32,7 +32,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (User_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@User_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (User_ID, Name, Email, PhoneNumber, MedicalHistory, IsActive) VALUES (@User_ID, @Name, @Email, @PhoneNumber, @MedicalHistory, @IsActive); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -42,6 +42,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
                         cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
                         cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
 
                         conn.Open();
                         cmd.ExecuteScalar();
@@ -102,7 +103,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient WHERE ID = @ID";
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE ID = @ID AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -144,7 +145,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient WHERE Email = @Email";
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE Email = @Email AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -186,7 +187,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string update = "UPDATE Patient SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber, MedicalHistory = @MedicalHistory WHERE ID = @ID";
+                string update = "UPDATE Patient SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber, MedicalHistory = @MedicalHistory WHERE ID = @ID AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(update, conn))
@@ -211,53 +212,124 @@ namespace DAL
             {
                 conn.Close();
             }
-
-            //// Method to get all products
-            //public List<ProductDTO> GetAllProducts()
-            //{
-            //    List<ProductDTO> products = new List<ProductDTO>();
-            //    SqlConnection conn = new SqlConnection(connectionString);
-            //    try
-            //    {
-            //        string select = @"
-            //                SELECT p.ID, p.Type, p.Standard_Value, IFNULL(r.Quantity, 0) AS Quantity, r.Expiredate 
-            //                FROM product p
-            //                LEFT JOIN receiver r ON p.ID = r.Product_ID";
-            //        using (conn)
-            //        {
-            //            using (SqlCommand cmd = new SqlCommand(select, conn))
-            //            {
-            //                conn.Open();
-            //                using (SqlDataReader reader = cmd.ExecuteReader())
-            //                {
-            //                    while (reader.Read())
-            //                    {
-            //                        products.Add(new ProductDTO
-            //                        {
-            //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
-            //                            Type = reader.GetString(reader.GetOrdinal("Type")),
-            //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value")),
-            //                            Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
-            //                            ExpireDate = reader.IsDBNull(reader.GetOrdinal("Expiredate"))
-            //                                         ? DateTime.MinValue
-            //                                         : reader.GetDateTime(reader.GetOrdinal("Expiredate"))
-            //                        });
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        return products;
-            //    }
-            //    catch (SqlException ex)
-            //    {
-            //        Console.WriteLine("An SQL error occurred while retrieving products: " + ex.Message);
-            //        return products;
-            //    }
-            //    finally
-            //    {
-            //        conn.Close();
-            //    }
-            //}
         }
+        public List<PatientDTO> GetInactivePatients()
+        {
+            List<PatientDTO> patients = [];
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE IsActive = 0";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PatientDTO patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                                patients.Add(patient);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return patients;
+        }
+        public bool SetActive(int id)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE [Patient] SET IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        //// Method to get all products
+        //public List<ProductDTO> GetAllProducts()
+        //{
+        //    List<ProductDTO> products = new List<ProductDTO>();
+        //    SqlConnection conn = new SqlConnection(connectionString);
+        //    try
+        //    {
+        //        string select = @"
+        //                SELECT p.ID, p.Type, p.Standard_Value, IFNULL(r.Quantity, 0) AS Quantity, r.Expiredate 
+        //                FROM product p
+        //                LEFT JOIN receiver r ON p.ID = r.Product_ID";
+        //        using (conn)
+        //        {
+        //            using (SqlCommand cmd = new SqlCommand(select, conn))
+        //            {
+        //                conn.Open();
+        //                using (SqlDataReader reader = cmd.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        products.Add(new ProductDTO
+        //                        {
+        //                            ID = reader.GetInt32(reader.GetOrdinal("ID")),
+        //                            Type = reader.GetString(reader.GetOrdinal("Type")),
+        //                            Standard_Value = reader.GetDouble(reader.GetOrdinal("Standard_Value")),
+        //                            Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+        //                            ExpireDate = reader.IsDBNull(reader.GetOrdinal("Expiredate"))
+        //                                         ? DateTime.MinValue
+        //                                         : reader.GetDateTime(reader.GetOrdinal("Expiredate"))
+        //                        });
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return products;
+        //    }
+        //    catch (SqlException ex)
+        //    {
+        //        Console.WriteLine("An SQL error occurred while retrieving products: " + ex.Message);
+        //        return products;
+        //    }
+        //    finally
+        //    {
+        //        conn.Close();
+        //    }
+        //}
     }
 }

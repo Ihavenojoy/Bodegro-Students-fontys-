@@ -41,5 +41,14 @@ namespace Domain.Containers.ProtocolFile
         {
             return GetSteps.AskStepsFormProtocol(protocolConverter.DTOToObject(Dal.GetProtocolbyid(id)));
         }
+        public List<Protocol> GetInactiveProtocols()
+        {
+            List<Protocol> result = GetSteps.AskStepsFormProtocols(protocolConverter.ListDTOToListObject(Dal.GetInactive()));
+            return result;
+        }
+        public bool SetActive(int id)
+        {
+            return Dal.SetActive(id);
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace Interfaces
         public List<int> GetPatientIDOfUser(int id);
         public PatientDTO GetPatient(int id);
         public PatientDTO GetPatientID(string email);
+        public List<PatientDTO> GetInactivePatients();
+        public bool SetActive(int id);
     }
 }

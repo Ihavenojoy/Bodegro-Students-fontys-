@@ -1,0 +1,60 @@
+﻿@model List<SubscriptionViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="Subscription-list">
+    @foreach (var Subscription in Model)
+    {
+        <div class="Subscription-card">
+            <h3>@Subscription.Patient.Name</h3>
+            <p><strong>Email: </strong>@Subscription.Patient.Email</p>
+            <p><strong>Voor: </strong>@Subscription.Protocol.Name</p>
+            <p><strong>Startdatum: </strong>@Subscription.StartDate</p>
+
+            <form method="post" asp-action="ArchiveSubscription" asp-controller="Archief">
+                <input type="hidden" name="id" value="@Subscription.ID" />
+                <button type="submit" class="btn btn-danger">Activeer</button>
+            </form>
+        </div>
+    }
+</div>
+
+<style>
+    .Subscription-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .Subscription-card {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 300px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+        .Subscription-card h3 {
+            margin: 0 0 0.5rem;
+        }
+
+        .Subscription-card p {
+            margin: 0.5rem 0;
+        }
+
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        color: #fff;
+        background-color: green;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: lightgreen;
+        }
+</style>
