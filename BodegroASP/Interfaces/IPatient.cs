@@ -15,5 +15,6 @@ namespace Interfaces
         public PatientDTO GetPatientID(string email);
         public List<PatientDTO> GetInactivePatients();
         public bool SetActive(int id);
+        public List<PatientDTO> Getall();
     }
 }

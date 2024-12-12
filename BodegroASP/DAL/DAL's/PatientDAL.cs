@@ -139,6 +139,49 @@ namespace DAL
             }
             return patient;
         }
+        public List<PatientDTO> Getall()
+        {
+            PatientDTO patient = new PatientDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            List<PatientDTO> list = new List<PatientDTO>();
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE  IsActive = 1";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                                list.Add(patient);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
         public PatientDTO GetPatientID(string email)
         {
             PatientDTO patient = new PatientDTO();

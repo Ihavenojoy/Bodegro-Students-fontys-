@@ -39,7 +39,16 @@ namespace BodegroASP.Controllers
         }
         public IActionResult Index()
         {
-            List<Patient> templist = _patientserver.GetPatientsOfUser(user);
+            List<Patient> templist = new List<Patient>();
+            if ((int)user.Role == 1)
+            {
+                templist = _patientserver.GetAll();
+            }
+            else
+            {
+                templist = _patientserver.GetPatientsOfUser(user);
+            }
+            
             List<PatientViewModel> list = patientConverter.ListObjectToVieuw(templist);
             return View(list);
         }
