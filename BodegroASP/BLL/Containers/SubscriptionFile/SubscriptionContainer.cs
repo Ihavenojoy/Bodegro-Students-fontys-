@@ -28,14 +28,16 @@ namespace Domain.Containers.SubscriptionFile
         {
             return SubDAL.SoftDeleteSubscription(id);
         }
-        public List<Subscription> GetInactiveSubscriptions()
+        public List<Subscription> GetAll()
         {
-            List<Subscription> list = subscriptionConverter.ListDTOToListObject(SubDAL.GetInactive());
-            return list;
+            return subscriptionConverter.ListDTOToListObject(SubDAL.GetAll());
         }
-        public bool SetActive(int id)
+        public async Task<List<Subscription>> AsyncGetAll()
         {
-            return SubDAL.SetActive(id);
+            var subscriptionDTOs = await SubDAL.AsyncGetAll();
+            var subscriptions = subscriptionConverter.ListDTOToListObject(subscriptionDTOs);
+            return subscriptions;
         }
+
     }
 }

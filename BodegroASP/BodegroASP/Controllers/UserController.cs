@@ -96,7 +96,7 @@ namespace BodegroASP.Controllers
                 doctor.IsActive = true; 
                 userContainer.UpdateUser(doctor, password);
             }
-            ModelState.AddModelError("", "An error occurred. Please check all fields.");
+            ModelState.AddModelError("", "Er is iets misgegaan. Vul alle velden in.");
             return RedirectToAction("Index");
         }
 
