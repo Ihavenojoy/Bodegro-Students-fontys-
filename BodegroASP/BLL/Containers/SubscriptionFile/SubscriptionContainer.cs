@@ -38,6 +38,15 @@ namespace Domain.Containers.SubscriptionFile
             var subscriptions = subscriptionConverter.ListDTOToListObject(subscriptionDTOs);
             return subscriptions;
         }
+        public bool SetActive(int id)
+        {
+            return SubDAL.SetActive(id);
+        }
+        public List<Subscription> GetInactiveSubscriptions()
+        {
+            List<Subscription> Subscriptions = subscriptionConverter.ListDTOToListObject(SubDAL.GetInactive());
+            return Subscriptions;
+        }
 
     }
 }

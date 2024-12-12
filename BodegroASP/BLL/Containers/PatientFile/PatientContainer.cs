@@ -37,6 +37,15 @@ namespace Domain.Containers.PatientFile
         {
             return Dal.GetPatientIDOfUser(id);
         }
+        public bool SetActive(int id)
+        {
+            return Dal.SetActive(id);
+        }
+        public List<Patient> GetInactivePatients()
+        {
+            List<Patient> patients = objectconverter.DTOListToObjectList(Dal.GetInactivePatients());
+            return patients;
+        }
 
     }
 }
