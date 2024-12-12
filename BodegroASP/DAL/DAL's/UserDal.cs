@@ -370,7 +370,7 @@ namespace DAL
                 }
             }
             catch (SqlException ex)
-            {
+            { 
                 Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
                 return false;
             }
