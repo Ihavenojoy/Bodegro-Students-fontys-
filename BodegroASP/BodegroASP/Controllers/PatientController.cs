@@ -4,6 +4,7 @@ using BodegroASP.ViewConverter;
 using DAL;
 using Domain.Containers.PatientFile;
 using Domain.Containers.ProtocolFile;
+using Domain.Containers.StepFile;
 using Domain.Containers.SubscriptionFile;
 using Domain.Enums;
 using Domain.Modules;
@@ -20,6 +21,7 @@ namespace BodegroASP.Controllers
         public PatientContainer _patientserver;
         public ProtocolContainer _protocolserver;
         public SubscriptionContainer _subscriptionserver;
+        public StepContainer _stepserver;
         public GetProtocolForPatient GetProtocolForPatient;
         private readonly IConfiguration iConfiguration;
         private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
@@ -33,6 +35,7 @@ namespace BodegroASP.Controllers
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
             GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             user = new User(1, "Tim", "timHaiwan", Role.Doctor, true);
+            _stepserver = new(new StepDAL(iConfiguration));
         }
         public IActionResult Index()
         {
@@ -43,7 +46,7 @@ namespace BodegroASP.Controllers
 
         public IActionResult AddProtocolPatient(PatientViewModel patient)
         {
-            PatientViewModel Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email));
+            PatientViewModel Patient = patientConverter.ObjectToVieuw(_patientserver.GetPatient(patient.ID));
             List<ProtocolViewModel> list = ProtocolConverter.ListObjectToView(GetProtocolForPatient.GetProtocolForSubscriptions(_subscriptionserver.GetSubscriptionsOfPatiënt(Patient.ID)));
             var model = new AddProtocolPatientViewModel
             {
@@ -53,10 +56,10 @@ namespace BodegroASP.Controllers
 
             return View(model);
         }
-        public IActionResult ViewSubscriptionsPatient(PatientViewModel patient)
+        public IActionResult ViewSubscriptionsPatient(int patientid)
         {
-            patient = patientConverter.ObjectToVieuw(_patientserver.GetPatientID(patient.Email));
-            List<SubscriptionViewModel> list = subscriptionConverter.ListObjectToView(_subscriptionserver.GetSubscriptionsOfPatiënt(patient.ID));
+            PatientViewModel patient = patientConverter.ObjectToVieuw(_patientserver.GetPatient(patientid));
+            List<SubscriptionViewModel> list = subscriptionConverter.ListObjectToView(_subscriptionserver.GetSubscriptionsOfPatiënt(patientid));
             var model = new PatientSubscriptionsViewModel
             {
                 Patient = patient,
@@ -121,6 +124,29 @@ namespace BodegroASP.Controllers
                 TempData["ErrorMessage"] = "Subscriptie verwijderen mislukt";
             }
             return View(model);
+        }
+        [HttpPost]
+        public IActionResult VieuwSteps(int id)
+        {
+            List<Step> protocolSteps = _stepserver.GetStepsOfProtocol(id);
+            List<StepViewModellook> steps = new List<StepViewModellook>();
+            steps = protocolSteps.Select(step => new StepViewModellook
+            {
+                Name = step.Name,
+                Description = step.Description,
+                Order = step.Order,
+                Interval = step.Interval,
+                Test = step.Test,
+                UserId = user.ID
+            }).ToList();
+
+            if (protocolSteps != null)
+            {
+                return PartialView("ProtocolSteps", steps);
+            }
+
+            TempData["ErrorMessage"] = "Protocol steps not found!";
+            return RedirectToAction("PatientProtocols", new { patientId = id });
         }
     }
 }

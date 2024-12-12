@@ -118,25 +118,23 @@
                     <li class="subscription-item">
                         <p><strong>Subscriptie naam:</strong> @subscription.Protocol.Name</p>
                         <p><strong>Descriptie:</strong> @subscription.Protocol.Description</p>
-                        <button type="button"
-                                class="delete-protocol"
-                                data-subscription='@Html.Raw(Json.Serialize(subscription))'
-                                onclick="deleteProtocol(this)">
-                            Stop Subscriptie
-                        </button>
-                        <button type="button"
-                                class="view-steps"
-                                data-protocol='@Html.Raw(Json.Serialize(protocolData))'
-                                onclick="viewProtocolSteps(this)">
-                            Bekijk Stappen
-                        </button>
+
+                        <div class="button-container">
+                            <button type="button"
+                                    class="delete-protocol"
+                                    data-subscription='@Html.Raw(Json.Serialize(subscription))'
+                                    onclick="deleteProtocol(this)">
+                                Stop Subscriptie
+                            </button>
+                            <form method="post" action="@Url.Action("VieuwSteps", "Patient")">
+                                <input type="hidden" name="id" value="@subscription.Protocol.ID" />
+                                <button type="submit" class="btn btn-primary">Subscriptie stappen</button>
+                            </form>
+                        </div>
                     </li>
                 }
             </ul>
         </div>
-
-        <!-- Protocol Steps -->
-        <div id="protocol-steps-content" class="hidden"></div>
     </div>
 
     <!-- Hidden Form for Submission -->
@@ -170,7 +168,6 @@
                 .catch(error => console.error('Error:', error));
             }
         }
-
     </script>
 </body>
 </html>
