@@ -9,7 +9,7 @@ namespace Domain.Enums
     public enum Role
     {
         Unkown = 0,
-        User = 1,
+        Admin = 1,
         Doctor = 2
     }
 }

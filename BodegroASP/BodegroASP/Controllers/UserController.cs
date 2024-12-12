@@ -88,7 +88,7 @@ namespace BodegroASP.Controllers
         {
             string password = Request.Form["password"];
             var doctor = userContainer.GetUserByID(model.ID);
-            if (doctor != null && ModelState.IsValid && !string.IsNullOrWhiteSpace(password))
+            if (doctor != null && ModelState.IsValid)
             {
                 doctor.Name = model.Name;
                 doctor.Email = model.Email;
