@@ -1,4 +1,6 @@
-﻿using Domain.Converter;
+﻿using Domain.Containers.PatientFile;
+using Domain.Containers.SubscriptionFile;
+using Domain.Converter;
 using Domain.Modules;
 using DTO;
 using Interfaces;
@@ -12,21 +14,21 @@ namespace Domain.Services
 {
     public class MailServices
     {
-        ISubscription SubDAL;
         SubscriptionConverter SubscriptionConverter;
-        IPatient PatientDAL;
+        SubscriptionContainer _Subscriptionservice;
+        PatientContainer _Patientservice;
         public MailServices(ISubscription subDAL, IPatient patientDAL)
         {
             SubscriptionConverter = new();
-            SubDAL = subDAL;
-            PatientDAL = patientDAL;
+            _Subscriptionservice = new(subDAL);
+            _Patientservice = new(patientDAL);
         }
         public async Task<List<MailInfo>> GetNextStepDates()
         {
             List<MailInfo> infoForMails = new();
-            List<SubscriptionDTO> subscriptions = await SubDAL.AsyncGetAll(); // Call the async database method
+            List<Subscription> subscriptions = await _Subscriptionservice.AsyncGetAll(); // Call the async database method
 
-            foreach (var subscription in SubscriptionConverter.ListDTOToListObject(subscriptions))
+            foreach (var subscription in subscriptions)
             {
                 int totalInterval = 0;
                 int loopsTaken = 0;
@@ -56,9 +58,9 @@ namespace Domain.Services
         public List<MailInfo> GetNextMailDates()
         {
             List<MailInfo> infoForMails = new();
-            List<SubscriptionDTO> subscriptions = SubDAL.GetAll();
+            List<Subscription> subscriptions = _Subscriptionservice.GetAll();
 
-            foreach (var subscription in SubscriptionConverter.ListDTOToListObject(subscriptions))
+            foreach (var subscription in subscriptions)
             {
                 int totalInterval = 0;
                 int loopsTaken = 0;
@@ -88,17 +90,17 @@ namespace Domain.Services
         public List<MailInfo> GetNextMailDates(User user)
         {
             List<MailInfo> infoForMails = new();
-            List<SubscriptionDTO> subscriptions = [];
-            foreach (var Patient in PatientDAL.GetPatientIDOfUser(user.ID))
+            List<Subscription> subscriptions = [];
+            foreach (var PatientId in _Patientservice.GetPatientIDOfUser(user.ID))
             {
-                foreach(var sub in SubDAL.GetSubscriptionsOfPatiënt(Patient))
+                foreach(var sub in _Subscriptionservice.GetSubscriptionsOfPatiënt(PatientId))
                 {
                     subscriptions.Add(sub);
                 }
             }
-            PatientDAL.GetPatientIDOfUser(user.ID);
+            _Patientservice.GetPatientIDOfUser(user.ID);
 
-            foreach (var subscription in SubscriptionConverter.ListDTOToListObject(subscriptions))
+            foreach (var subscription in subscriptions)
             {
                 int totalInterval = 0;
                 int loopsTaken = 0;

@@ -25,7 +25,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Protocol] (Name, Description) VALUES (@Name, @Description); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Protocol] (Name, Description) VALUES (@Name, @Description);";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))

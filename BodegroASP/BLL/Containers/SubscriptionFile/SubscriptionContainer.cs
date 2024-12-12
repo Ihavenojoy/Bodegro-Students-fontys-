@@ -28,5 +28,16 @@ namespace Domain.Containers.SubscriptionFile
         {
             return SubDAL.SoftDeleteSubscription(id);
         }
+        public List<Subscription> GetAll()
+        {
+            return subscriptionConverter.ListDTOToListObject(SubDAL.GetAll());
+        }
+        public async Task<List<Subscription>> AsyncGetAll()
+        {
+            var subscriptionDTOs = await SubDAL.AsyncGetAll();
+            var subscriptions = subscriptionConverter.ListDTOToListObject(subscriptionDTOs);
+            return subscriptions;
+        }
+
     }
 }

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
+﻿using Domain.Converter;
 using Domain.Modules;
 using Interfaces;
-using DTO;
-using System.Numerics;
-using Domain.Converter;
 
 namespace Domain.Containers.PatientFile
 {
@@ -41,5 +33,10 @@ namespace Domain.Containers.PatientFile
             Patient patient = objectconverter.DTOToObject(Dal.GetPatientID(email));
             return patient;
         }
+        public List<int> GetPatientIDOfUser(int id)
+        {
+            return Dal.GetPatientIDOfUser(id);
+        }
+
     }
 }
