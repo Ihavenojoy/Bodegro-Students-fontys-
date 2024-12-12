@@ -30,36 +30,13 @@
                 <input type="hidden" name="PhoneNumber" value="@patient.PhoneNumber" />
                 <input type="hidden" name="MedicalHistory" value="@patient.MedicalHistory" />
                 <button type="submit" class="add-protocol">Voeg Protocol toe</button>
-                <a asp-action="ViewSubscriptionsPatient" asp-controller="Patient" asp-route-Email="@patient.Email" class="redirect-button">
+                <a asp-action="ViewSubscriptionsPatient" asp-controller="Patient" asp-route-patientid="@patient.ID" class="redirect-button">
                     Bekijk Subsctipties
                 </a>
             </form>
         </div>
     }
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Toggle Medical History Visibility
-        document.querySelectorAll('.toggle-history').forEach(button => {
-            button.addEventListener('click', () => {
-                const card = button.closest('.patient-card');
-                const shortText = card.querySelector('.short-text');
-                const fullText = card.querySelector('.full-text');
-
-                if (fullText.style.display === "none") {
-                    fullText.style.display = "inline";
-                    shortText.style.display = "none";
-                    button.textContent = "Show Less";
-                } else {
-                    fullText.style.display = "none";
-                    shortText.style.display = "inline";
-                    button.textContent = "Show More";
-                }
-            });
-        });
-    });
-</script>
 
 <style>
     .patient-list {

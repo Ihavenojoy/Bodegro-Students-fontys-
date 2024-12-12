@@ -29,5 +29,9 @@ namespace Domain.Containers.StepFile
         {
             return stepConverter.ListDTOToListObject(Dal.GetStepsOfProtocol(protocol.ID));
         }
+        public List<Step> GetStepsOfProtocol(int protocolid)
+        {
+            return stepConverter.ListDTOToListObject(Dal.GetStepsOfProtocol(protocolid));
+        }
     }
 }
