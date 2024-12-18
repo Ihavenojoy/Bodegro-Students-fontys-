@@ -1,7 +1,16 @@
-﻿@model List<PatientViewModel>
+﻿@model PatientFormViewModel
 
+<form asp-action="Search" asp-controller="Patient">
+    <div class="house-container" style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
+        <div>
+            <label>Zoek:</label>
+            <input type="text" name="search" value="@Model.Search" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
 <div class="patient-list">
-    @foreach (var patient in Model)
+    @foreach (var patient in Model.Patients)
     {
         <div class="patient-card">
             <h3>@patient.Name</h3>

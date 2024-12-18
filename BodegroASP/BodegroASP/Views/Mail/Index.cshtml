@@ -1,10 +1,19 @@
-﻿@model List<EmailViewModel>
+﻿@model MailFormViewModel
 @{
     ViewData["Title"] = "Index";
 }
+<form asp-action="Search" asp-controller="Mail">
+    <div class="house-container" style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
+        <div>
+            <label>Zoek:</label>
+            <input type="text" name="search" value="@Model.Search" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
 
 <div class="Mail-list">
-    @foreach (var email in Model)
+    @foreach (var email in Model.Emails)
     {
         <div class="Mail-card">
             <h3>@email.Subscription.Patient.Name</h3>
