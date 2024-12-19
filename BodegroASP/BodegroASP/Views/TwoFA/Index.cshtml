@@ -1,0 +1,45 @@
+﻿@model TwoFAViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<form asp-action="Check" asp-controller="TwoFA" method="post">
+    <div class="TwoFA-container" style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
+        <label>Het gegeven OTP:</label>
+        <div>
+            <input type="hidden" asp-for="UserID" />
+            <input type="text" asp-for="input" />
+        </div>
+        <button type="submit" class="btn btn-custom-submit">Enter</button>
+        <a asp-action="ReSend" asp-controller="TwoFA" asp-route-userID="@Model.UserID" class="btn btn-custom-link">
+            Verstuur opnieuw de code.
+        </a>
+    </div>
+</form>
+<style>
+    .btn-custom-submit {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .btn-custom-submit:hover {
+            background-color: #218838;
+        }
+
+    .btn-custom-link {
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+        .btn-custom-link:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+</style>

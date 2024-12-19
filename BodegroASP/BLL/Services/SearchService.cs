@@ -24,7 +24,7 @@ namespace Domain.Services
             List<MailInfo> returnList = new List<MailInfo>();
             foreach (var Mail in MailServices.GetNextMailDates())
             {
-                if (Mail.Subscription.Patient.Name != null && Mail.Subscription.Patient.Name.Contains(name))
+                if (Mail.Subscription.Patient.Name != null && Mail.Subscription.Patient.Name.ToLower().Contains(name.ToLower()))
                 {
                     returnList.Add(Mail);
                 }
@@ -36,7 +36,7 @@ namespace Domain.Services
             List<MailInfo> returnList = new List<MailInfo>();
             foreach (var Mail in MailServices.GetNextMailDates(user))
             {
-                if (Mail.Subscription.Patient.Name != null && Mail.Subscription.Patient.Name.Contains(name))
+                if (Mail.Subscription.Patient.Name != null && Mail.Subscription.Patient.Name.ToLower().Contains(name.ToLower()))
                 {
                     returnList.Add(Mail);
                 }
@@ -48,7 +48,7 @@ namespace Domain.Services
             List<Patient> returnList = new List<Patient>();
             foreach (var Patient in PatientContainer.GetPatientsOfUser(user))
             {
-                if (Patient.Name != null && Patient.Name.Contains(name))
+                if (Patient.Name != null && Patient.Name.ToLower().Contains(name.ToLower()))
                 {
                     returnList.Add(Patient);
                 }
