@@ -107,11 +107,11 @@ namespace BodegroASP.Controllers
         {
             if (model.Search != null && model.Search != "")
             {
-                List<PatientViewModel> mailInfos = patientConverter.ListObjectToVieuw(SearchService.SearchPatient(model.Search, user));
-                model.Patients = mailInfos;
+                List<PatientViewModel> Patients = patientConverter.ListObjectToVieuw(SearchService.SearchPatient(model.Search, user));
+                model.Patients = Patients;
                 return View("Index", model);
             }
-            return View();
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult SaveSubscription([FromBody] ConfirmProtocolLinkingViewModel subscription)
