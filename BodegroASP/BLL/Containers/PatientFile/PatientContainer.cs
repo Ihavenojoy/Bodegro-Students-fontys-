@@ -46,6 +46,9 @@ namespace Domain.Containers.PatientFile
             List<Patient> patients = objectconverter.DTOListToObjectList(Dal.GetInactivePatients());
             return patients;
         }
-
+        public List<Patient> GetAll()
+        {
+            return objectconverter.DTOListToObjectList(Dal.Getall());
+        }
     }
 }
