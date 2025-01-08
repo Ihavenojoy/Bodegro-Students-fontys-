@@ -33,7 +33,7 @@ namespace BodegroASP.Controllers
         SearchService SearchService { get; set; }
         public PatientController()
         {
-            _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
+            _patientserver = new PatientContainer(new PatientDAL());
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
             GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));

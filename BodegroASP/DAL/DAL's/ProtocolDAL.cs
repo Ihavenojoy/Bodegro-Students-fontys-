@@ -16,7 +16,7 @@ namespace DAL
         private readonly string connectionString;
         public ProtocolDAL(IConfiguration configuration)
         {
-            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_backup;User Id=dbi500009_backup;Password=backupWW;TrustServerCertificate=True;";
             //connectionString = configuration.GetConnectionString("DefaultConnection");
         }
         public bool CreateProtocol(ProtocolDTO protocol)
