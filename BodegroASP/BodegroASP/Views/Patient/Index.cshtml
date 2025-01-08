@@ -6,6 +6,9 @@
             <label>Zoek:</label>
             <input type="text" name="search" value="@Model.Search" />
             <button type="submit" class="btn btn-success">Zoek</button>
+            <a asp-action="AddPatient" asp-controller="Patient" class="redirect-button">
+                Maak een nieuwe patiënt aan.
+            </a>
         </div>
     </div>
 </form>
@@ -107,15 +110,16 @@
     .redirect-button {
         display: inline-block;
         padding: 10px 15px;
-        background-color: #28a745;
+        background-color: burlywood;
         color: white;
         text-align: center;
         text-decoration: none;
         border-radius: 5px;
         cursor: pointer;
     }
+    
 
         .redirect-button:hover {
-            background-color: #218838;
+            background-color: chocolate;
         }
 </style>

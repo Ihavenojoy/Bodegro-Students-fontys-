@@ -32,15 +32,14 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (User_ID, Name, Email, PhoneNumber, MedicalHistory, IsActive) VALUES (@User_ID, @Name, @Email, @PhoneNumber, @MedicalHistory, @IsActive); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (Name, Email, PhoneNumber, MedicalHistory, IsActive) VALUES (@Name, @Email, @PhoneNumber, @MedicalHistory, @IsActive); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@User_ID", patient.User_ID);
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
-                        cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", patient.PhoneNumber);
                         cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
                         cmd.Parameters.AddWithValue("@IsActive", 1);
 
@@ -123,6 +122,7 @@ namespace DAL
                                     PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
                                     MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
                                 };
+                                return patient;
                             }
                         }
                     }
@@ -137,7 +137,7 @@ namespace DAL
             {
                 conn.Close();
             }
-            return patient;
+            return null;
         }
         public List<PatientDTO> Getall()
         {

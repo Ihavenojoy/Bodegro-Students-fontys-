@@ -1,0 +1,18 @@
+﻿@model PatientViewModel
+@{
+    ViewData["Title"] = "AddPatient";
+}
+
+
+<form method="post" asp-action="Add" asp-controller="Patient">
+    <label>Naam</label>
+    <input type="text" name="name" value="@Model.Name" />
+    <label>Email</label>
+    <input type="text" name="email" value="@Model.Email" />
+    <label>Telefoon nummer</label>
+    <input type="text" name="phonenumber" value="@Model.PhoneNumber" />
+    <label>Medische geschiedenis</label>
+    <input type="text" name="medicalhistory" value="@Model.MedicalHistory" />
+    <button type="submit" class="btn btn-success">Voeg toe</button>
+</form>
+

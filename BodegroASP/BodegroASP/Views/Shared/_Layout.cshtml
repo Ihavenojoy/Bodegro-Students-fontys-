@@ -78,3 +78,15 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var errorMessage = '@TempData["ErrorMessage"]';
+        if (errorMessage) {
+            showError(errorMessage); // Function to show the popup
+        }
+    });
+
+    function showError(message) {
+        alert(message); // Replace with your custom modal logic
+    }
+</script>

@@ -1,5 +1,6 @@
 ﻿using Domain.Converter;
 using Domain.Modules;
+using DTO;
 using Interfaces;
 
 namespace Domain.Containers.PatientFile
@@ -18,8 +19,12 @@ namespace Domain.Containers.PatientFile
             List<int> PatientIDs = Dal.GetPatientIDOfUser(User.ID);
             foreach (int i in PatientIDs)
             {
-                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i));
-                list.Add(patient);
+                PatientDTO dto = Dal.GetPatient(i);
+                if (dto != null)
+                {
+                    Patient patient = objectconverter.DTOToObject(dto);
+                    list.Add(patient);
+                }
             }
             return list;
         }
@@ -49,6 +54,10 @@ namespace Domain.Containers.PatientFile
         public List<Patient> GetAll()
         {
             return objectconverter.DTOListToObjectList(Dal.Getall());
+        }
+        public bool AddPatient(Patient patient)
+        {
+            return Dal.CreatePatient(objectconverter.ObjectToDTO(patient));
         }
     }
 }

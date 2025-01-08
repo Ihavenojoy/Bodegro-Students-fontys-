@@ -35,5 +35,9 @@ namespace BodegroASP.Converters
             };
             return temp;
         }
+        public Patient ViewToObject(PatientViewModel view)
+        {
+            return new Patient(view.Name, view.Email, view.PhoneNumber, view.MedicalHistory, 0);
+        }
     }
 }

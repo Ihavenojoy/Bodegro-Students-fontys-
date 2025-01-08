@@ -178,5 +178,24 @@ namespace BodegroASP.Controllers
             TempData["ErrorMessage"] = "Protocol steps not found!";
             return RedirectToAction("PatientProtocols", new { patientId = id });
         }
+        public IActionResult AddPatient()
+        {
+            PatientViewModel model = new PatientViewModel();
+            return View("AddPatient", model);
+        }
+        public IActionResult Add(PatientViewModel model)
+        {
+            if (model.Email == null || model.PhoneNumber == 0 || model.Name == null)
+            {
+                TempData["ErrorMessage"] = "Ongeldige gegevens ingevoerd";
+                return View("AddPatient", model);
+            }
+            if(model.MedicalHistory == null) { model.MedicalHistory = ""; }
+            if (!_patientserver.AddPatient(patientConverter.ViewToObject(model)))
+            {
+                TempData["ErrorMessage"] = "Patiënt kon niet worden aangemaakt";
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
