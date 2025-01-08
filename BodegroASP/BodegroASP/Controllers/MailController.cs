@@ -6,24 +6,27 @@ using Domain.Modules;
 using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Enums;
+using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
     public class MailController : Controller
     {
-        MailConvertert MailConvertert { get; set; }
-        MailServices MailContainer { get; set; }
+        MailConvertert MailConvertert;
+        MailServices MailContainer;
+        UserContainer _UserContainer;
         User User;
-        SearchService SearchService { get; set; }
-        IConfiguration configuration { get; set; }
+        SearchService SearchService;
+        IConfiguration configuration;
         public MailController()
         {
             MailConvertert = new();
             SubscriptionDAL subscriptionDAL = new(configuration);
             PatientDAL patientDAL = new(configuration);
+            _UserContainer = new(new UserDAL(configuration));
             SearchService = new(patientDAL, subscriptionDAL);
             MailContainer = new(subscriptionDAL, patientDAL);
-            User = new("Henk", "HenkvdPost@gmail.com", Role.Admin, true);
+            User = _UserContainer.GetUserByID(HttpContext.Session.GetInt32("UserId") ?? -1);
         }
         public IActionResult Index()
         {

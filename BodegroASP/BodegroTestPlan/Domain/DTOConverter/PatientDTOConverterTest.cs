@@ -1,4 +1,4 @@
-﻿using Domain.DTOConverter;
+﻿using Domain.Converter;
 using Domain.Enums;
 using Domain.Modules;
 using DTO;
@@ -14,11 +14,10 @@ namespace BodegroTestPlan.Domain.DTOConverter
     public class PatientDTOConverterTest
     {
         [TestMethod]
-
         public void ObjectToDTO()
         {
             //Arrange
-            PatientDTOConverter converter = new PatientDTOConverter();
+            PatientConverter converter = new PatientConverter();
             Patient test = new Patient(2, "test", "test",6,"Test",54);
 
             //Act
