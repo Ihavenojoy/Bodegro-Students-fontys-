@@ -10,14 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Twofactor;
 
-namespace Domain.Containers._2FAFile
+namespace Domain.Containers.TwoFactorFile
 {
 
-    public class _2FAContainer
+    public class TwoFactorContainer
     {
         private ITwoFactor Dal;
         private TwoFactorConverter converter = new();
-        public _2FAContainer(ITwoFactor dal)
+        public TwoFactorContainer(ITwoFactor dal)
         {
             Dal = dal;
         }

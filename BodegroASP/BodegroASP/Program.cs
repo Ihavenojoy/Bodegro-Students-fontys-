@@ -2,8 +2,10 @@ using Azure;
 using BodegroASP.BackGroundServices;
 using BodegroASP.BackGroundServices.MailTask;
 using DAL;
+using DAL.DAL_s;
 using Domain.Containers.PatientFile;
 using Domain.Containers.SubscriptionFile;
+using Domain.Containers.TwoFactorFile;
 using Domain.Containers.UserFile;
 using Domain.Modules;
 using Interfaces;
@@ -31,7 +33,9 @@ namespace BodegroASP
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IUser, UserDAL>();
             builder.Services.AddScoped<IRequest, RequestDAL>();
+            builder.Services.AddScoped<ITwoFactor, TwoFactorDAL>();
             builder.Services.AddScoped<UserContainer>();
+            builder.Services.AddScoped<TwoFactorContainer>();
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20); // Session timeout
@@ -45,6 +49,9 @@ namespace BodegroASP
 
             services.AddSingleton<PatientContainer>();
             services.AddSingleton<IPatient, PatientDAL>();
+
+            services.AddSingleton<TwoFactorContainer>();
+            services.AddSingleton<ITwoFactor, TwoFactorDAL>();
 
             // Setting up the authentication scheme
             builder.Services.AddAuthentication("CookieAuth")

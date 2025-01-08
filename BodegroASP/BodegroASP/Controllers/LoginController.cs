@@ -1,6 +1,7 @@
 ﻿using BodegroASP.Models;
 using Domain.Containers.UserFile;
 using Domain.Modules;
+using Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -57,6 +58,7 @@ namespace BodegroASP.Controllers
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync("CookieAuth");
+            HttpContext.Session.SetString("UserId", "-1");
             return RedirectToAction("LogIn");
         }
 

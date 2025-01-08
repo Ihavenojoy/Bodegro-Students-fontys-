@@ -1,5 +1,5 @@
 ﻿using DAL.DAL_s;
-using Domain.Containers._2FAFile;
+using Domain.Containers.TwoFactorFile;
 using Domain.Modules;
 
 namespace BodegroASP.BackGroundServices.TwoFactorTask
@@ -7,10 +7,10 @@ namespace BodegroASP.BackGroundServices.TwoFactorTask
     public class TwoFactorDone
     {
         IConfiguration _configuration;
-        public _2FAContainer container;
+        public TwoFactorContainer container;
         public TwoFactorDone()
         {
-            container = new _2FAContainer(new TwoFactorDAL(_configuration));
+            container = new TwoFactorContainer(new TwoFactorDAL(_configuration));
         }
         public async Task ValidTwoFactorCheck()
         {

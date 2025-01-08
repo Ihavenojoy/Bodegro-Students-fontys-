@@ -1,11 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BodegroASP.Models;
 using Domain.Modules;
+using Domain.Containers.TwoFactorFile;
+using DAL.DAL_s;
+using Interfaces;
 
 namespace BodegroASP.Controllers
 {
     public class TwoFAController : Controller
     {
+        private TwoFactorContainer _TwofactorContainer;
+        ITwoFactor Dal;
+        public TwoFAController(ITwoFactor dal)
+        {
+            Dal = dal;
+            _TwofactorContainer = new TwoFactorContainer(Dal);
+        }
         public IActionResult Index()
         {
             TwoFAViewModel model = new TwoFAViewModel()
@@ -25,6 +35,8 @@ namespace BodegroASP.Controllers
         }
         public IActionResult ReSend(int userID)
         {
+            _TwofactorContainer.Create(userID);
+            TempData["ErrorMessage"] = "Has been sent" ;
             return RedirectToAction("Index");
         }
     }
