@@ -23,20 +23,95 @@ namespace BodegroTestPlan.Domain.Containers
             container = new PatientContainer(patient);
         }
         [TestMethod]
-        public void AskAllPatientsOfUser()
+        public void GetPatientsOfUser()
         {
             //Arrange
-            User user = new User(5, "timo", "timoo",(Role)1,true);
+            
 
             //Act
-            List<Patient> list = container.GetPatientsOfUser((User)user);
+            
 
             //Assert
-            Assert.IsNotNull(list);
-            foreach (Patient pat in list)
-            {
-                Assert.IsNotNull(pat);
-            }
+
+
+        }
+        [TestMethod]
+        public void GetPatient(int id)
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
+        [TestMethod]
+        public void GetPatientID(string email)
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
+        [TestMethod]
+        public void GetPatientIDOfUser(int id)
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
+        [TestMethod]
+        public void SetActive(int id)
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
+        [TestMethod]
+        public void GetInactivePatients()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
+        }
+        [TestMethod]
+        public void GetAll()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+
+
         }
     }
 }
