@@ -1,10 +1,15 @@
+using Azure;
 using BodegroASP.BackGroundServices;
 using BodegroASP.BackGroundServices.MailTask;
 using DAL;
 using Domain.Containers.PatientFile;
 using Domain.Containers.SubscriptionFile;
 using Domain.Containers.UserFile;
+using Domain.Modules;
 using Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Web;
+
 
 namespace BodegroASP
 {
@@ -26,6 +31,12 @@ namespace BodegroASP
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IUser, UserDAL>();
             builder.Services.AddScoped<UserContainer>();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20); // Session timeout
+                options.Cookie.HttpOnly = true;                // Secure session cookies
+                options.Cookie.IsEssential = true;             // Ensure cookies are GDPR compliant
+            });
 
             // DI - Container
             services.AddSingleton<UserContainer>();
@@ -57,7 +68,7 @@ namespace BodegroASP
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

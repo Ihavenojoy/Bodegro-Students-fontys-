@@ -41,6 +41,7 @@ namespace BodegroASP.Controllers
                 }
 
                 await SignInUser(user);
+                HttpContext.Session.SetString("Userid",Convert.ToString(user.ID));
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
@@ -72,6 +73,7 @@ namespace BodegroASP.Controllers
             var principal = new ClaimsPrincipal(identity);
 
             await HttpContext.SignInAsync("CookieAuth", principal);
+
         }
 
 

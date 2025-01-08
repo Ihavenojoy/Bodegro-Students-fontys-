@@ -6,6 +6,7 @@ using Domain.Containers.PatientFile;
 using Domain.Containers.ProtocolFile;
 using Domain.Containers.StepFile;
 using Domain.Containers.SubscriptionFile;
+using Domain.Containers.UserFile;
 using Domain.Enums;
 using Domain.Modules;
 using Domain.Services;
@@ -18,11 +19,12 @@ namespace BodegroASP.Controllers
 {
     public class PatientController : Controller
     {
-        public PatientContainer _patientserver;
-        public ProtocolContainer _protocolserver;
-        public SubscriptionContainer _subscriptionserver;
-        public StepContainer _stepserver;
-        public GetProtocolForPatient GetProtocolForPatient;
+        private PatientContainer _patientserver;
+        private ProtocolContainer _protocolserver;
+        private UserContainer _userserver;
+        private SubscriptionContainer _subscriptionserver;
+        private StepContainer _stepserver;
+        private GetProtocolForPatient GetProtocolForPatient;
         private readonly IConfiguration iConfiguration;
         private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
         private User user;
@@ -35,7 +37,8 @@ namespace BodegroASP.Controllers
             _protocolserver = new ProtocolContainer(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
             GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
-            user = new User(1, "Tim", "timHaiwan", Role.Doctor, true);
+            _userserver = new(new UserDAL(iConfiguration));
+            user = _userserver.GetUserByID(Convert.ToInt32(HttpContext.Session.GetString("UserId")));
             _stepserver = new(new StepDAL(iConfiguration));
             SearchService = new(new PatientDAL(iConfiguration), new SubscriptionDAL(iConfiguration));
         }
