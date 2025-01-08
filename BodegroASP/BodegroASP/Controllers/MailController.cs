@@ -26,10 +26,10 @@ namespace BodegroASP.Controllers
             _UserContainer = new(new UserDAL(configuration));
             SearchService = new(patientDAL, subscriptionDAL);
             MailContainer = new(subscriptionDAL, patientDAL);
-            User = _UserContainer.GetUserByID(HttpContext.Session.GetInt32("UserId") ?? -1);
         }
         public IActionResult Index()
         {
+            User = _UserContainer.GetUserByID(Convert.ToInt32(HttpContext.Session.GetString("UserId")));
             List<MailInfo> mailInfos;
             if (User.Role == Role.Admin)
             {
