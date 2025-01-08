@@ -8,12 +8,13 @@ namespace Twofactor
 {
     public static class Validation
     {
-        public static bool OTP(string secretKey, string inputCode, int digits = 6, int timeStep = 30, int allowedDrift = 1)
+        public static bool OTP(string secretKey, string inputCode, DateTime requesttime, int digits = 6, int timeStep = 30, int allowedDrift = 1)
         {
             // Generate TOTP for the current time and a few steps before/after (to allow for clock drift)
             for (int i = -allowedDrift; i <= allowedDrift; i++)
             {
-                long currentTime = (DateTimeOffset.UtcNow.ToUnixTimeSeconds() / timeStep) + i;
+                DateTimeOffset DateTimeRequest = new DateTimeOffset(requesttime);
+                long currentTime = (DateTimeRequest.ToUnixTimeSeconds() / timeStep) + i;
                 var timeBytes = BitConverter.GetBytes(currentTime);
                 Array.Reverse(timeBytes);
 

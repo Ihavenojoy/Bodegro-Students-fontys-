@@ -2,7 +2,6 @@
 using DTO;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using Twofactor;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
@@ -60,16 +59,6 @@ namespace DAL
                 conn.Close();
             }
             return UserDTO;
-        }
-
-
-        public void TwofactorActivation(string UserEmail)
-        {
-            int OTP = Convert.ToInt32(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30));
-        }
-        public bool TwofactorCheck(string Userinput)
-        {
-            return false;
         }
         public bool CreateUser(UserDTO User, string password)
         {

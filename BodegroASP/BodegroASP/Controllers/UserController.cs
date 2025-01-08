@@ -42,7 +42,7 @@ namespace BodegroASP.Controllers
             string password = Request.Form["password"];
             if (ModelState.IsValid && !string.IsNullOrWhiteSpace(password))
             {
-                var user = new User(model.Name, model.Email, (Role)2 , true);
+                var user = new User(model.Name, model.Email, Role.Doctor , true);
                 userContainer.CreateUser(user, password);
                 return RedirectToAction("Index");
             }
