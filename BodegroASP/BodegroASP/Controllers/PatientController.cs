@@ -27,7 +27,6 @@ namespace BodegroASP.Controllers
         private GetProtocolForPatient GetProtocolForPatient;
         private readonly IConfiguration iConfiguration;
         private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
-        private User user;
         private readonly PatientConvertert patientConverter = new PatientConvertert();
         private readonly SubscriptionConvertert subscriptionConverter = new SubscriptionConvertert(); 
         SearchService SearchService { get; set; }
@@ -38,13 +37,13 @@ namespace BodegroASP.Controllers
             _subscriptionserver = new SubscriptionContainer(new SubscriptionDAL(iConfiguration));
             GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             _userserver = new(new UserDAL(iConfiguration));
-            user = _userserver.GetUserByID(Convert.ToInt32(HttpContext.Session.GetString("UserId")));
             _stepserver = new(new StepDAL(iConfiguration));
             SearchService = new(new PatientDAL(iConfiguration), new SubscriptionDAL(iConfiguration));
         }
         public IActionResult Index()
         {
             List<Patient> templist = new List<Patient>();
+            User user = _userserver.GetUserByID(Convert.ToInt32(HttpContext.Session.GetString("UserId")));
             if ((int)user.Role == 1)
             {
                 templist = _patientserver.GetAll();
@@ -110,6 +109,7 @@ namespace BodegroASP.Controllers
         {
             if (model.Search != null && model.Search != "")
             {
+                User user = _userserver.GetUserByID(HttpContext.Session.GetInt32("UserId") ?? -1);
                 List<PatientViewModel> Patients = patientConverter.ListObjectToVieuw(SearchService.SearchPatient(model.Search, user));
                 model.Patients = Patients;
                 return View("Index", model);
@@ -159,6 +159,7 @@ namespace BodegroASP.Controllers
         {
             List<Step> protocolSteps = _stepserver.GetStepsOfProtocol(id);
             List<StepViewModellook> steps = new List<StepViewModellook>();
+            User user = _userserver.GetUserByID(HttpContext.Session.GetInt32("UserId") ?? -1);
             steps = protocolSteps.Select(step => new StepViewModellook
             {
                 Name = step.Name,
