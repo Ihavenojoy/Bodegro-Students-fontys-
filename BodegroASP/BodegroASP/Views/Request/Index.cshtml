@@ -1,0 +1,49 @@
+@model List<RequestViewModel>
+
+@{
+    ViewBag.Title = "All requests";
+    Layout = "_Layout";
+}
+
+<h2>Allen Verzoeken</h2>
+<form asp-action="CreateRequest" asp-controller="Request" method="get">
+    <button type="submit" class="btn btn-primary">Verzoek aanmaken</button>
+</form>
+<table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th>ID</th>
+        <th>Important</th>
+        <th>Actions</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.id)</td>
+            <td>@Html.DisplayFor(modelItem => item.important)</td>
+            <td>
+                <!-- Accept Button -->
+                <form asp-action="UpdateRequest" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@item.id" />
+                    <input type="hidden" name="accepted" value="1" />
+                    <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                </form>
+
+                <!-- Decline Button -->
+                <form asp-action="UpdateRequest" method="post" style="display: inline;">
+                    <input type="hidden" name="id" value="@item.id" />
+                    <input type="hidden" name="accepted" value="0" />
+                    <button type="submit" class="btn btn-danger btn-sm">Decline</button>
+                </form>
+            </td>
+            <td>
+                <!-- Details Button -->
+                <a asp-action="GetRequest" asp-route-id="@item.id" class="btn btn-info btn-sm">Details</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,46 @@
+@model RequestDetailsViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h2>Request Details</h2>
+
+<div class="card">
+    <div class="card-header">
+        Request ID: @Model.id
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Details</h5>
+        <p class="card-text">@Model.description</p>
+
+        <h5 class="card-title">Explanation</h5>
+        <p class="card-text">@Model.explanation</p>
+
+        <h5 class="card-title">Important</h5>
+
+        <p class="card-text">@Model.important</p>
+
+        <h5 class="card-title">Status</h5>
+        <p class="card-text">
+            @if (Model.finished == null)
+            {
+                <span class="text-warning">Not been accepted yet</span>
+            }
+            else if (Model.finished == 1)
+            {
+                <span class="text-success">Accepted</span>
+            }
+            else
+            {
+                <span class="text-danger">Declined</span>
+            }
+        </p>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-primary">Back to All Requests</a>
+</div>

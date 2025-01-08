@@ -30,6 +30,7 @@ namespace BodegroASP
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IUser, UserDAL>();
+            builder.Services.AddScoped<IRequest, RequestDAL>();
             builder.Services.AddScoped<UserContainer>();
             builder.Services.AddSession(options =>
             {
