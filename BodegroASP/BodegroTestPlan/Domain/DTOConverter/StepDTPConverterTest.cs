@@ -1,4 +1,4 @@
-﻿using Domain.DTOConverter;
+﻿using Domain.Converter;
 using Domain.Modules;
 using DTO;
 using System;
@@ -17,7 +17,7 @@ namespace BodegroTestPlan.Domain.DTOConverter
         public void ObjectToDTO()
         {
             //Arrange
-            StepDTOConverter converter = new StepDTOConverter();
+            StepConverter converter = new StepConverter();
             Step test = new Step(6,6,"test", "test", 6,"Test",6);
 
             //Act

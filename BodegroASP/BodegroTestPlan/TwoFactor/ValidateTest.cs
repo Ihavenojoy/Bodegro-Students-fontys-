@@ -21,7 +21,7 @@ namespace BodegroTestPlan.TwoFactor
             string otp = Generate.OTP(check, 6, 30);
 
             //Act
-            bool test = Validation.OTP(check, otp, 6, 30, 0);
+            bool test = Validation.OTP(check, otp, DateTime.Now, 30, 0);
 
             //Assert
             Assert.IsTrue(test);

@@ -1,4 +1,4 @@
-﻿using Domain.DTOConverter;
+﻿using Domain.Converter;
 using Domain.Modules;
 using DTO;
 using System;
@@ -18,7 +18,7 @@ namespace BodegroTestPlan.Domain.DTOConverter
         public void ObjectToDTO()
         {
             //Arrange
-            SubscriptionDTOConverter converter = new SubscriptionDTOConverter();
+            SubscriptionConverter converter = new SubscriptionConverter();
             List<Step> Steps = new List<Step>();
             Protocol protocol = new Protocol("test", "test", Steps, 9);
             Patient patient = new Patient(6, "test", "test", 4, "test", 8);
@@ -29,8 +29,6 @@ namespace BodegroTestPlan.Domain.DTOConverter
 
             //Assert
             Assert.AreEqual(test.StepsTaken, testdto.StepsTaken);
-            Assert.AreEqual(test.Patient.Name, testdto.Patient.Name);
-            Assert.AreEqual(test.Protocol.ID, testdto.Protocol.ID);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace BodegroASP.Controllers
                 }
 
                 await SignInUser(user);
-                HttpContext.Session.SetString("Userid",Convert.ToString(user.ID));
+                HttpContext.Session.SetInt32("Userid",user.ID);
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)

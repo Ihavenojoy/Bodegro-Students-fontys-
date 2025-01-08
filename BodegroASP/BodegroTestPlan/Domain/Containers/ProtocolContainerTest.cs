@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BodegroTestPlan.Domain.Containers
 {
-    internal class ProtocolContainerTest
+    public class ProtocolContainerTest
     {
     }
 }
