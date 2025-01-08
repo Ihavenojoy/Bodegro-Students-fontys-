@@ -27,7 +27,8 @@ namespace BodegroASP.Controllers
         private ProtocolConvertert ProtocolConverter = new ProtocolConvertert();
         private User user;
         private readonly PatientConvertert patientConverter = new PatientConvertert();
-        private readonly SubscriptionConvertert subscriptionConverter = new SubscriptionConvertert();
+        private readonly SubscriptionConvertert subscriptionConverter = new SubscriptionConvertert(); 
+        SearchService SearchService { get; set; }
         public PatientController()
         {
             _patientserver = new PatientContainer(new PatientDAL(iConfiguration));
@@ -36,6 +37,7 @@ namespace BodegroASP.Controllers
             GetProtocolForPatient = new(new ProtocolDAL(iConfiguration), new StepDAL(iConfiguration));
             user = new User(1, "Tim", "timHaiwan", Role.Doctor, true);
             _stepserver = new(new StepDAL(iConfiguration));
+            SearchService = new(new PatientDAL(iConfiguration), new SubscriptionDAL(iConfiguration));
         }
         public IActionResult Index()
         {
@@ -50,7 +52,12 @@ namespace BodegroASP.Controllers
             }
             
             List<PatientViewModel> list = patientConverter.ListObjectToVieuw(templist);
-            return View(list);
+            PatientFormViewModel model = new PatientFormViewModel()
+            {
+                Patients = list,
+                Search = ""
+            };
+            return View(model);
         }
 
         public IActionResult AddProtocolPatient(PatientViewModel patient)
@@ -95,6 +102,16 @@ namespace BodegroASP.Controllers
                 StepsTaken = 0
             };
             return View(model);  // You can pass the model to a confirmation view
+        }
+        public IActionResult Search(PatientFormViewModel model)
+        {
+            if (model.Search != null && model.Search != "")
+            {
+                List<PatientViewModel> Patients = patientConverter.ListObjectToVieuw(SearchService.SearchPatient(model.Search, user));
+                model.Patients = Patients;
+                return View("Index", model);
+            }
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult SaveSubscription([FromBody] ConfirmProtocolLinkingViewModel subscription)

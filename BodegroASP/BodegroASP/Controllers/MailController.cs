@@ -14,12 +14,14 @@ namespace BodegroASP.Controllers
         MailConvertert MailConvertert { get; set; }
         MailServices MailContainer { get; set; }
         User User;
+        SearchService SearchService { get; set; }
         IConfiguration configuration { get; set; }
         public MailController()
         {
             MailConvertert = new();
             SubscriptionDAL subscriptionDAL = new(configuration);
             PatientDAL patientDAL = new(configuration);
+            SearchService = new(patientDAL, subscriptionDAL);
             MailContainer = new(subscriptionDAL, patientDAL);
             User = new("Henk", "HenkvdPost@gmail.com", Role.Admin, true);
         }
@@ -39,7 +41,35 @@ namespace BodegroASP.Controllers
                 mailInfos = [];
             }
             List<EmailViewModel> mailViewModels = MailConvertert.ListObjectToVieuw(mailInfos);
-            return View(mailViewModels);
+            MailFormViewModel mailFormViewModel = new MailFormViewModel()
+            {
+                Emails = mailViewModels,
+                Search = ""
+            };
+            return View(mailFormViewModel);
+        }
+        [HttpPost]
+        public IActionResult Search(MailFormViewModel model)
+        {
+            if (model.Search != null && model.Search != "")
+            {
+                List<EmailViewModel> mailInfos;
+                if (User.Role == Role.Admin)
+                {
+                    mailInfos = MailConvertert.ListObjectToVieuw(SearchService.SearchMail(model.Search));
+                }
+                else if (User.Role == Role.Doctor)
+                {
+                    mailInfos = MailConvertert.ListObjectToVieuw(SearchService.SearchMail(model.Search, User));
+                }
+                else
+                {
+                    mailInfos = [];
+                }
+                model.Emails = mailInfos;
+                return View("Index", model);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

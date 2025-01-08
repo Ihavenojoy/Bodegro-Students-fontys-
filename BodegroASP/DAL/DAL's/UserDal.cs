@@ -305,7 +305,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email FROM [User] WHERE IsActive = 0";
+                string select = "SELECT ID, Name, Email, Role FROM [User] WHERE IsActive = 0";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -319,7 +319,8 @@ namespace DAL
                                 {
                                     ID = reader.GetInt32(reader.GetOrdinal("ID")),
                                     Name = reader.GetString(reader.GetOrdinal("Name")),
-                                    Email = reader.GetString(reader.GetOrdinal("Email"))
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    Role = (int)reader["Role"]
                                 });
                             }
                         }
@@ -358,7 +359,7 @@ namespace DAL
                 }
             }
             catch (SqlException ex)
-            {
+            { 
                 Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
                 return false;
             }

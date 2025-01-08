@@ -9,7 +9,13 @@
         <div class="gebruiker-card">
             <h3>@user.Name</h3>
             <p><strong>Email: </strong> @user.Email</p>
-            <p><strong>Rol: </strong> @user.Role</p>
+            <p><strong>Rol: </strong> @(user.Role switch
+                {
+                    2 => "Doctor",
+                    1 => "Beheerder",
+                    _ => "Niet bekend"
+                })
+            </p>
 
             <form method="post" asp-action="ArchiveUser" asp-controller="Archief">
                 <input type="hidden" name="id" value="@user.ID" />
