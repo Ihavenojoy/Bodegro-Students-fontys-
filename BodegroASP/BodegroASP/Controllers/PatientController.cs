@@ -11,6 +11,7 @@ using Domain.Enums;
 using Domain.Modules;
 using Domain.Services;
 using DTO;
+using Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
@@ -191,6 +192,7 @@ namespace BodegroASP.Controllers
                 return View("AddPatient", model);
             }
             if(model.MedicalHistory == null) { model.MedicalHistory = ""; }
+            model.User_ID = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
             if (!_patientserver.AddPatient(patientConverter.ViewToObject(model)))
             {
                 TempData["ErrorMessage"] = "Patiënt kon niet worden aangemaakt";

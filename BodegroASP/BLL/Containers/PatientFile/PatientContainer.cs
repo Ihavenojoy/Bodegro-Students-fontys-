@@ -2,6 +2,7 @@
 using Domain.Modules;
 using DTO;
 using Interfaces;
+using System.Net.Http;
 
 namespace Domain.Containers.PatientFile
 {
