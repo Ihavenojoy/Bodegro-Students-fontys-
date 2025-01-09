@@ -12,9 +12,7 @@ namespace Interfaces
         public bool CreatePatient(PatientDTO patient);
         public List<int> GetPatientIDOfUser(int id);
         public PatientDTO GetPatient(int id);
-        public PatientDTO GetPatientID(string email);
-        public List<PatientDTO> GetInactivePatients();
-        public bool SetActive(int id);
-        public List<PatientDTO> Getall();
+        public List<PatientDTO> GetAllPatients();
+
     }
 }

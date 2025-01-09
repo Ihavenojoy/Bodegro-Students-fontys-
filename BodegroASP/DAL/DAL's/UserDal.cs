@@ -2,40 +2,41 @@
 using DTO;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using Twofactor;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class UserDAL : IUser
     {
-        private readonly string connectionString;
-
+        private readonly string connectionString = "TrustServerCertificate=True;" +
+                    "Server=mssqlstud.fhict.local;" +
+                    "Database=dbi500009_grodebo;" +
+                    "User Id=dbi500009_grodebo;" +
+                    "Password=Grodebo;";
         public UserDAL(IConfiguration configuration)
         {
-            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
-            //connectionString = configuration.GetConnectionString("DefaultConnection");
+            // connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public UserDTO UserLogin(string Emailinput)
+        public UserDTO UserLogin(string Emailinput, string PassWordInput)
         {
             SqlConnection conn = new SqlConnection(connectionString);
             UserDTO UserDTO = new UserDTO();
             try
             {
-                string insert = "SELECT ID, Name, Email, Role, IsActive FROM [User] " +
-                       "WHERE Email = @Email AND IsActive = 1";
+                string insert = "Select ID, Name, Email, Role From [User] WHERE Email = @Email AND Password = @Password";
 
                 using (conn)
                 {
-                    conn.Open();
+                    //conn.Open();
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Email", Emailinput);
-                        //cmd.Parameters.AddWithValue("@Password", BCrypt.Net.BCrypt.HashPassword(PassWordInput));
-                        //cmd.Parameters.AddWithValue("@Password", PassWordInput);
+                        cmd.Parameters.AddWithValue("@Password", PassWordInput);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read()) 
+                            if (reader.Read())
                             {
                                 UserDTO = new UserDTO
                                 {
@@ -43,7 +44,6 @@ namespace DAL
                                     Name = (string)reader["Name"],
                                     Email = (string)reader["Email"],
                                     Role = (int)reader["Role"],
-                                    IsActive = true
                                 };
                             }
                         }
@@ -60,6 +60,16 @@ namespace DAL
             }
             return UserDTO;
         }
+
+
+        public void TwofactorActivation(string UserEmail)
+        {
+            int OTP = Convert.ToInt32(Generate.OTP(Code32.Encode(Generate.RandomKey(32)), 6, 30));
+        }
+        public bool TwofactorCheck(string Userinput)
+        {
+            return false;
+        }
         public bool CreateUser(UserDTO User, string password)
         {
             bool isdone = false;
@@ -69,7 +79,6 @@ namespace DAL
                 string insert = "INSERT INTO [User] (Name, Email, Role, IsActive, Password) VALUES (@Name, @Email, @Role ,@IsActive, @Password);";
                 using (conn)
                 {
-
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", User.Name);
@@ -267,107 +276,54 @@ namespace DAL
             return user;
         }
 
-        public string GetHashByEmail(string email)
+        public bool LinkDoctorToPatient(int patientID, int doctorID)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
+            bool isDone = false;
             try
             {
-                string select = "SELECT Password FROM [User] WHERE Email = @Email";
-                using (conn)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(select, conn))
+
+                    // Check if the record already exists
+                    string checkQuery = "SELECT COUNT(*) FROM Doctor_Patient WHERE Doctor_ID = @doctor_ID AND Patient_ID = @patient_ID";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        checkCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        checkCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int count = (int)checkCmd.ExecuteScalar();
+                        if (count > 0)
                         {
-                            if (reader.Read())
-                            {
-                                return reader.GetString(reader.GetOrdinal("Password"));
-                            }
+                            // Record already exists, return false
+                            return false;
+                        }
+                    }
+
+                    // Insert the new record
+                    string insertQuery = "INSERT INTO Doctor_Patient (Doctor_ID, Patient_ID) VALUES (@doctor_ID, @patient_ID)";
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        insertCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int rowsAffected = insertCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            isDone = true;
                         }
                     }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An SQL error occurred while reading a user: " + ex.Message);
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return null; // Return null if no password hash was found or an error occurred
-        }
-        public List<UserDTO> GetAllInactive()
-        {
-            List<UserDTO> Users = new List<UserDTO>();
-            SqlConnection conn = new SqlConnection(connectionString);
-            try
-            {
-                string select = "SELECT ID, Name, Email, Role FROM [User] WHERE IsActive = 0";
-                using (conn)
-                {
-                    using (SqlCommand cmd = new SqlCommand(select, conn))
-                    {
-                        conn.Open();
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                Users.Add(new UserDTO
-                                {
-                                    ID = reader.GetInt32(reader.GetOrdinal("ID")),
-                                    Name = reader.GetString(reader.GetOrdinal("Name")),
-                                    Email = reader.GetString(reader.GetOrdinal("Email")),
-                                    Role = (int)reader["Role"]
-                                });
-                            }
-                        }
-                    }
-                }
-                return Users;
-            }
-            catch (SqlException ex)
-            {
-                Debug.WriteLine("An SQL error occurred while retrieving Users: " + ex.Message);
-                return Users;
-            }
-            finally
-            {
-                conn.Close();
+                Console.WriteLine("An error occurred: " + ex.Message);
             }
 
+            return isDone;
         }
-        public bool SetActive(int id)
-        {
-            SqlConnection conn = new SqlConnection(connectionString);
-            try
-            {
-                string update = "UPDATE [User] SET IsActive= @IsActive WHERE ID = @ID";
-                using (conn)
-                {
-                    using (SqlCommand cmd = new SqlCommand(update, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", id);
-                        cmd.Parameters.AddWithValue("@IsActive", 1);
 
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        return true;
-                    }
-                }
-            }
-            catch (SqlException ex)
-            { 
-                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
-                return false;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
+
     }
 }
 

@@ -1,7 +1,14 @@
-﻿using Domain.Converter;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL;
 using Domain.Modules;
-using DTO;
 using Interfaces;
+using DTO;
+using System.Numerics;
+using Domain.Converter;
 
 namespace Domain.Containers.PatientFile
 {
@@ -19,45 +26,47 @@ namespace Domain.Containers.PatientFile
             List<int> PatientIDs = Dal.GetPatientIDOfUser(User.ID);
             foreach (int i in PatientIDs)
             {
-                PatientDTO dto = Dal.GetPatient(i);
-                if (dto != null)
-                {
-                    Patient patient = objectconverter.DTOToObject(dto);
-                    list.Add(patient);
-                }
+                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i));
+                list.Add(patient);
             }
             return list;
         }
+
+        public List<Patient> GetAllPatients()
+        {
+            List<Patient> list = new List<Patient>();
+            List<PatientDTO> dtos = Dal.GetAllPatients();
+
+            foreach (PatientDTO d in dtos)
+            {
+                Patient patient = new Patient(
+                    d.ID,
+                    d.Name,
+                    d.Email,
+                    d.PhoneNumber,
+                    d.MedicalHistory
+                );
+                list.Add(patient);
+            }
+
+            return list;
+        }
+
         public Patient GetPatient(int id)
         {
-            Patient patient = objectconverter.DTOToObject(Dal.GetPatient(id));
+            PatientDTO d = Dal.GetPatient(id);
+
+            Patient patient = new Patient(
+                   d.ID,
+                   d.Name,
+                   d.Email,
+                   d.PhoneNumber,
+                   d.MedicalHistory);
+
             return patient;
         }
-        public Patient GetPatientID(string email)
-        {
-            Patient patient = objectconverter.DTOToObject(Dal.GetPatientID(email));
-            return patient;
-        }
-        public List<int> GetPatientIDOfUser(int id)
-        {
-            return Dal.GetPatientIDOfUser(id);
-        }
-        public bool SetActive(int id)
-        {
-            return Dal.SetActive(id);
-        }
-        public List<Patient> GetInactivePatients()
-        {
-            List<Patient> patients = objectconverter.DTOListToObjectList(Dal.GetInactivePatients());
-            return patients;
-        }
-        public List<Patient> GetAll()
-        {
-            return objectconverter.DTOListToObjectList(Dal.Getall());
-        }
-        public bool AddPatient(Patient patient)
-        {
-            return Dal.CreatePatient(objectconverter.ObjectToDTO(patient));
-        }
+
+
+
     }
 }
