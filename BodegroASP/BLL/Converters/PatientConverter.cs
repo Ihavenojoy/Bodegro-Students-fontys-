@@ -1,4 +1,5 @@
 ﻿
+using DAL;
 using Domain.Modules;
 using DTO;
 using System;
@@ -46,8 +47,7 @@ namespace Domain.Converter
                 Name = patient.Name,
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber,
-                MedicalHistory = patient.MedicalHistory,
-                User_ID = patient.User_ID
+                MedicalHistory = patient.MedicalHistory
             };
         }
         public List<Patient> ListDTOToObject(List<PatientDTO> dto)

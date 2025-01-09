@@ -17,6 +17,7 @@ namespace Interfaces
         public bool SetActive(int id);
         public UserDTO GetUserByID(int id);
         public bool UpdateUser(UserDTO user, string password);
+        public bool LinkDoctorToPatient(int patientID, int doctorID);
         string GetHashByEmail(string email);
         public List<UserDTO> GetAllInactive();
     }

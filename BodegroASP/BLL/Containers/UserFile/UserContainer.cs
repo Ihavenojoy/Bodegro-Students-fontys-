@@ -15,6 +15,8 @@ namespace Domain.Containers.UserFile
     {
         private readonly IUser _UserService;
         UserConverter Userconverter = new UserConverter();
+
+
         public UserContainer(IUser context)
         {
             _UserService = context;
@@ -116,6 +118,11 @@ namespace Domain.Containers.UserFile
         public bool SetActive(int id)
         {
             return _UserService.SetActive(id);
+        }
+
+        public bool LinkDoctorToPatient(int  patientID, int doctorID)
+        {
+            return _UserService.LinkDoctorToPatient(patientID, doctorID);
         }
     }
 }

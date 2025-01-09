@@ -23,24 +23,49 @@ namespace BodegroASP.Controllers
         }
         public IActionResult Index()
         {
+            int id = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
             TwoFAViewModel model = new TwoFAViewModel()
             {
                 input = "",
-                UserID = Convert.ToInt32(HttpContext.Session.GetString("UserId"))
+                UserID = id
             };
+            _TwofactorContainer.Remove(id);
+            if (!_TwofactorContainer.Exist(id))
+            {
+                _TwofactorContainer.Create(id, _UserContainer.GetUserByID(id).Email);
+            }
+            _TwofactorContainer.Send(id, _UserContainer.GetUserByID(id).Email);
             return View(model);
         }
         public IActionResult Check(TwoFAViewModel model)
         {
             if (model.input != null)
             {
-                return RedirectToAction("Index", "Home");
+                if (_TwofactorContainer.check(model.UserID,model.input,DateTime.Now))
+                {
+                    TempData["ErrorMessage"] = "U bent succesvol ingelogd";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Verkeerde otp";
+                    return View("Index", model);
+                }
             }
-            return View("Index", model);
+            else
+            {
+                TempData["ErrorMessage"] = "Vul het veld in";
+                return View("Index", model);
+            }
         }
         public IActionResult ReSend(int userID)
         {
-            _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
+            _TwofactorContainer.Remove(userID);
+            if (!_TwofactorContainer.Exist(userID))
+            {
+                _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
+            }
+            _TwofactorContainer.Send(userID, _UserContainer.GetUserByID(userID).Email);
             TempData["ErrorMessage"] = "Has been sent" ;
             return RedirectToAction("Index");
         }

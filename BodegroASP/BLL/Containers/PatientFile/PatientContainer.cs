@@ -1,8 +1,14 @@
-﻿using Domain.Converter;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DAL;
 using Domain.Modules;
-using DTO;
 using Interfaces;
-using System.Net.Http;
+using DTO;
+using System.Numerics;
+using Domain.Converter;
 
 namespace Domain.Containers.PatientFile
 {

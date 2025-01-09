@@ -13,7 +13,11 @@ namespace DAL
 {
     public class SubscriptionDAL : ISubscription
     {
-        private readonly string connectionString;
+        private readonly string connectionString = "TrustServerCertificate=True;" +
+                    "Server=mssqlstud.fhict.local;" +
+                    "Database=dbi500009_grodebo;" +
+                    "User Id=dbi500009_grodebo;" +
+                    "Password=Grodebo;";
         public SubscriptionDAL(IConfiguration configuration)
         {
             connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
