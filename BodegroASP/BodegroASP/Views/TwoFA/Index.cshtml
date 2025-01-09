@@ -1,6 +1,7 @@
 ﻿@model TwoFAViewModel
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutNoNavBar.cshtml";
 }
 <form asp-action="Check" asp-controller="TwoFA" method="post">
     <div class="TwoFA-container" style="margin-bottom:20px; border:1px solid #ccc; padding:10px;">
