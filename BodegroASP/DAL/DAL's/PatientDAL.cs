@@ -7,35 +7,45 @@ using System.Threading.Tasks;
 using DTO;
 using Microsoft.Data.SqlClient;
 using Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class PatientDAL : IPatient
     {
-        private readonly string connectionString = "TrustServerCertificate=True;" +
-            "Server=mssqlstud.fhict.local;" +
-            "Database=dbi500009_grodebo;" +
-            "User Id=dbi500009_grodebo;" +
-            "Password=Grodebo;";
-        public int CreatePatient(PatientDTO patient)
+        private readonly string connectionString;
+        public PatientDAL(IConfiguration configuration)
         {
-            int insertedId = -1;
+            if (configuration is null)
+            {
+                connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
+            }
+            else
+            {
+                connectionString = configuration.GetConnectionString("DefaultConnection");
+            }
+
+        }
+        public bool CreatePatient(PatientDTO patient)
+        {
+            bool isdone = false;
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "INSERT INTO [Patient] (Doctor_ID, Name, Email, PhoneNumber, MedicalHistory) VALUES (@Doctor_ID, @Name, @Email, @PhoneNumber, @MedicalHistory); SELECT SCOPE_IDENTITY();";
+                string insert = "INSERT INTO [Patient] (Name, Email, PhoneNumber, MedicalHistory, IsActive) VALUES (@Name, @Email, @PhoneNumber, @MedicalHistory, @IsActive); SELECT SCOPE_IDENTITY();";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Doctor_ID", patient.ID);
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
-                        cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", patient.PhoneNumber);
                         cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
 
                         conn.Open();
-                        insertedId = Convert.ToInt32(cmd.ExecuteScalar());
+                        cmd.ExecuteScalar();
+                        isdone = true;
 
                     }
                 }
@@ -48,11 +58,11 @@ namespace DAL
             {
                 conn.Close();
             }
-            return insertedId;
+            return isdone;
         }
 
         // Method to read a product record by ID
-        public List<int> GetPatientIDOfDoctor(int id)
+        public List<int> GetPatientIDOfUser(int id)
         {
             List<int> list = new List<int>();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -79,7 +89,6 @@ namespace DAL
             catch (SqlException ex)
             {
                 Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
-                return null;
             }
             finally
             {
@@ -93,7 +102,7 @@ namespace DAL
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient WHERE ID = @ID";
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE ID = @ID AND IsActive = 1";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(select, conn))
@@ -105,7 +114,93 @@ namespace DAL
                         {
                             if (reader.Read())
                             {
-                                patient = new PatientDTO 
+                                patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                                return patient;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return null;
+        }
+        public List<PatientDTO> Getall()
+        {
+            PatientDTO patient = new PatientDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            List<PatientDTO> list = new List<PatientDTO>();
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE  IsActive = 1";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                                list.Add(patient);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+        public PatientDTO GetPatientID(string email)
+        {
+            PatientDTO patient = new PatientDTO();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE Email = @Email AND IsActive = 1";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                patient = new PatientDTO
                                 {
                                     ID = Convert.ToInt32(reader["ID"]),
                                     Name = Convert.ToString(reader["Name"]),
@@ -129,119 +224,109 @@ namespace DAL
             }
             return patient;
         }
-
-        public List<PatientDTO> GetAllPatients()
+        // Method to update a patient record
+        public bool UpdatePatient(PatientDTO patient)
         {
-            List<PatientDTO> list = new List<PatientDTO>();
-
-            string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory FROM Patient";
-
+            SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                using (SqlCommand cmd = new SqlCommand(select, conn))
+                string update = "UPDATE Patient SET Name = @Name, Email = @Email, PhoneNumber = @PhoneNumber, MedicalHistory = @MedicalHistory WHERE ID = @ID AND IsActive = 1";
+                using (conn)
                 {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
                     {
-                        while (reader.Read())
-                        {
-                            PatientDTO patient = new PatientDTO
-                            {
-                                ID = Convert.ToInt32(reader["ID"]),
-                                Name = reader["Name"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
-                                MedicalHistory = reader["MedicalHistory"].ToString()
-                            };
+                        cmd.Parameters.AddWithValue("@Name", patient.Name);
+                        cmd.Parameters.AddWithValue("@Email", patient.Email);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", patient.PhoneNumber);
+                        cmd.Parameters.AddWithValue("@MedicalHistory", patient.MedicalHistory);
 
-                            list.Add(patient);
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a patient: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        public List<PatientDTO> GetInactivePatients()
+        {
+            List<PatientDTO> patients = [];
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT ID, Name, Email, PhoneNumber, MedicalHistory, IsActive FROM Patient WHERE IsActive = 0";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PatientDTO patient = new PatientDTO
+                                {
+                                    ID = Convert.ToInt32(reader["ID"]),
+                                    Name = Convert.ToString(reader["Name"]),
+                                    Email = Convert.ToString(reader["Email"]),
+                                    PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
+                                    MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
+                                };
+                                patients.Add(patient);
+                            }
                         }
                     }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An SQL error occurred while retrieving patients: " + ex.Message);
+                Console.WriteLine("An SQL error occurred while reading a product: " + ex.Message);
+                return null;
             }
-
-            return list;
+            finally
+            {
+                conn.Close();
+            }
+            return patients;
         }
-
-        bool IPatient.CreatePatient(PatientDTO patient)
+        public bool SetActive(int id)
         {
-            throw new NotImplementedException();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string update = "UPDATE [Patient] SET IsActive= @IsActive WHERE ID = @ID";
+                using (conn)
+                {
+                    using (SqlCommand cmd = new SqlCommand(update, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", id);
+                        cmd.Parameters.AddWithValue("@IsActive", 1);
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
-
-        public List<int> GetPatientIDOfUser(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        //// Method to update a product record
-        //public bool UpdateProduct(ProductDTO product)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string update = "UPDATE Product SET Type = @Type, Standard_Value = @Standard_Value WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(update, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@Type", product.Type);
-        //                cmd.Parameters.AddWithValue("@Standard_Value", product.Standard_Value);
-        //                cmd.Parameters.AddWithValue("@ID", product.ID);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while updating a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
-
-        //// Method to delete a product record by ID
-        //public bool DeleteProduct(int id)
-        //{
-        //    SqlConnection conn = new SqlConnection(connectionString);
-        //    try
-        //    {
-        //        string delete = "DELETE FROM Product WHERE ID = @ID";
-        //        using (conn)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(delete, conn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@ID", id);
-
-        //                conn.Open();
-        //                cmd.ExecuteNonQuery();
-        //                return true;
-        //            }
-        //        }
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        Console.WriteLine("An SQL error occurred while deleting a product: " + ex.Message);
-        //        return false;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //}
 
         //// Method to get all products
         //public List<ProductDTO> GetAllProducts()

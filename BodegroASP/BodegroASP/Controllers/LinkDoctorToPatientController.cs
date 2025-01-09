@@ -18,7 +18,7 @@ namespace BodegroASP.Controllers
         public LinkDoctorToPatientController()
         {
             uc = new UserContainer(new UserDAL(configuration));
-            pc = new PatientContainer(new PatientDAL());
+            pc = new PatientContainer(new PatientDAL(configuration));
         }
         [HttpGet]
         public IActionResult LinkDoctorToPatient()
@@ -26,7 +26,7 @@ namespace BodegroASP.Controllers
             LinkDoctorToPatientViewModel model = new LinkDoctorToPatientViewModel();
 
             List<User> allDoctors = uc.GetAllUsers();
-            List<Patient> allPatients = pc.GetAllPatients();
+            List<Patient> allPatients = pc.GetAll();
 
             model.allDoctors = allDoctors.Select(d => new SelectListItem
             {
@@ -54,7 +54,7 @@ namespace BodegroASP.Controllers
             LinkDoctorToPatientViewModel Newmodel = new LinkDoctorToPatientViewModel();
 
             List<User> allDoctors = uc.GetAllUsers();
-            List<Patient> allPatients = pc.GetAllPatients();
+            List<Patient> allPatients = pc.GetAll();
 
             Newmodel.allDoctors = allDoctors.Select(d => new SelectListItem
             {
