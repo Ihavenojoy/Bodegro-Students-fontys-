@@ -26,10 +26,47 @@ namespace Domain.Containers.PatientFile
             List<int> PatientIDs = Dal.GetPatientIDOfUser(User.ID);
             foreach (int i in PatientIDs)
             {
-                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i, User.ID));
+                Patient patient = objectconverter.DTOToObject(Dal.GetPatient(i));
                 list.Add(patient);
             }
             return list;
         }
+
+        public List<Patient> GetAllPatients()
+        {
+            List<Patient> list = new List<Patient>();
+            List<PatientDTO> dtos = Dal.GetAllPatients();
+
+            foreach (PatientDTO d in dtos)
+            {
+                Patient patient = new Patient(
+                    d.ID,
+                    d.Name,
+                    d.Email,
+                    d.PhoneNumber,
+                    d.MedicalHistory
+                );
+                list.Add(patient);
+            }
+
+            return list;
+        }
+
+        public Patient GetPatient(int id)
+        {
+            PatientDTO d = Dal.GetPatient(id);
+
+            Patient patient = new Patient(
+                   d.ID,
+                   d.Name,
+                   d.Email,
+                   d.PhoneNumber,
+                   d.MedicalHistory);
+
+            return patient;
+        }
+
+
+
     }
 }

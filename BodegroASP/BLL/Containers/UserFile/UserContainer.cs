@@ -16,6 +16,8 @@ namespace Domain.Containers.UserFile
         private readonly IUser _UserService;
         UserConverter docconverter = new UserConverter();
         UserConverter Userconverter = new UserConverter();
+
+
         public UserContainer(IUser context)
         {
             _UserService = context;
@@ -74,6 +76,11 @@ namespace Domain.Containers.UserFile
         public bool UpdateUser(User User, string password)
         {
             return _UserService.UpdateUser(Userconverter.ObjectToDTO(User), password);
+        }
+
+        public bool LinkDoctorToPatient(int  patientID, int doctorID)
+        {
+            return _UserService.LinkDoctorToPatient(patientID, doctorID);
         }
     }
 }

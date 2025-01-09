@@ -15,8 +15,7 @@ namespace BodegroASP.Converters
                     Email = patient.Email,
                     MedicalHistory = patient.MedicalHistory,
                     Name = patient.Name,
-                    PhoneNumber = patient.PhoneNumber,
-                    User_ID = patient.User_ID
+                    PhoneNumber = patient.PhoneNumber
                 };
                 list.Add(temp);
             }

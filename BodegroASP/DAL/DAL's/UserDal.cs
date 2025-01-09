@@ -9,10 +9,14 @@ namespace DAL
 {
     public class UserDAL : IUser
     {
-        private readonly string connectionString;
+        private readonly string connectionString = "TrustServerCertificate=True;" +
+                    "Server=mssqlstud.fhict.local;" +
+                    "Database=dbi500009_grodebo;" +
+                    "User Id=dbi500009_grodebo;" +
+                    "Password=Grodebo;";
         public UserDAL(IConfiguration configuration)
         {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
+            // connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public UserDTO UserLogin(string Emailinput, string PassWordInput)
@@ -270,6 +274,53 @@ namespace DAL
                 conn.Close();
             }
             return user;
+        }
+
+        public bool LinkDoctorToPatient(int patientID, int doctorID)
+        {
+            bool isDone = false;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Check if the record already exists
+                    string checkQuery = "SELECT COUNT(*) FROM Doctor_Patient WHERE Doctor_ID = @doctor_ID AND Patient_ID = @patient_ID";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        checkCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int count = (int)checkCmd.ExecuteScalar();
+                        if (count > 0)
+                        {
+                            // Record already exists, return false
+                            return false;
+                        }
+                    }
+
+                    // Insert the new record
+                    string insertQuery = "INSERT INTO Doctor_Patient (Doctor_ID, Patient_ID) VALUES (@doctor_ID, @patient_ID)";
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        insertCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int rowsAffected = insertCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            isDone = true;
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+
+            return isDone;
         }
 
 

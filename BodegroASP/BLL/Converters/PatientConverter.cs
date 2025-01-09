@@ -18,8 +18,7 @@ namespace Domain.Converter
                 patientDTO.Name,
                 patientDTO.Email,
                 patientDTO.PhoneNumber,
-                patientDTO.MedicalHistory,
-                patientDTO.User_ID);
+                patientDTO.MedicalHistory);
             return patient;
         }
         public PatientDTO ObjectToDTO(Patient patient)
@@ -30,8 +29,7 @@ namespace Domain.Converter
                 Name = patient.Name,
                 Email = patient.Email,
                 PhoneNumber = patient.PhoneNumber,
-                MedicalHistory = patient.MedicalHistory,
-                User_ID = patient.User_ID
+                MedicalHistory = patient.MedicalHistory
             };
         }
     }

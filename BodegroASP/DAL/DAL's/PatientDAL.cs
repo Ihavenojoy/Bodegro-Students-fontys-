@@ -28,7 +28,7 @@ namespace DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Doctor_ID", patient.Doctor_ID);
+                        cmd.Parameters.AddWithValue("@Doctor_ID", patient.ID);
                         cmd.Parameters.AddWithValue("@Name", patient.Name);
                         cmd.Parameters.AddWithValue("@Email", patient.Email);
                         cmd.Parameters.AddWithValue("@Number", patient.PhoneNumber);
@@ -87,7 +87,7 @@ namespace DAL
             }
             return list;
         }
-        public PatientDTO GetPatient(int id, int DoctorID)
+        public PatientDTO GetPatient(int id)
         {
             PatientDTO patient = new PatientDTO();
             SqlConnection conn = new SqlConnection(connectionString);
@@ -112,7 +112,6 @@ namespace DAL
                                     Email = Convert.ToString(reader["Email"]),
                                     PhoneNumber = Convert.ToInt32(reader["PhoneNumber"]),
                                     MedicalHistory = Convert.ToString(reader["MedicalHistory"]),
-                                    Doctor_ID = DoctorID
                                 };
                             }
                         }
@@ -168,6 +167,16 @@ namespace DAL
             }
 
             return list;
+        }
+
+        bool IPatient.CreatePatient(PatientDTO patient)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<int> GetPatientIDOfUser(int id)
+        {
+            throw new NotImplementedException();
         }
 
 
