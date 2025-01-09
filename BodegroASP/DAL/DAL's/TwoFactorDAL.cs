@@ -26,16 +26,17 @@ namespace DAL.DAL_s
             try
             {
                 string insert = "INSERT INTO [User_2FA] (ID, OTP, SentTime) VALUES (@ID, @OTP, @SentTime)";
+
                 using (conn)
                 {
+                    conn.Open();
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@ID", userid);
                         cmd.Parameters.AddWithValue("@OTP", key);
                         cmd.Parameters.AddWithValue("@SentTime", senttime);
-                        conn.Open();
-                        cmd.ExecuteScalar();
-                        result = true;
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        result = rowsAffected > 0;
                     }
                 }
             }
@@ -55,14 +56,14 @@ namespace DAL.DAL_s
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "SELECT COUNT FROM [User_2FA] Where (ID = @ID)";
+                string insert = "SELECT * FROM [User_2FA] Where (ID = @ID)";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@ID", userid);
                         conn.Open();
-                        int count = (int)cmd.ExecuteScalar();
+                        int count = (int)cmd.ExecuteNonQuery();
                         if (count > 0) { result = true; };
                     }
                 }
@@ -86,12 +87,12 @@ namespace DAL.DAL_s
                 string insert = "DELETE FROM [User_2FA] Where (ID = @ID)";
                 using (conn)
                 {
+                    conn.Open();
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@ID", userid);
-                        conn.Open();
-                        int count = (int)cmd.ExecuteScalar();
-                        if (count > 0) { result = true; };
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0) { result = true; };
                     }
                 }
             }
@@ -112,7 +113,7 @@ namespace DAL.DAL_s
             SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                string insert = "SELECT  FROM [User_2FA] ID, OTP, SentTime";
+                string insert = "SELECT ID, OTP, SentTime FROM [User_2FA] ";
                 using (conn)
                 {
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
@@ -172,6 +173,44 @@ namespace DAL.DAL_s
                 conn.Close();
             }
             return result;
+        }
+        public TwoFactorDTO GetById(int userid)
+        {
+            TwoFactorDTO twofactor = new();
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string insert = "SELECT ID, OTP, SentTime FROM [User_2FA] Where ID = @ID";
+                using (conn)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(insert, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ID", userid);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                twofactor = new()
+                                {
+                                    UserId = (int)reader["ID"],
+                                    OTP = (string)reader["OTP"],
+                                    RequestTime = (DateTime)reader["SentTime"]
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Debug.WriteLine("An SQL error occurred while creating a protocol: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return twofactor;
         }
     }
 }

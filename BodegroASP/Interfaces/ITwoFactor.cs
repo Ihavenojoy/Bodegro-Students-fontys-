@@ -14,5 +14,6 @@ namespace Interfaces
         public bool Remove(int userid);
         public Task<List<TwoFactorDTO>> GetAll();
         public bool Check(int userid, string passwordinput);
+        public TwoFactorDTO GetById(int userid);
     }
 }

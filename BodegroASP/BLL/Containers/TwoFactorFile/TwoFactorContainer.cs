@@ -1,13 +1,8 @@
-﻿using Domain.Converter;
-using Domain.Converters;
+﻿using Domain.Converters;
 using Domain.Modules;
+using Domain.Services;
 using Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using Twofactor;
 
 namespace Domain.Containers.TwoFactorFile
@@ -17,14 +12,28 @@ namespace Domain.Containers.TwoFactorFile
     {
         private ITwoFactor Dal;
         private TwoFactorConverter converter = new();
+        private MailServicesTwoFactor mail = new MailServicesTwoFactor();
+
         public TwoFactorContainer(ITwoFactor dal)
         {
             Dal = dal;
         }
-        public bool Create(int userid)
-        {
-            string code = Code32.Encode(Generate.RandomKey(6));
-            return Dal.Create(userid, code, DateTime.Now);
+        public bool Create(int userid, string usermail)
+        {       
+            if (!Dal.Exist(userid))
+            {
+                string code = Code32.Encode(Generate.RandomKey(6));
+                if (Dal.Create(userid, code, DateTime.Now));
+                {
+                    return mail.SentTwofactor(code, usermail); 
+                }
+                
+            }
+            else
+            {
+                return mail.SentTwofactor(Dal.GetById(userid).OTP,usermail); 
+            }
+
         }
         public bool Remove(int userid)
         {
@@ -42,7 +51,7 @@ namespace Domain.Containers.TwoFactorFile
         public async Task<List<TwoFactor>> GetAll()
         {
             var list = await Dal.GetAll();
-            return  converter.DTOListToObjectList(list);
+            return converter.DTOListToObjectList(list);
         }
     }
 }
