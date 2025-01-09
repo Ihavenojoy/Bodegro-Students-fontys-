@@ -14,7 +14,7 @@ namespace Domain.Services
         EmailContainer EmailContainer = new EmailContainer();
         public bool SentTwofactor(string OTP, string email)
         {
-            MailMessage mailMessage = EmailContainer.MailMessage(email, Domain.Enums.EmailBody.TWOFACTOR, Convert.ToString(DateTime.Now.AddDays(7)));
+            MailMessage mailMessage = EmailContainer.MailMessage(email, Domain.Enums.EmailBody.TWOFACTOR, OTP);
             return EmailContainer.SendEmail(mailMessage);
 
         }

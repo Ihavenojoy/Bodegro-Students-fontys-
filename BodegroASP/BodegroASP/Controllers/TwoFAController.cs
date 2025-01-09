@@ -23,11 +23,18 @@ namespace BodegroASP.Controllers
         }
         public IActionResult Index()
         {
+            int id = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
             TwoFAViewModel model = new TwoFAViewModel()
             {
                 input = "",
-                UserID = Convert.ToInt32(HttpContext.Session.GetString("UserId"))
+                UserID = id
             };
+            _TwofactorContainer.Remove(id);
+            if (!_TwofactorContainer.Exist(id))
+            {
+                _TwofactorContainer.Create(id, _UserContainer.GetUserByID(id).Email);
+            }
+            _TwofactorContainer.Send(id, _UserContainer.GetUserByID(id).Email);
             return View(model);
         }
         public IActionResult Check(TwoFAViewModel model)
@@ -53,7 +60,8 @@ namespace BodegroASP.Controllers
         }
         public IActionResult ReSend(int userID)
         {
-            if (_TwofactorContainer.Exist(userID))
+            _TwofactorContainer.Remove(userID);
+            if (!_TwofactorContainer.Exist(userID))
             {
                 _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
             }

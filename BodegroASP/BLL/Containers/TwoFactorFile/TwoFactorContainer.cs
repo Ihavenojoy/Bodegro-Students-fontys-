@@ -20,19 +20,8 @@ namespace Domain.Containers.TwoFactorFile
         }
         public bool Create(int userid, string usermail)
         {       
-            if (!Dal.Exist(userid))
-            {
-                string code = Code32.Encode(Generate.RandomKey(6));
-                if (Dal.Create(userid, code, DateTime.Now));
-                {
-                    return mail.SentTwofactor(code, usermail); 
-                }
-                
-            }
-            else
-            {
-                return mail.SentTwofactor(Dal.GetById(userid).OTP,usermail); 
-            }
+         string code = Code32.Encode(Generate.RandomKey(32));
+         return Dal.Create(userid, code, DateTime.Now) ;
 
         }
         public bool Remove(int userid)
@@ -54,7 +43,7 @@ namespace Domain.Containers.TwoFactorFile
         }
         public bool Send(int userid, string usermail)
         {
-            return mail.SentTwofactor(Dal.GetById(userid).OTP, usermail);
+            return mail.SentTwofactor(Generate.OTP(Dal.GetById(userid).OTP, Dal.GetById(userid).RequestTime), usermail);
         }
     }
 }
