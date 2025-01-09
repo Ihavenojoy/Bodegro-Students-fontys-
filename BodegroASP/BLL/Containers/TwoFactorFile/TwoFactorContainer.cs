@@ -39,10 +39,9 @@ namespace Domain.Containers.TwoFactorFile
         {
             return Dal.Remove(userid);
         }
-        public bool check(int userid, string password)
-        {
-            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-            return Dal.Check(userid, Code32.Encode(passwordBytes));
+        public bool check(int userid, string password, DateTime time)
+        { 
+            return Validation.OTP(Dal.GetById(userid).OTP,password, time);
         }
         public bool Exist(int userid)
         {
@@ -52,6 +51,10 @@ namespace Domain.Containers.TwoFactorFile
         {
             var list = await Dal.GetAll();
             return converter.DTOListToObjectList(list);
+        }
+        public bool Send(int userid, string usermail)
+        {
+            return mail.SentTwofactor(Dal.GetById(userid).OTP, usermail);
         }
     }
 }

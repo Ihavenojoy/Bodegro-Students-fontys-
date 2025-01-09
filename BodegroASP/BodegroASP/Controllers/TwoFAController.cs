@@ -34,13 +34,30 @@ namespace BodegroASP.Controllers
         {
             if (model.input != null)
             {
-                return RedirectToAction("Index", "Home");
+                if (_TwofactorContainer.check(model.UserID,model.input,DateTime.Now))
+                {
+                    TempData["ErrorMessage"] = "U bent succesvol ingelogd";
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Verkeerde otp";
+                    return View("Index", model);
+                }
             }
-            return View("Index", model);
+            else
+            {
+                TempData["ErrorMessage"] = "Vul het veld in";
+                return View("Index", model);
+            }
         }
         public IActionResult ReSend(int userID)
         {
-            _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
+            if (_TwofactorContainer.Exist(userID))
+            {
+                _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
+            }
+            _TwofactorContainer.Send(userID, _UserContainer.GetUserByID(userID).Email);
             TempData["ErrorMessage"] = "Has been sent" ;
             return RedirectToAction("Index");
         }
