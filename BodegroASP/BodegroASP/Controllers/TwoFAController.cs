@@ -11,9 +11,12 @@ namespace BodegroASP.Controllers
     {
         private TwoFactorContainer _TwofactorContainer;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         ITwoFactor Dal;
         public TwoFAController(ITwoFactor dal)
 =======
+=======
+>>>>>>> Stashed changes
         private Twofactor
         private UserContainer _UserContainer; 
         ITwoFactor Daltwofactor;
@@ -58,12 +61,18 @@ namespace BodegroASP.Controllers
         public IActionResult ReSend(int userID)
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             _TwofactorContainer.Create(userID);
 =======
+=======
+>>>>>>> Stashed changes
             if (_TwofactorContainer.Exist(userID))
             {
                 _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email, DateTime.Now);
             }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             TempData["ErrorMessage"] = "Has been sent" ;
             return RedirectToAction("Index");

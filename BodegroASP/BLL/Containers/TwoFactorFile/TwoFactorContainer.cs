@@ -22,10 +22,16 @@ namespace Domain.Containers.TwoFactorFile
             Dal = dal;
         }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public bool Create(int userid)
         {
             string code = Code32.Encode(Generate.RandomKey(6));
             return Dal.Create(userid, code, DateTime.Now);
+=======
+        public bool Create(int userid, string usermail, DateTime senttime)
+        {
+            return Dal.Create(userid, usermail, senttime);
+>>>>>>> Stashed changes
 =======
         public bool Create(int userid, string usermail, DateTime senttime)
         {
@@ -48,6 +54,10 @@ namespace Domain.Containers.TwoFactorFile
         {
             var list = await Dal.GetAll();
             return  converter.DTOListToObjectList(list);
+        }
+        public bool Send (string OTP, string mail)
+        {
+            return mail.SentTwofactor(OTP, mail);
         }
         public bool Send (string OTP, string mail)
         {
