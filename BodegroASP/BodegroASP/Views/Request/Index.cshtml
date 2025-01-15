@@ -1,6 +1,14 @@
 @model List<RequestViewModel>
 
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewBag.Title = "All requests";
     Layout = "_Layout";
 }
@@ -13,9 +21,9 @@
     <thead class="thead-dark">
     <tr>
         <th>ID</th>
-        <th>Important</th>
-        <th>Actions</th>
-        <th>Details</th>
+        <th>Belangrijk</th>
+        <th>Acties</th>
+        <th>Becshrijving</th>
     </tr>
     </thead>
     <tbody>
@@ -29,19 +37,19 @@
                 <form asp-action="UpdateRequest" method="post" style="display: inline;">
                     <input type="hidden" name="id" value="@item.id" />
                     <input type="hidden" name="accepted" value="1" />
-                    <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                    <button type="submit" class="btn btn-success btn-sm">Accepteren</button>
                 </form>
 
                 <!-- Decline Button -->
                 <form asp-action="UpdateRequest" method="post" style="display: inline;">
                     <input type="hidden" name="id" value="@item.id" />
                     <input type="hidden" name="accepted" value="0" />
-                    <button type="submit" class="btn btn-danger btn-sm">Decline</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Weigeren</button>
                 </form>
             </td>
             <td>
                 <!-- Details Button -->
-                <a asp-action="GetRequest" asp-route-id="@item.id" class="btn btn-info btn-sm">Details</a>
+                <a asp-action="GetRequest" asp-route-id="@item.id" class="btn btn-info btn-sm">Informatie</a>
             </td>
         </tr>
     }

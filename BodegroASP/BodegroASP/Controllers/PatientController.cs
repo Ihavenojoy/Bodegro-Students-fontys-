@@ -18,7 +18,7 @@ using System.Reflection;
 
 namespace BodegroASP.Controllers
 {
-    public class PatientController : Controller
+    public class PatientController : BaseController
     {
         private PatientContainer _patientserver;
         private ProtocolContainer _protocolserver;

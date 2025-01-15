@@ -1,22 +1,30 @@
 ﻿@model LinkDoctorToPatientViewModel
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "LinkDoctortoPatient";
 }
 
-<h1>Link Doctor to Patient</h1>
+<h1>Koppel patiënt naar Doctor</h1>
 
 <form asp-action="LinkDoctorToPatient" method="post">
     <div class="form-group">
-        <label for="doctor">Select Doctor</label>
+        <label for="doctor">Selecteer doctor</label>
         <select asp-for="SelectedDoctorID" asp-items="Model.allDoctors" class="form-control">
-            <option value="">-- Select a Doctor --</option>
+            <option value="">-- Selecteer een doctor --</option>
         </select>
     </div>
     <div class="form-group">
         <label for="patient">Select Patient</label>
         <select asp-for="SelectedPatientID" asp-items="Model.allPatients" class="form-control">
-            <option value="">-- Select a Patient --</option>
+            <option value="">-- Selecteer een patiënt --</option>
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Link</button>
+    <button type="submit" class="btn btn-primary">Koppelen</button>
 </form>

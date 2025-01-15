@@ -10,7 +10,7 @@ using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
-    public class MailController : Controller
+    public class MailController : BaseController
     {
         MailConvertert MailConvertert;
         MailServices MailContainer;

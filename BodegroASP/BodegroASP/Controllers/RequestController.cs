@@ -6,7 +6,7 @@ using BodegroASP.Models;
 
 namespace BodegroASP.Controllers;
 
-public class RequestController : Controller
+public class RequestController : BaseController
 {
     private RequestContainer _container;
     private IRequest DAL;

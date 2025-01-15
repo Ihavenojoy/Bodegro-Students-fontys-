@@ -1,6 +1,14 @@
 @model RequestDetailsViewModel
 
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
@@ -13,13 +21,13 @@
         Request ID: @Model.id
     </div>
     <div class="card-body">
-        <h5 class="card-title">Details</h5>
+        <h5 class="card-title">Beschrijving</h5>
         <p class="card-text">@Model.description</p>
 
-        <h5 class="card-title">Explanation</h5>
+        <h5 class="card-title">Uitleg</h5>
         <p class="card-text">@Model.explanation</p>
 
-        <h5 class="card-title">Important</h5>
+        <h5 class="card-title">Belangrijk</h5>
 
         <p class="card-text">@Model.important</p>
 
@@ -27,20 +35,20 @@
         <p class="card-text">
             @if (Model.finished == null)
             {
-                <span class="text-warning">Not been accepted yet</span>
+                <span class="text-warning">Nog niet geaccepteerd</span>
             }
             else if (Model.finished == 1)
             {
-                <span class="text-success">Accepted</span>
+                <span class="text-success">Geaccepteerd</span>
             }
             else
             {
-                <span class="text-danger">Declined</span>
+                <span class="text-danger">Geweigerd</span>
             }
         </p>
     </div>
 </div>
 
 <div class="mt-3">
-    <a asp-action="Index" class="btn btn-primary">Back to All Requests</a>
+    <a asp-action="Index" class="btn btn-primary">Terug naar alle verzoeken</a>
 </div>

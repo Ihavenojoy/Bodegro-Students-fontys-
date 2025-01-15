@@ -1,5 +1,13 @@
 ﻿@model MailFormViewModel
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "Index";
 }
 <form asp-action="Search" asp-controller="Mail">

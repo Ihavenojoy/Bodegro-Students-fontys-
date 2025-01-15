@@ -1,11 +1,19 @@
 @model CreateRequestModel
 
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewBag.Title = "Create Request";
     Layout = "_Layout";
 }
 
-<h2>Create a request</h2>
+<h2>Verzoek aanmaken</h2>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="CreateRequestForReal">

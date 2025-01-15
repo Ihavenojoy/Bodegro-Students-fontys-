@@ -1,5 +1,13 @@
 ﻿@model List<PatientViewModel>
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "Patiënten";
 }
 
@@ -12,12 +20,12 @@
             <p><strong>Telefoon nummer:</strong> @patient.PhoneNumber</p>
 
             <p class="medical-history">
-                <strong>Medice Historie:</strong>
+                <strong>Medische geschiedenis:</strong>
                 @if (patient.MedicalHistory.Length > 150)
                 {
                     <span class="short-text">@patient.MedicalHistory.Substring(0, 150)...</span>
                     <span class="full-text" style="display: none;">@patient.MedicalHistory</span>
-                    <button type="button" class="toggle-history">Show More</button>
+                    <button type="button" class="toggle-history">Zie meer</button>
                 }
                 else
                 {

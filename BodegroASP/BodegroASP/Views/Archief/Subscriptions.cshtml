@@ -1,5 +1,13 @@
 ﻿@model List<SubscriptionViewModel>
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "Index";
 }
 
@@ -10,7 +18,7 @@
             <h3>@Subscription.Patient.Name</h3>
             <p><strong>Email: </strong>@Subscription.Patient.Email</p>
             <p><strong>Voor: </strong>@Subscription.Protocol.Name</p>
-            <p><strong>Startdatum: </strong>@Subscription.StartDate</p>
+            <p><strong>Start datum: </strong>@Subscription.StartDate</p>
 
             <form method="post" asp-action="ArchiveSubscription" asp-controller="Archief">
                 <input type="hidden" name="id" value="@Subscription.ID" />

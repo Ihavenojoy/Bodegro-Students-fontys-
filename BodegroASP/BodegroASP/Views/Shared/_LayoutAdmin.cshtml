@@ -20,12 +20,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient</a>
                         </li>
                         <li class="nav-item">
@@ -46,14 +40,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="LinkDoctorToPatient" asp-action="LinkDoctorToPatient">Doctor Patient kopelen</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TwoFA" asp-action="Index">2FA</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
-                        </li>
-                        
-                        <ul class="navbar-nav">
+
+                        <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <form asp-controller="Login" asp-action="LogOut" method="post" class="form-inline">
                                     <button type="submit" class="btn btn-outline-dark">Logout</button>
