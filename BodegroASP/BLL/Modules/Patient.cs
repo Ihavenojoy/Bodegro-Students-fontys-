@@ -9,7 +9,7 @@ namespace Domain.Modules
 {
     public class Patient
     {
-        public int ID { get;}
+        public int ID { get; }
         public string Name { get; set; }
         public string Email { get; set; }
         public int PhoneNumber { get; set; }

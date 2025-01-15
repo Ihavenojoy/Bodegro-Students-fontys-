@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Modules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Twofactor
                 Array.Reverse(timeBytes);
 
                 // Generate the TOTP for this specific time step
-                string generatedCode = Generate.OTP(secretKey, digits);
+                string generatedCode = Generate.OTP(secretKey, requesttime);
                 if (generatedCode == inputCode)
                 {
                     return true;

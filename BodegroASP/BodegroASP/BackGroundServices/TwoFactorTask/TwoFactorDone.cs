@@ -4,7 +4,7 @@ using Domain.Modules;
 
 namespace BodegroASP.BackGroundServices.TwoFactorTask
 {
-    public class TwoFactorDone
+    public class TwoFactorDone : ITwoFactorDone
     {
         IConfiguration _configuration;
         public TwoFactorContainer container;

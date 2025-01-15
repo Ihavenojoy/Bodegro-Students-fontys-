@@ -24,7 +24,7 @@ namespace DAL
             {
                 connectionString = configuration.GetConnectionString("DefaultConnection");
             }
-            
+
         }
         public bool CreatePatient(PatientDTO patient)
         {

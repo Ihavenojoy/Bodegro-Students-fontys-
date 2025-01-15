@@ -43,7 +43,7 @@ namespace BodegroASP.Controllers
 
                 await SignInUser(user);
                 HttpContext.Session.SetString("UserId", user.ID.ToString());
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "TwoFA");
             }
             catch (Exception ex)
             {

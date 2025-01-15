@@ -2,18 +2,22 @@
 using DTO;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using Twofactor;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
     public class UserDAL : IUser
     {
-        private readonly string connectionString;
+        private readonly string connectionString = "TrustServerCertificate=True;" +
+                    "Server=mssqlstud.fhict.local;" +
+                    "Database=dbi500009_grodebo;" +
+                    "User Id=dbi500009_grodebo;" +
+                    "Password=Grodebo;";
 
         public UserDAL(IConfiguration configuration)
         {
-            connectionString = "Server=mssqlstud.fhict.local;Database=dbi500009_grodebo;User Id=dbi500009_grodebo;Password=Grodebo;TrustServerCertificate=True;";
-            //connectionString = configuration.GetConnectionString("DefaultConnection");
+            // connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public UserDTO UserLogin(string Emailinput)
@@ -35,7 +39,7 @@ namespace DAL
                         //cmd.Parameters.AddWithValue("@Password", PassWordInput);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.Read()) 
+                            if (reader.Read())
                             {
                                 UserDTO = new UserDTO
                                 {
@@ -60,6 +64,7 @@ namespace DAL
             }
             return UserDTO;
         }
+
         public bool CreateUser(UserDTO User, string password)
         {
             bool isdone = false;
@@ -69,7 +74,6 @@ namespace DAL
                 string insert = "INSERT INTO [User] (Name, Email, Role, IsActive, Password) VALUES (@Name, @Email, @Role ,@IsActive, @Password);";
                 using (conn)
                 {
-
                     using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
                         cmd.Parameters.AddWithValue("@Name", User.Name);
@@ -81,7 +85,6 @@ namespace DAL
                         conn.Open();
                         cmd.ExecuteScalar();
                         isdone = true;
-
                     }
                 }
             }
@@ -95,6 +98,7 @@ namespace DAL
             }
             return isdone;
         }
+
         public bool UserExists(string email)
         {
             int count = 0;
@@ -123,8 +127,6 @@ namespace DAL
             return count > 0;
         }
 
-
-        // Method to update a user record
         public bool UpdateUser(UserDTO user, string password)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -158,6 +160,7 @@ namespace DAL
                 conn.Close();
             }
         }
+
         public bool SoftDeleteUser(int id)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -186,6 +189,7 @@ namespace DAL
                 conn.Close();
             }
         }
+
         public List<UserDTO> GetAllUsers()
         {
             List<UserDTO> Users = new List<UserDTO>();
@@ -223,8 +227,8 @@ namespace DAL
             {
                 conn.Close();
             }
-
         }
+
         public UserDTO GetUserByID(int id)
         {
             UserDTO user = new UserDTO();
@@ -267,38 +271,50 @@ namespace DAL
             return user;
         }
 
-        public string GetHashByEmail(string email)
+        public bool LinkDoctorToPatient(int patientID, int doctorID)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
+            bool isDone = false;
             try
             {
-                string select = "SELECT Password FROM [User] WHERE Email = @Email";
-                using (conn)
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(select, conn))
+
+                    string checkQuery = "SELECT COUNT(*) FROM Doctor_Patient WHERE Doctor_ID = @doctor_ID AND Patient_ID = @patient_ID";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Email", email);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        checkCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        checkCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int count = (int)checkCmd.ExecuteScalar();
+                        if (count > 0)
                         {
-                            if (reader.Read())
-                            {
-                                return reader.GetString(reader.GetOrdinal("Password"));
-                            }
+                            return false;
+                        }
+                    }
+
+                    string insertQuery = "INSERT INTO Doctor_Patient (Doctor_ID, Patient_ID) VALUES (@doctor_ID, @patient_ID)";
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@doctor_ID", doctorID);
+                        insertCmd.Parameters.AddWithValue("@patient_ID", patientID);
+
+                        int rowsAffected = insertCmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            isDone = true;
                         }
                     }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An SQL error occurred while reading a user: " + ex.Message);
+                Console.WriteLine("An error occurred: " + ex.Message);
             }
-            finally
-            {
-                conn.Close();
-            }
-            return null; // Return null if no password hash was found or an error occurred
+
+            return isDone;
         }
+
         public List<UserDTO> GetAllInactive()
         {
             List<UserDTO> Users = new List<UserDTO>();
@@ -337,8 +353,43 @@ namespace DAL
             {
                 conn.Close();
             }
-
         }
+
+        public string GetHashByEmail(string email)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            try
+            {
+                string select = "SELECT Password FROM [User] WHERE Email = @Email";
+                using (conn)
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(select, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Email", email);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                return reader.GetString(reader.GetOrdinal("Password"));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An SQL error occurred while reading a user: " + ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return null;
+        }
+
+
+
         public bool SetActive(int id)
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -359,7 +410,7 @@ namespace DAL
                 }
             }
             catch (SqlException ex)
-            { 
+            {
                 Console.WriteLine("An SQL error occurred while updating a user: " + ex.Message);
                 return false;
             }
@@ -370,6 +421,3 @@ namespace DAL
         }
     }
 }
-
-
-

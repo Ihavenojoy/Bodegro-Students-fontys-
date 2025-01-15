@@ -1,6 +1,7 @@
 using Azure;
 using BodegroASP.BackGroundServices;
 using BodegroASP.BackGroundServices.MailTask;
+using BodegroASP.BackGroundServices.TwoFactorTask;
 using DAL;
 using DAL.DAL_s;
 using Domain.Containers.PatientFile;
@@ -11,6 +12,7 @@ using Domain.Modules;
 using Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Web;
+using Twofactor;
 
 
 namespace BodegroASP
@@ -25,6 +27,8 @@ namespace BodegroASP
             var logger = _serviceProvider.GetService<ILogger<MailBackGroundService>>();
             var mailBackGroundService = new MailBackGroundService(_serviceProvider, logger);
             Task.Run(() => mailBackGroundService.StartAsync(CancellationToken.None));
+            var TwoFactorService = new TwoFactorDone();
+            Task.Run(() => TwoFactorService.ValidTwoFactorCheck());
             var builder = WebApplication.CreateBuilder(args);
             var services = builder.Services;
 
