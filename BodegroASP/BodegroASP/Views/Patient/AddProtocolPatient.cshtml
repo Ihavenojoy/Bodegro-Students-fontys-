@@ -1,6 +1,14 @@
 ﻿@using BodegroASP.Models
 @model BodegroASP.Models.AddProtocolPatientViewModel
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     @if (TempData["SuccessMessage"] != null)
     {
         <script type="text/javascript">
@@ -89,7 +97,7 @@
             <p><strong>Naam:</strong> @Model.Patient.Name</p>
             <p><strong>Email:</strong> @Model.Patient.Email</p>
             <p><strong>Telefoon nr.:</strong> @Model.Patient.PhoneNumber</p>
-            <p><strong>Medice Historie:</strong> @Model.Patient.MedicalHistory</p>
+            <p><strong>Medische geschiedenis:</strong> @Model.Patient.MedicalHistory</p>
         </div>
 
         <!-- Calendar Section -->

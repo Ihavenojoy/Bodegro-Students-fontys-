@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BodegroASP.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
 
         private readonly UserContainer userContainer;

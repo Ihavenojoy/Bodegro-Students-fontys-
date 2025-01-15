@@ -1,5 +1,13 @@
 ﻿@model List<UserViewModel>
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "Gebruikers";
 }
 

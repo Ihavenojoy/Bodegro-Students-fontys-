@@ -10,7 +10,7 @@ using System.Text;
 
 namespace BodegroASP.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly UserContainer _userContainer;
 
@@ -43,6 +43,8 @@ namespace BodegroASP.Controllers
 
                 await SignInUser(user);
                 HttpContext.Session.SetString("UserId", user.ID.ToString());
+                HttpContext.Session.SetString("UserName", user.Name.ToString());
+                HttpContext.Session.SetString("UserRole", user.Role.ToString());
                 return RedirectToAction("Index", "TwoFA");
             }
             catch (Exception ex)
@@ -58,7 +60,9 @@ namespace BodegroASP.Controllers
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync("CookieAuth");
-            HttpContext.Session.SetString("UserId", "-1");
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("UserRole");
             return RedirectToAction("LogIn");
         }
 

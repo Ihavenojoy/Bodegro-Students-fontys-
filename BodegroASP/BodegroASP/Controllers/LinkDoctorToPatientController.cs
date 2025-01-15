@@ -10,7 +10,7 @@ using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
-    public class LinkDoctorToPatientController : Controller
+    public class LinkDoctorToPatientController : BaseController
     {
         private readonly UserContainer uc;
         private readonly PatientContainer pc;

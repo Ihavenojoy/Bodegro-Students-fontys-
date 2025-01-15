@@ -1,3 +1,13 @@
 ﻿@using BodegroASP
 @using BodegroASP.Models
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
+}

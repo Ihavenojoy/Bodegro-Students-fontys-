@@ -8,7 +8,7 @@ using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
-    public class TwoFAController : Controller
+    public class TwoFAController : BaseController
     {
         private TwoFactorContainer _TwofactorContainer;
         private UserContainer _UserContainer; 

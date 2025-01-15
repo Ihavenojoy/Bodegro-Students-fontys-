@@ -11,7 +11,7 @@ using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
-    public class ArchiefController : Controller
+    public class ArchiefController : BaseController
     {
         PatientConvertert PatientConverter { get; set; }
         ProtocolConvertert ProtocolConverter { get; set; }

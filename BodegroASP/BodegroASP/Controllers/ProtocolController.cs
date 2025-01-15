@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BodegroASP.Controllers
 {
-    public class ProtocolController : Controller
+    public class ProtocolController : BaseController
     {
         ProtocolContainer protocolContainer;
         StepContainer stepContainer;

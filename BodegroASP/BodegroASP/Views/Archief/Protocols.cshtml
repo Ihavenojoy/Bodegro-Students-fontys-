@@ -1,5 +1,13 @@
 ﻿@model List<ProtocolViewModel>
 @{
+    if (ViewBag.UserRole == "Admin")
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+    }
     ViewData["Title"] = "Protocolen";
 }
 
@@ -9,7 +17,7 @@
         <div class="protocol-card">
             <h3>@protocol.Name</h3>
             <p><strong>Hoeveelheid Stappen: </strong> @protocol.Steps.Count</p>
-            <p><strong>Omschrijving: </strong> @protocol.Description</p>
+            <p><strong>Beschrijving: </strong> @protocol.Description</p>
 
             <form method="post" asp-action="ArchiveProtocol" asp-controller="Archief">
                 <input type="hidden" name="id" value="@protocol.ID" />
