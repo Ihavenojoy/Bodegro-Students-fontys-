@@ -60,7 +60,7 @@ namespace BodegroTestPlan.MockDal
 
         public List<int> GetPatientIDOfUser(int id)
         {
-            List<int> ints = new List<int>() { 6, 2, 63, 7, 2,, 3, 6, 2 };
+            List<int> ints = new List<int>() { 6, 2, 63, 7, 2, 3, 6, 2 };
             MockIntList = ints;
             return ints;
         }
