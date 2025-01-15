@@ -1,8 +1,13 @@
-﻿using Domain.Converters;
+﻿using Domain.Converter;
+using Domain.Converters;
 using Domain.Modules;
-using Domain.Services;
 using Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Twofactor;
 
 namespace Domain.Containers.TwoFactorFile
@@ -12,25 +17,28 @@ namespace Domain.Containers.TwoFactorFile
     {
         private ITwoFactor Dal;
         private TwoFactorConverter converter = new();
-        private MailServicesTwoFactor mail = new MailServicesTwoFactor();
-
         public TwoFactorContainer(ITwoFactor dal)
         {
             Dal = dal;
         }
-        public bool Create(int userid, string usermail)
-        {       
-         string code = Code32.Encode(Generate.RandomKey(32));
-         return Dal.Create(userid, code, DateTime.Now) ;
-
+<<<<<<< Updated upstream
+        public bool Create(int userid)
+        {
+            string code = Code32.Encode(Generate.RandomKey(6));
+            return Dal.Create(userid, code, DateTime.Now);
+=======
+        public bool Create(int userid, string usermail, DateTime senttime)
+        {
+            return Dal.Create(userid, usermail, senttime);
+>>>>>>> Stashed changes
         }
         public bool Remove(int userid)
         {
             return Dal.Remove(userid);
         }
-        public bool check(int userid, string password, DateTime time)
-        { 
-            return Validation.OTP(Dal.GetById(userid).OTP,password, time);
+        public bool check(int userid, string password)
+        {
+            return Validation.OTP(Dal.GetById(userid).OTP,Generate.OTP(Dal.GetById(userid).OTP), Dal.GetById(userid).RequestTime);
         }
         public bool Exist(int userid)
         {
@@ -39,11 +47,11 @@ namespace Domain.Containers.TwoFactorFile
         public async Task<List<TwoFactor>> GetAll()
         {
             var list = await Dal.GetAll();
-            return converter.DTOListToObjectList(list);
+            return  converter.DTOListToObjectList(list);
         }
-        public bool Send(int userid, string usermail)
+        public bool Send (string OTP, string mail)
         {
-            return mail.SentTwofactor(Generate.OTP(Dal.GetById(userid).OTP, Dal.GetById(userid).RequestTime), usermail);
+            return mail.SentTwofactor(OTP, mail);
         }
     }
 }

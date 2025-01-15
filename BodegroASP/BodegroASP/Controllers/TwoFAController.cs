@@ -4,53 +4,50 @@ using Domain.Modules;
 using Domain.Containers.TwoFactorFile;
 using DAL.DAL_s;
 using Interfaces;
-using Domain.Containers.UserFile;
 
 namespace BodegroASP.Controllers
 {
     public class TwoFAController : Controller
     {
         private TwoFactorContainer _TwofactorContainer;
+<<<<<<< Updated upstream
+        ITwoFactor Dal;
+        public TwoFAController(ITwoFactor dal)
+=======
+        private Twofactor
         private UserContainer _UserContainer; 
         ITwoFactor Daltwofactor;
         IUser Daluser;
         public TwoFAController(ITwoFactor daltwofactor, IUser daluser)
+>>>>>>> Stashed changes
         {
-            Daltwofactor = daltwofactor;
-            Daluser = daluser;
-            _TwofactorContainer = new TwoFactorContainer(Daltwofactor);
-            _UserContainer = new UserContainer(Daluser);
+            Dal = dal;
+            _TwofactorContainer = new TwoFactorContainer(Dal);
         }
         public IActionResult Index()
         {
-            int id = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
             TwoFAViewModel model = new TwoFAViewModel()
             {
                 input = "",
-                UserID = id
+                UserID = 3
             };
-            _TwofactorContainer.Remove(id);
-            if (!_TwofactorContainer.Exist(id))
-            {
-                _TwofactorContainer.Create(id, _UserContainer.GetUserByID(id).Email);
-            }
-            _TwofactorContainer.Send(id, _UserContainer.GetUserByID(id).Email);
             return View(model);
         }
         public IActionResult Check(TwoFAViewModel model)
         {
             if (model.input != null)
             {
-                if (_TwofactorContainer.check(model.UserID,model.input,DateTime.Now))
+                if(_TwofactorContainer.check(model.UserID,model.input))
                 {
-                    TempData["ErrorMessage"] = "U bent succesvol ingelogd";
+                    TempData["ErrorMessage"] = "Succesvol ingelogd";
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Verkeerde otp";
+                    TempData["ErrorMessage"] = "Onjuist OTP";
                     return View("Index", model);
                 }
+                
             }
             else
             {
@@ -60,12 +57,14 @@ namespace BodegroASP.Controllers
         }
         public IActionResult ReSend(int userID)
         {
-            _TwofactorContainer.Remove(userID);
-            if (!_TwofactorContainer.Exist(userID))
+<<<<<<< Updated upstream
+            _TwofactorContainer.Create(userID);
+=======
+            if (_TwofactorContainer.Exist(userID))
             {
-                _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email);
+                _TwofactorContainer.Create(userID, _UserContainer.GetUserByID(userID).Email, DateTime.Now);
             }
-            _TwofactorContainer.Send(userID, _UserContainer.GetUserByID(userID).Email);
+>>>>>>> Stashed changes
             TempData["ErrorMessage"] = "Has been sent" ;
             return RedirectToAction("Index");
         }

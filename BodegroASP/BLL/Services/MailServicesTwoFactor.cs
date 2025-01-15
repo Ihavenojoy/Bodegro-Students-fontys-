@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using Twofactor;
 
 namespace Domain.Services
 {
@@ -14,7 +15,8 @@ namespace Domain.Services
         EmailContainer EmailContainer = new EmailContainer();
         public bool SentTwofactor(string OTP, string email)
         {
-            MailMessage mailMessage = EmailContainer.MailMessage(email, Domain.Enums.EmailBody.TWOFACTOR, OTP);
+            string code = Generate.OTP(OTP);
+            MailMessage mailMessage = EmailContainer.MailMessage(email, Domain.Enums.EmailBody.TWOFACTOR, code);
             return EmailContainer.SendEmail(mailMessage);
 
         }
