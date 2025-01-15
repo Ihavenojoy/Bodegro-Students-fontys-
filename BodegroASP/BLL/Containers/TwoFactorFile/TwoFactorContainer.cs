@@ -1,6 +1,7 @@
 ﻿using Domain.Converters;
 using Domain.Modules;
 using Domain.Services;
+using DTO;
 using Interfaces;
 using System.Text;
 using Twofactor;
@@ -22,15 +23,15 @@ namespace Domain.Containers.TwoFactorFile
         {       
          string code = Code32.Encode(Generate.RandomKey(32));
          return Dal.Create(userid, code, DateTime.Now) ;
-
         }
         public bool Remove(int userid)
         {
             return Dal.Remove(userid);
         }
-        public bool check(int userid, string password, DateTime time)
-        { 
-            return Validation.OTP(Dal.GetById(userid).OTP,password, time);
+        public bool check(int userid, string password)
+        {
+            TwoFactorDTO check = Dal.GetById(userid);
+            return Validation.OTP(check.OTP,password, check.RequestTime);
         }
         public bool Exist(int userid)
         {
@@ -43,7 +44,8 @@ namespace Domain.Containers.TwoFactorFile
         }
         public bool Send(int userid, string usermail)
         {
-            return mail.SentTwofactor(Generate.OTP(Dal.GetById(userid).OTP, Dal.GetById(userid).RequestTime), usermail);
+            TwoFactorDTO check = Dal.GetById(userid);
+            return mail.SentTwofactor(Generate.OTP(check.OTP, check.RequestTime), usermail);
         }
     }
 }

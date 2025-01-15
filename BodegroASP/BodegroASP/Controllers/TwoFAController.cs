@@ -41,7 +41,7 @@ namespace BodegroASP.Controllers
         {
             if (model.input != null)
             {
-                if (_TwofactorContainer.check(model.UserID,model.input,DateTime.Now))
+                if (_TwofactorContainer.check(model.UserID,model.input))
                 {
                     TempData["ErrorMessage"] = "U bent succesvol ingelogd";
                     return RedirectToAction("Index", "Home");
